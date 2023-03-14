@@ -1,12 +1,13 @@
-from tkinter import *
-from tkinter.ttk import *
+import tkinter as tk
+import tkinter.ttk as ttk
+from tkinter import PhotoImage
 from tkinter.constants import *
-from tkinter.messagebox import *
+from tkinter.messagebox import showerror, showinfo, askokcancel, askyesno, askyesnocancel
 from PIL import ImageTk, Image
-from widgetswindow import Create_frame, Create_top, Create_label, Create_entry, Create_button
+from widgetswindow import Create_frame, Create_top, Create_label, Create_entry, Create_button, Create_radbutton
 
 
-class Survey_win(Tk):
+class Survey_win(tk.Tk):
     def __init__(self):
         super().__init__()
         self.configure_gui()
@@ -26,7 +27,7 @@ class Survey_win(Tk):
             self, width=1300, height=200, relief=FLAT)
         self.topFrame.pack(side=TOP)
         # Create slider label
-        self.slidertext = StringVar(
+        self.slidertext = tk.StringVar(
             value="UKULELE - \"The Singing Sculpture\"")
         self.topLabel = Create_label(
             self.topFrame, textvariable=self.slidertext)
@@ -42,21 +43,21 @@ class Survey_win(Tk):
             self, width=1300, height=200, relief=FLAT)
         self.midFrame.pack(side=TOP)
         # Create Texts
-        self.firstWelcometext = StringVar(value="WELCOME TO UKULELE!!!")
-        self.secondWelcometext = StringVar(
+        self.firstWelcometext = tk.StringVar(value="WELCOME TO UKULELE!!!")
+        self.secondWelcometext = tk.StringVar(
             value="We are glad you are here!!!")
-        self.thirdWelcometext = StringVar(
+        self.thirdWelcometext = tk.StringVar(
             value="Will you like to share your experience?")
         # Create Labels
-        self.firstwelcomeLabel = Label(
+        self.firstwelcomeLabel = tk.Label(
             self.midFrame, textvariable=self.firstWelcometext)
         self.firstwelcomeLabel.config(font=('', 40, 'bold'))
         self.firstwelcomeLabel.pack(padx=2, pady=5)
-        self.secondwelcomeLabel = Label(
+        self.secondwelcomeLabel = tk.Label(
             self.midFrame, textvariable=self.secondWelcometext)
         self.secondwelcomeLabel.config(font=('', 25, 'bold'))
         self.secondwelcomeLabel.pack(padx=2, pady=(5, 0))
-        self.thirdwelcomeLabel = Label(
+        self.thirdwelcomeLabel = tk.Label(
             self.midFrame, textvariable=self.thirdWelcometext)
         self.thirdwelcomeLabel.config(font=('', 20, 'bold'))
         self.thirdwelcomeLabel.pack(padx=2, pady=(5, 0))
@@ -64,7 +65,7 @@ class Survey_win(Tk):
         self.bottomFrame = Create_frame(
             self, width=1300, height=200, relief=FLAT)
         self.bottomFrame.pack(side=TOP)
-        self.surveytext = StringVar(
+        self.surveytext = tk.StringVar(
             value="Kindly click the button to take the 60 seconds survey")
         self.surveyLabel = Create_label(
             self.bottomFrame, textvariable=self.surveytext)
