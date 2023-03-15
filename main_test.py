@@ -18,7 +18,7 @@ class Mainframe():
                               font=("Bell MT", 12, "bold"))
         apply_style.configure('TEntry', foreground="black",
                               background="WhiteSmoke", font=("Bell MT", 12, "bold"), bd=2)
-        apply_style.configure('TButton', foreground="black",
+        apply_style.configure('TButton', foreground="violet red",
                               background="MistyRose", font=("Helvetica", 12, "bold"))
 
         # Create Page Title Frame
@@ -38,12 +38,13 @@ class Mainframe():
         buttonFrame = ttk.Frame(topframe)
         buttonFrame.pack(side=RIGHT, expand=1, anchor=E)
         topButton = ttk.Button(
-            buttonFrame, text='Admin Log-in', cursor='hand2', style='TButton', command=self.adminlogin)
+            buttonFrame, text='Admin Log-in', cursor='hand2', style='TButton', command=self.adminlogin, state='disabled')
         topButton.pack(expand=1, fill=BOTH)
 
         # Create Welcome Message Frame
         midframe = ttk.Frame(main_win, width=950, height=250)
-        midframe.pack(side=TOP, anchor=CENTER, padx=10)
+        midframe.pack(side=TOP, expand=1, fill=BOTH,
+                      anchor=CENTER, padx=10)
         # First Child Frame
         firsttextFrame = ttk.Frame(midframe)
         firsttextFrame.pack(side=TOP, expand=1, anchor=CENTER)
