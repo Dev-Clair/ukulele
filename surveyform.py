@@ -1,15 +1,31 @@
 """
-    OOP Style
+    The code contained in this file is to be imported as a top level frame into Main.
+    The program is basically a Main Window which contains,
+     1. A topframe - holds title label
+     2. A mainframe - serves as a container/parent to two child frames: Firstframe and Secondframe
+     3. A bottomframe - holds the buttons for switching between frames and submitting the survey form
 """
 
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
+from tkinter.messagebox import showerror, showinfo, askokcancel, askyesno, askyesnocancel
 
 
 class Firstframe(ttk.Frame):
     def __init__(self, master):
+        """
+            The first frame or window is displayed in the mainframe until the ">>>" button is clicked
+            This window collects personal and demographic information from respondents
+            Information fields required are;
+            1. ID/Tag No.
+            2. First and Last Names
+            3. Age
+            4. Gender
+            5. Ethnicity and 
+            6. Disability status
+        """
         super().__init__(master, width=500, height=600)
         self.pack(side=TOP, expand=1, fill=BOTH)
 
@@ -17,7 +33,7 @@ class Firstframe(ttk.Frame):
         self.apply_style = ttk.Style()
         self.apply_style.configure('TLabel', foreground="violet red",
                                    font=("Helvetica", 12, "bold"))
-        self.apply_style.configure('TEntry', foreground="black",
+        self.apply_style.configure('TEntry', foreground="blue",
                                    background="WhiteSmoke", font=("Helvetica", 12, "bold"), bd=2)
         self.apply_style.configure('TButton', foreground="violet red",
                                    background="MistyRose", font=("Helvetica", 12, "bold"))
@@ -99,6 +115,14 @@ class Firstframe(ttk.Frame):
 
 class Secondframe(ttk.Frame):
     def __init__(self, master):
+        """
+            The second frame or window is displayed after the ">>>" button is clicked
+            This window collects information about the event from respondents
+            Information fields required are;
+            1. if the respondents enjoyed the tour
+            2. will they love to find out about the science of acoustics
+            3. will they attend future events hosted by the funders/sponsors
+        """
         super().__init__(master, width=500, height=600)
         self.pack(side=TOP, expand=1, fill=BOTH)
 
@@ -120,13 +144,13 @@ class Secondframe(ttk.Frame):
         self.textlabel2 = ttk.Label(
             self.labelframe2, text="Kindly select the option that best describes your experience so far", foreground='violet red', font=('times', 12, 'bold italic'))
         self.textlabel2.pack(side=TOP, expand=1,
-                             fill=X, padx=5, pady=5)
+                             fill=BOTH, padx=5, pady=5)
         # Question 1
         self.q1_frame = ttk.Frame(self)
         self.q1_frame.pack(side=TOP, expand=1, fill=BOTH)
         self.q1_variable = tk.BooleanVar()
         self.q1_label = ttk.Label(
-            self.q1_frame, text="1. Did you enjoy your tour around the singing sculpture? ", foreground='violet red', font=('times', 12, 'bold'))
+            self.q1_frame, text="1. Did you enjoy your tour around the singing sculpture? ")
         self.q1_label.pack(side=TOP, expand=1, fill=BOTH, padx=5, anchor=W)
         self.q1_radioframe = ttk.Frame(self.q1_frame)
         self.q1_radioframe.pack(side=TOP, expand=1, fill=BOTH)
@@ -193,7 +217,7 @@ class Secondframe(ttk.Frame):
         self.emailframe = ttk.Frame(self)
         self.emailframe.pack(side=TOP, expand=1, fill=BOTH)
         self.emaillabel = ttk.Label(
-            self.emailframe, text="Email: *", foreground='violet red', font=('times', 12, 'bold'))
+            self.emailframe, text="Email: ", foreground='violet red', font=('times', 12, 'bold'))
         self.emaillabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.emailentry = ttk.Entry(self.emailframe)
         self.emailentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -201,36 +225,59 @@ class Secondframe(ttk.Frame):
 
 class Mainwindow():
     def __init__(self, master):
-        # Title Frame
-        self.topframe = ttk.Frame(master)
-        self.topframe.pack(side=TOP)
-        self.titlelabel = ttk.Label(
-            self.topframe, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
-        self.titlelabel.pack(padx=5, pady=5, anchor=CENTER)
-        # Create mainframe to act as parent for subframes
+        """
+            contains a top frame which holds the title label - "UKULELE"
+            a mainframe which serves as a parent or container window to two child frames - Firstframe and Secondframe
+            and a bottom frame which holds two buttons
+            the ">>>" button allows us to move from one page to the other while the submit button submits entries entered by the user.
+            The submit button is temporarily disabled while the respondent fills the information in the first window and comes normal when the respondent switches to the next frame 
+        """
+        # Create Title Frame for Title Label
+        topframe = ttk.Frame(master)
+        topframe.pack(side=TOP)
+        titlelabel = ttk.Label(
+            topframe, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
+        titlelabel.pack(padx=5, pady=5, anchor=CENTER)
+
+        # Create Main Frame to act as Parent for Child Frames
         mainframe = ttk.Frame(master)
         mainframe.pack(expand=1, fill=BOTH)
+
+        # Initialize Page/Child Frame Counter
         self.windowNum = 0
 
-        # Putting frames into parent window
+        # Add Child Frames to Parent Window
         self.framelist = []
         self.framelist.append(Firstframe(mainframe))
         self.framelist.append(Secondframe(mainframe))
         self.framelist[1].forget()
 
-        # Create buttons to switch frames
+        # Create Bottom Frame for Buttons
         bottomframe = ttk.Frame(master)
         bottomframe.pack(side=BOTTOM)
+        # Create Button for Switching Frames
         switchbutton = ttk.Button(
             bottomframe, text='>>>', cursor='hand2', command=self.switchframe)
         switchbutton.pack(side=LEFT, expand=1, padx=(
             20, 25), pady=2, anchor=CENTER)
+        # Create Submit Button for Survey Form
         self.submitbutton = ttk.Button(
             bottomframe, text='Submit', cursor='hand2', command=self.submitform, state="disabled")  # Submit button is disabled in the first window
         self.submitbutton.pack(side=RIGHT, expand=1,
                                padx=(20, 25), pady=2, anchor=CENTER)
 
+        # Trying to automate the state of the button with respect to the frame/window view.
+        # I think can be achieved via threading. will try it out later
+        # if self.framelist[self.windowNum] == 0:
+        #     self.submitbutton.config(state="disabled")
+        # elif self.framelist[self.windowNum] == 0:
+        #     self.submitbutton.config(state="normal")
+
     def switchframe(self):
+        """
+            This button allows the respondent to switch between information/entry field windows
+            This function keeps the child frames in the main frame in a continuous loop instead of clicking separate next or previous buttons to change views
+        """
         self.framelist[self.windowNum].forget()
         self.windowNum = (self.windowNum+1) % len(self.framelist)
         # Using the tk.raise() method to switch form frames
@@ -241,13 +288,19 @@ class Mainwindow():
         self.submitbutton.config(state="normal")
 
     def submitform(self):
-        pass
+        """
+            Before submitting entries a check should be run to ensure all required fields have been completed by the respondents
+            This is important as the button submits the information directly to the database
+            A tkinter messagebox should be used to ask respondent to confirm they have satisfactorily entered all required information 
+            if any of the mandatory fields * are left empty, the button show throw/dispaly an error messagebox
+        """
+        print("\nSubmit button was clicked")
 
 
 if __name__ == "__main__":
     root = tk.Toplevel()
     root.title("UKULELE - Survey Form")
-    root.geometry('600x700+342+0')
+    root.geometry('500x600+342+50')
     root.iconimage = PhotoImage(file='images/icon_img.ico')
     root.iconphoto(False, root.iconimage)
     root.minsize(100, 100)
