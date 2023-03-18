@@ -1,17 +1,10 @@
-# from tkinter import *
-# from tkinter.ttk import *
-# from tkinter.constants import *
-
-# sf = Toplevel()
-# sf.title("UKULELE - Survey Form")
-# sf.geometry('350x450+342+0')
-# sf.iconimage = PhotoImage(file='images/icon_img.ico')
-# sf.iconphoto(False, sf.iconimage)
-# sf.minsize(100, 100)
-# sf.resizable(0, 0)
-
-# if __name__ == "__main__":
-#     sf.mainloop()
+"""
+    The code contained in this file is to be imported as a top level frame into Main.
+    The program is basically a Main Window which contains,
+     1. A topframe - holds title label
+     2. A mainframe - serves as a container/parent to two child frames: Firstframe and Secondframe
+     3. A bottomframe - holds the buttons for switching between frames and submitting the survey form
+"""
 
 import tkinter as tk
 import tkinter.ttk as ttk
