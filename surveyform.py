@@ -28,18 +28,6 @@ class Firstframe(ttk.Frame):
         """
         super().__init__(master, width=500, height=600)
         self.pack(side=TOP, expand=1, fill=BOTH)
-
-        # Widget Styling - Labels, Entrys, Buttons
-        self.apply_style = ttk.Style()
-        self.apply_style.configure('TLabel', foreground="violet red",
-                                   font=("Helvetica", 12, "bold"))
-        self.apply_style.configure('TEntry', foreground="blue",
-                                   background="WhiteSmoke", font=("Helvetica", 12, "bold"), bd=2)
-        self.apply_style.configure('TButton', foreground="violet red",
-                                   background="MistyRose", font=("Helvetica", 12, "bold"))
-        self.apply_style.configure('TRadiobutton', foreground="violet red",
-                                   font=("times new roman", 10, "bold"))
-
         # Create First -Child-  Form Page
         # Information Frame
         self.labelframe1 = ttk.Frame(self)
@@ -52,7 +40,7 @@ class Firstframe(ttk.Frame):
         self.idframe = ttk.Frame(self)
         self.idframe.pack(side=TOP, expand=1, fill=BOTH)
         self.idlabel = ttk.Label(self.idframe, text="Id/Tag No: *",
-                                 foreground='violet red', font=('times', 12, 'bold'))
+                                 style='TLabel')
         self.idlabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.identry = ttk.Entry(self.idframe)
         self.identry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -60,15 +48,16 @@ class Firstframe(ttk.Frame):
         self.fnameframe = ttk.Frame(self)
         self.fnameframe.pack(side=TOP, expand=1, fill=BOTH)
         self.fnamelabel = ttk.Label(
-            self.fnameframe, text="First name: ", foreground='violet red', font=('times', 12, 'bold'))
+            self.fnameframe, text="First name: ", style='TLabel')
         self.fnamelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.fnameentry = ttk.Entry(self.fnameframe)
-        self.fnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+        self.fnameentry.pack(side=TOP, expand=1, fill=X,
+                             padx=5, anchor=W)
         # Last Name
         self.lnameframe = ttk.Frame(self)
         self.lnameframe.pack(side=TOP, expand=1, fill=BOTH)
         self.lnamelabel = ttk.Label(
-            self.lnameframe, text="Last name: ", foreground='violet red', font=('times', 12, 'bold'))
+            self.lnameframe, text="Last name: ", style='TLabel')
         self.lnamelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.lnameentry = ttk.Entry(self.lnameframe)
         self.lnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -76,7 +65,7 @@ class Firstframe(ttk.Frame):
         self.ageframe = ttk.Frame(self)
         self.ageframe.pack(side=TOP, expand=1, fill=BOTH)
         self.agelabel = ttk.Label(
-            self.ageframe, text="Age: *", foreground='violet red', font=('times', 12, 'bold'))
+            self.ageframe, text="Age: *", style='TLabel')
         self.agelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.ageentry = ttk.Entry(self.ageframe)
         self.ageentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -84,7 +73,7 @@ class Firstframe(ttk.Frame):
         self.genderframe = ttk.Frame(self)
         self.genderframe.pack(side=TOP, expand=1, fill=BOTH)
         self.genderlabel = ttk.Label(
-            self.genderframe, text="Gender: *", foreground='violet red', font=('times', 12, 'bold'))
+            self.genderframe, text="Gender: *", style='TLabel')
         self.genderlabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.genderentry = ttk.Entry(self.genderframe)
         self.genderentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -92,7 +81,7 @@ class Firstframe(ttk.Frame):
         self.ethnicframe = ttk.Frame(self)
         self.ethnicframe.pack(side=TOP, expand=1, fill=BOTH)
         self.ethniclabel = ttk.Label(
-            self.ethnicframe, text="Ethnicity: *", foreground='violet red', font=('times', 12, 'bold'))
+            self.ethnicframe, text="Ethnicity: *", style='TLabel')
         self.ethniclabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.ethnicentry = ttk.Entry(self.ethnicframe)
         self.ethnicentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
@@ -100,17 +89,23 @@ class Firstframe(ttk.Frame):
         self.disabilityframe = ttk.Frame(self)
         self.disabilityframe.pack(side=TOP, expand=1, fill=BOTH)
         self.disabilitylabel = ttk.Label(
-            self.disabilityframe, text="Disability: *", foreground='violet red', font=('times', 12, 'bold'))
+            self.disabilityframe, text="Disability: *", style='TLabel')
         self.disabilitylabel.pack(side=TOP, expand=1, padx=5, anchor=W)
         self.disabilityentry = ttk.Entry(self.disabilityframe)
         self.disabilityentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
         # Mandatory Fields - this label will display when respondent tries to submit form without filling in information required in mandatory fields
-        self.mfframe = ttk.Frame(self)
-        self.mfframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.mftext = ttk.Label(
-            self.mfframe, text="* mandatory fields are required", foreground='black', font=('times', 10, 'bold italic'))
-        self.mftext.pack(side=TOP, expand=1,
-                         fill=BOTH, padx=5, pady=5)
+        # self.mfframe = ttk.Frame(self)
+        # self.mfframe.pack(side=TOP, expand=1, fill=BOTH)
+        # self.mftext = ttk.Label(
+        #     self.mfframe, text="* mandatory fields are required", foreground='black', font=('times', 10, 'bold italic'))
+        # self.mftext.pack(side=TOP, expand=1,
+        #                  fill=BOTH, padx=5, pady=5)
+
+        # if self.identry.get() or self.ageentry.get() or self.genderentry.get() or self.ethnicentry.get() or self.disabilityentry.get() == "":
+        #     showerror('Mandatory Fields',
+        #               '* information fields cannot be empty')
+        # else:
+        #     pass
 
 
 class Secondframe(ttk.Frame):
@@ -125,18 +120,6 @@ class Secondframe(ttk.Frame):
         """
         super().__init__(master, width=500, height=600)
         self.pack(side=TOP, expand=1, fill=BOTH)
-
-        # Widget Styling - Labels, Entrys, Buttons
-        self.apply_style = ttk.Style()
-        self.apply_style.configure('TLabel', foreground="violet red",
-                                   font=("Helvetica", 12, "bold"))
-        self.apply_style.configure('TEntry', foreground="black",
-                                   background="WhiteSmoke", font=("Helvetica", 12, "bold"), bd=2)
-        self.apply_style.configure('TButton', foreground="violet red",
-                                   background="MistyRose", font=("Helvetica", 12, "bold"))
-        self.apply_style.configure('TRadiobutton', foreground="violet red",
-                                   font=("times new roman", 10, "bold"))
-
         # Create Second -Child-  Form Page
         # Information Frame
         self.labelframe2 = ttk.Frame(self)
@@ -172,11 +155,11 @@ class Secondframe(ttk.Frame):
         self.q2_radioframe = ttk.Frame(self.q2_frame)
         self.q2_radioframe.pack(side=TOP, expand=1, fill=BOTH)
         self.q2_firstradio = ttk.Radiobutton(
-            self.q2_frame, text='Yes', value="Yes", variable=self.q2_variable, style='TRadiobutton')
+            self.q2_radioframe, text='Yes', value="Yes", variable=self.q2_variable, style='TRadiobutton')
         self.q2_firstradio.pack(side=TOP, expand=1,
                                 padx=(20, 25), pady=2, anchor=W)
         self.q2_secondradio = ttk.Radiobutton(
-            self.q2_frame, text='No', value="No", variable=self.q2_variable, style='TRadiobutton')
+            self.q2_radioframe, text='No', value="No", variable=self.q2_variable, style='TRadiobutton')
         self.q2_secondradio.pack(side=TOP, expand=1,
                                  padx=(20, 25), pady=2, anchor=W)
         # Question 3
@@ -189,11 +172,11 @@ class Secondframe(ttk.Frame):
         self.q3_radioframe = ttk.Frame(self.q3_frame)
         self.q3_radioframe.pack(side=TOP, expand=1, fill=BOTH)
         self.q3_firstradio = ttk.Radiobutton(
-            self.q3_frame, text='Yes', value="Yes", variable=self.q3_variable, style='TRadiobutton')
+            self.q3_radioframe, text='Yes', value="Yes", variable=self.q3_variable, style='TRadiobutton')
         self.q3_firstradio.pack(side=TOP, expand=1,
                                 padx=(20, 25), pady=2, anchor=W)
         self.q3_secondradio = ttk.Radiobutton(
-            self.q3_frame, text='No', value="No", variable=self.q3_variable, style='TRadiobutton')
+            self.q3_radioframe, text='No', value="No", variable=self.q3_variable, style='TRadiobutton')
         self.q3_secondradio.pack(side=TOP, expand=1,
                                  padx=(20, 25), pady=2, anchor=W)
         # Question 4
@@ -206,24 +189,25 @@ class Secondframe(ttk.Frame):
         self.q4_radioframe = ttk.Frame(self.q4_frame)
         self.q4_radioframe.pack(side=TOP, expand=1, fill=BOTH)
         self.q4_firstradio = ttk.Radiobutton(
-            self.q4_frame, text='Yes', value="Yes", variable=self.q4_variable, style='TRadiobutton')
+            self.q4_radioframe, text='Yes', value="Yes", variable=self.q4_variable, style='TRadiobutton')
         self.q4_firstradio.pack(side=TOP, expand=1,
                                 padx=(20, 25), pady=2, anchor=W)
         self.q4_secondradio = ttk.Radiobutton(
-            self.q4_frame, text='No', value="No", variable=self.q4_variable, style='TRadiobutton')
+            self.q4_radioframe, text='No', value="No", variable=self.q4_variable, style='TRadiobutton')
         self.q4_secondradio.pack(side=TOP, expand=1,
                                  padx=(20, 25), pady=2, anchor=W)
         # Email
         self.emailframe = ttk.Frame(self)
         self.emailframe.pack(side=TOP, expand=1, fill=BOTH)
         self.emaillabel = ttk.Label(
-            self.emailframe, text="Email: ", foreground='violet red', font=('times', 12, 'bold'))
+            self.emailframe, text="Email: ", style='TLabel')
         self.emaillabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.emailentry = ttk.Entry(self.emailframe)
+        self.emailentry = ttk.Entry(
+            self.emailframe)
         self.emailentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
 
 
-class Mainwindow():
+class Main():
     def __init__(self, master):
         """
             contains a top frame which holds the title label - "UKULELE"
@@ -232,12 +216,23 @@ class Mainwindow():
             the ">>>" button allows us to move from one page to the other while the submit button submits entries entered by the user.
             The submit button is temporarily disabled while the respondent fills the information in the first window and comes normal when the respondent switches to the next frame 
         """
+        self.master = master
+        apply_style = ttk.Style(master)
+        apply_style.configure('TLabel', foreground="violet red",
+                              font=("Helvetica", 10, "bold"))
+        apply_style.configure('TEntry', foreground="blue",
+                              background="WhiteSmoke", font=("Helvetica", 12, "normal"))
+        apply_style.configure('TButton', foreground="violet red",
+                              background="MistyRose", font=("Helvetica", 10, "bold"))
+        apply_style.configure('TRadiobutton', foreground="violet red",
+                              font=("times new roman", 10, "bold"))
+
         # Create Title Frame for Title Label
         topframe = ttk.Frame(master)
         topframe.pack(side=TOP)
-        titlelabel = ttk.Label(
+        self.titlelabel = ttk.Label(
             topframe, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
-        titlelabel.pack(padx=5, pady=5, anchor=CENTER)
+        self.titlelabel.pack(padx=5, pady=5, anchor=CENTER)
 
         # Create Main Frame to act as Parent for Child Frames
         mainframe = ttk.Frame(master)
@@ -256,9 +251,9 @@ class Mainwindow():
         bottomframe = ttk.Frame(master)
         bottomframe.pack(side=BOTTOM)
         # Create Button for Switching Frames
-        switchbutton = ttk.Button(
+        self.switchbutton = ttk.Button(
             bottomframe, text='>>>', cursor='hand2', command=self.switchframe)
-        switchbutton.pack(side=LEFT, expand=1, padx=(
+        self.switchbutton.pack(side=LEFT, expand=1, padx=(
             20, 25), pady=2, anchor=CENTER)
         # Create Submit Button for Survey Form
         self.submitbutton = ttk.Button(
@@ -278,6 +273,11 @@ class Mainwindow():
             This button allows the respondent to switch between information/entry field windows
             This function keeps the child frames in the main frame in a continuous loop instead of clicking separate next or previous buttons to change views
         """
+        # if self.identry.get() or self.ageentry.get() or self.genderentry.get() or self.ethnicentry.get() or self.disabilityentry.get() == "":
+        #     showerror('Mandatory Fields',
+        #               '* information fields cannot be empty,\nPlease fill in correct details into input fields')
+        # else:
+        #     pass
         self.framelist[self.windowNum].forget()
         self.windowNum = (self.windowNum+1) % len(self.framelist)
         # Using the tk.raise() method to switch form frames
@@ -305,5 +305,5 @@ if __name__ == "__main__":
     root.iconphoto(False, root.iconimage)
     root.minsize(100, 100)
     root.resizable(0, 0)
-    window = Mainwindow(root)
+    window = Main(root)
     root.mainloop()
