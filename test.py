@@ -11,6 +11,7 @@ import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel, askyesno, askyesnocancel
+from tkcalendar import Calendar
 
 
 class Firstframe(ttk.Frame):
@@ -28,100 +29,106 @@ class Firstframe(ttk.Frame):
         """
         super().__init__(master, width=500, height=600)
         self.pack(side=TOP, expand=1, fill=BOTH)
-        self.master = master
-
-        # Create Variables
-        self.idvar = tk.StringVar()
-        self.fnamevar = tk.StringVar()
-        self.lnamevar = tk.StringVar()
-        self.agevar = tk.StringVar()
-        self.gendervar = tk.StringVar()
-        self.ethnicvar = tk.StringVar()
-        self.disabilityvar = tk.StringVar()
+        # self.master = master
 
         # Create First -Child-  Form Page
-        # Information Frame
-        labelframe1 = ttk.Frame(self)
-        labelframe1.pack(side=TOP, expand=1, fill=BOTH)
-        self.textlabel1 = ttk.Label(
-            labelframe1, text="Kindly fill in the right information into the fields below", foreground='violet red', font=('times', 12, 'bold italic'))
-        self.textlabel1.pack(side=TOP, expand=1,
-                             fill=BOTH, padx=5, pady=5)
+        # Title Label
+        titlelabel = ttk.Label(
+            self, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
+        titlelabel.pack(side=TOP)
+        self.textlabel = ttk.Label(
+            self, text="Kindly enter the required information into the fields below", foreground='violet red', font=('times', 12, 'bold italic'))
+        self.textlabel.pack(side=TOP)
         # id/Tag No.
-        idframe = ttk.Frame(self)
-        idframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.idlabel = ttk.Label(idframe, text="Id/Tag No: *",
-                                 style='TLabel')
-        self.idlabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.identry = ttk.Entry(idframe, textvariable=self.idvar)
+        idframe = ttk.Labelframe(
+            self, text="Id/Tag no.: *", labelanchor=NW)
+        idframe.pack(side=TOP, expand=0, fill=X, anchor=CENTER, padx=5, pady=5)
+        self.idvar = tk.StringVar()
+        self.identry = ttk.Entry(
+            idframe, textvariable=self.idvar, width=40, justify=CENTER)
         self.identry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
         # First Name
-        fnameframe = ttk.Frame(self)
-        fnameframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.fnamelabel = ttk.Label(
-            fnameframe, text="First name: ", style='TLabel')
-        self.fnamelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
+        fnameframe = ttk.Labelframe(
+            self, text="First name: *", labelanchor=NW)
+        fnameframe.pack(side=TOP, expand=0, fill=X,
+                        anchor=CENTER, padx=5, pady=5)
+        self.fnamevar = tk.StringVar()
         self.fnameentry = ttk.Entry(
-            fnameframe, textvariable=self.fnamevar)
-        self.fnameentry.pack(side=TOP, expand=1, fill=X,
-                             padx=5, anchor=W)
+            fnameframe, textvariable=self.fnamevar, width=40, justify=CENTER)
+        self.fnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
         # Last Name
-        lnameframe = ttk.Frame(self)
-        lnameframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.lnamelabel = ttk.Label(
-            lnameframe, text="Last name: ", style='TLabel')
-        self.lnamelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
+        lnameframe = ttk.Labelframe(
+            self, text="Last name: *", labelanchor=NW)
+        lnameframe.pack(side=TOP, expand=0, fill=X,
+                        anchor=CENTER, padx=5, pady=5)
+        self.lnamevar = tk.StringVar()
         self.lnameentry = ttk.Entry(
-            lnameframe, textvariable=self.lnamevar)
+            lnameframe, textvariable=self.lnamevar, width=40, justify=CENTER)
         self.lnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
         # Age
-        ageframe = ttk.Frame(self)
-        ageframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.agelabel = ttk.Label(
-            ageframe, text="Age: *", style='TLabel')
-        self.agelabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.ageentry = ttk.Entry(ageframe, textvariable=self.agevar)
-        self.ageentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+        ageframe = ttk.Labelframe(
+            self, text="Age: *", labelanchor=NW)
+        ageframe.pack(side=TOP, expand=0, fill=BOTH, padx=5, pady=5)
+        self.agevar = tk.StringVar()
+        self.ageentry = ttk.Entry(
+            ageframe, textvariable=self.agevar, width=40, justify=CENTER)
+        self.ageentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
+        self.ageentry.insert(0, "---dd/mm/yyyy---")
+        self.ageentry.bind("<Button-1>", self.select_DOB)
         # Gender
-        genderframe = ttk.Frame(self)
-        genderframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.genderlabel = ttk.Label(
-            genderframe, text="Gender: *", style='TLabel')
-        self.genderlabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.genderentry = ttk.Entry(
-            genderframe, textvariable=self.gendervar)
-        self.genderentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+        genderframe = ttk.Labelframe(
+            self, text="Gender: *", labelanchor=NW)
+        genderframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=5)
+        gender = ["--Click to Select--", "Male", "Female", "Transgender", "Gender-neutral", "Non-binary",
+                  "Agender", "Pangender", "Genderqueer", "Two-spirit", "Third-gender"]
+        self.gendervar = tk.StringVar(value=gender[0])
+        self.genderdrop = ttk.OptionMenu(
+            genderframe, self.gendervar, *gender, direction="above", style='TMenubutton', )
+        self.genderdrop.pack(side=TOP, expand=1, anchor=CENTER)
         # Ethnicity
-        ethnicframe = ttk.Frame(self)
-        ethnicframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.ethniclabel = ttk.Label(
-            ethnicframe, text="Ethnicity: *", style='TLabel')
-        self.ethniclabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.ethnicentry = ttk.Entry(
-            ethnicframe, textvariable=self.ethnicvar)
-        self.ethnicentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+        ethnicframe = ttk.Labelframe(
+            self, text="Ethnicity: *", labelanchor=NW)
+        ethnicframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=5)
+        ethnic = ["--Click to Select--", "Arab", "Black",
+                  "Chinese", "Indo-Asian", "Latin", "White"]
+        self.ethnicvar = tk.StringVar(value=ethnic[0])
+        self.ethnicdrop = ttk.OptionMenu(
+            ethnicframe, self.ethnicvar, *ethnic, direction="above", style='TMenubutton', )
+        self.ethnicdrop.pack(side=TOP, expand=1, anchor=CENTER)
         # Disability
-        disabilityframe = ttk.Frame(self)
-        disabilityframe.pack(side=TOP, expand=1, fill=BOTH)
-        self.disabilitylabel = ttk.Label(
-            disabilityframe, text="Disability: *", style='TLabel')
-        self.disabilitylabel.pack(side=TOP, expand=1, padx=5, anchor=W)
-        self.disabilityentry = ttk.Entry(
-            disabilityframe, textvariable=self.disabilityvar)
-        self.disabilityentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
-        # Mandatory Fields - this label will display when respondent tries to submit form without filling in information required in mandatory fields
-        # self.mfframe = ttk.Frame(self)
-        # self.mfframe.pack(side=TOP, expand=1, fill=BOTH)
-        # self.mftext = ttk.Label(
-        #     self.mfframe, text="* mandatory fields are required", foreground='black', font=('times', 10, 'bold italic'))
-        # self.mftext.pack(side=TOP, expand=1,
-        #                  fill=BOTH, padx=5, pady=5)
+        disabilityframe = ttk.Labelframe(
+            self, text="Disability: *", labelanchor=NW)
+        disabilityframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=5)
+        disability = ["--Click to Select--", "Yes", "No"]
+        self.disabilityvar = tk.StringVar(value=disability[0])
+        self.disabilitydrop = ttk.OptionMenu(
+            disabilityframe, self.disabilityvar, *disability, direction="above", style='TMenubutton', )
+        self.disabilitydrop.pack(side=TOP, expand=1, anchor=CENTER)
 
-        # if self.identry.get() or self.ageentry.get() or self.genderentry.get() or self.ethnicentry.get() or self.disabilityentry.get() == "":
-        #     showerror('Mandatory Fields',
-        #               '* information fields cannot be empty')
-        # else:
-        #     pass
+    # Widget Functions
+    def select_DOB(self, event):
+        self.dob_window = tk.Toplevel()
+        self.dob_window.grab_set()
+        self.dob_window.title("Select Date of Birth")
+        self.dob_window.geometry("350x250+450+100")
+        self.cal = Calendar(
+            self.dob_window, selectmode="day", date_pattern="dd/mm/yyyy", background="violet red", foreground="white", headersforeground="violet red", selectforeground="violet red", headersbackground="white", )
+        self.cal.pack(expand=1, fill=BOTH)
+
+        self.submit_date = ttk.Button(
+            self.dob_window, text="SUBMIT", style='TButton', command=self.grab_selection)
+        self.submit_date.pack(expand=1, pady=5)
+
+    def grab_selection(self):
+        self.ageentry.delete(0, END)
+        self.ageentry.insert(0, self.cal.get_date())
+        self.dob_window.destroy()
+
+    # if self.identry.get() or self.ageentry.get() or self.genderentry.get() or self.ethnicentry.get() or self.disabilityentry.get() == "":
+    #     showerror('Mandatory Fields',
+    #               '* information fields cannot be empty')
+    # else:
+    #     pass
 
 
 class Secondframe(ttk.Frame):
@@ -146,13 +153,13 @@ class Secondframe(ttk.Frame):
         self.emailvar = tk.StringVar()
 
         # Create Second -Child-  Form Page
-        # Information Frame
-        labelframe2 = ttk.Frame(self)
-        labelframe2.pack(side=TOP, expand=1, fill=BOTH)
-        self.textlabel2 = ttk.Label(
-            labelframe2, text="Kindly select the option that best describes your experience so far", foreground='violet red', font=('times', 12, 'bold italic'))
-        self.textlabel2.pack(side=TOP, expand=1,
-                             fill=BOTH, padx=5, pady=5)
+        # Title Label
+        titlelabel = ttk.Label(
+            self, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
+        titlelabel.pack(side=TOP)
+        self.textlabel = ttk.Label(
+            self, text="Kindly select the option that best describes your experience so far", foreground='violet red', font=('times', 12, 'bold italic'))
+        self.textlabel.pack(side=TOP)
         # Question 1
         q1_frame = ttk.Frame(self)
         q1_frame.pack(side=TOP, expand=1, fill=BOTH)
@@ -245,7 +252,7 @@ class Mainwindow:
         self.master.title("UKULELE - Survey Form")
         self.master.geometry('500x600+342+50')
         self.master.iconimage = PhotoImage(file='images/icon_img.ico')
-        self.master.iconphoto(False, root.iconimage)
+        self.master.iconphoto(True, root.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -259,13 +266,17 @@ class Mainwindow:
                               background="MistyRose", font=("Helvetica", 10, "bold"))
         apply_style.configure('TRadiobutton', foreground="violet red",
                               font=("times new roman", 10, "bold"))
+        apply_style.configure('TMenubutton', foreground="blue",
+                              font=("Helvetica", 10, "bold"))
+        # apply_style.configure('TLabelFrame', foreground="violet red",
+        #                       font=("Helvetica", 10, "bold"))
 
         # Create Title Frame for Title Label
-        topframe = ttk.Frame(master)
-        topframe.pack(side=TOP)
-        self.titlelabel = ttk.Label(
-            topframe, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
-        self.titlelabel.pack(padx=5, pady=5, anchor=CENTER)
+        # topframe = ttk.Frame(master)
+        # topframe.pack(side=TOP)
+        # self.titlelabel = ttk.Label(
+        #     master, text='UKULELE!!!', foreground='violet red', font=('times', 20, 'bold'))
+        # self.titlelabel.pack(side=TOP, padx=5, pady=5, anchor=CENTER)
 
         # Create Main Frame to act as Parent for Child Frames
         mainframe = ttk.Frame(master)
