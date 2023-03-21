@@ -76,7 +76,7 @@ class Mainframe:
             bottomframe, text="Take Survey", width=20, style='TButton', command=self.takesurvey)
         self.surveyButton.pack(side=TOP, anchor=CENTER, pady=10)
 
-    # Admin Toplevel Functions
+    # Admin Log-in Toplevel
     def adminlogin(self):
         """
             Launches a toplevel window for administrative authentication details
@@ -114,6 +114,7 @@ class Mainframe:
 
         # Direct input focus to the first entry widget of the log-in window
         self.usernameentry.focus_set()
+    # Admin Login Toplevel Functions
 
     def adlog(self):
         """
@@ -136,6 +137,7 @@ class Mainframe:
                 "Error", "Username or Password fields cannot be empty", parent=self.admin_win)
             self.usernameentry.focus_set()
 
+    # Survey Form Toplevel
     def takesurvey(self):
         """
             Launches a top level window of the surveyform to read input from user/respondent at runtime

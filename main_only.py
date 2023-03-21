@@ -72,60 +72,7 @@ class Mainframe:
         """
             Launches a toplevel window for administrative authentication details
         """
-        self.admin_win = tk.Toplevel()
-        self.admin_win.title('Admin Login')
-        self.admin_win.geometry("350x350+325+100")
-        self.admin_win.resizable(0, 0)
-
-        self.admin_img = PhotoImage(
-            file='images/person_imgL.png')
-        self.login_img = ttk.Label(
-            self.admin_win, image=self.admin_img, justify=CENTER)
-        self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)
-        # create Label Widgets
-        self.usernamelabel = ttk.Label(
-            self.admin_win, text="Username:", style='TLabel')
-        self.usernamelabel.grid(row=1, column=0, padx=2, pady=10)
-        self.passwordlabel = ttk.Label(
-            self.admin_win, text="Password:", style='TLabel')
-        self.passwordlabel.grid(row=2, column=0, padx=2, pady=10)
-        # Create Entry Widgets
-        self.uservar = tk.StringVar()
-        self.usernameentry = ttk.Entry(
-            self.admin_win, textvariable=self.uservar, width=40, justify=CENTER)
-        self.usernameentry.grid(row=1, column=1, padx=2, pady=10)
-        self.passvar = tk.StringVar()
-        self.passwordentry = ttk.Entry(
-            self.admin_win, textvariable=self.passvar, width=40, justify=CENTER, show="*")
-        self.passwordentry.grid(row=2, column=1, padx=2, pady=10)
-        # Create log-in Button
-        self.logbutton = ttk.Button(
-            self.admin_win, text="Log-in", command=self.adlog, style='TButton')
-        self.logbutton.grid(row=3, columnspan=2, padx=2, pady=10)
-
-        # Direct input focus to the first entry widget of the log-in window
-        self.usernameentry.focus_set()
-
-    def adlog(self):
-        """
-            Allows access to serverside / admin window
-        """
-        if self.uservar.get() == "sponsor" and self.passvar.get() == "ukulele":
-            showinfo('Welcome', 'Log-in Successful', parent=self.admin_win)
-            self.admin_win.quit()
-            # import adminwindow
-
-        if self.uservar.get() != "sponsor" and self.passvar.get() != "ukulele":
-            showerror("Error", "Please enter the correct log-in details",
-                      parent=self.admin_win)
-            self.usernameentry.delete(0, END)
-            self.passwordentry.delete(0, END)
-            self.usernameentry.focus_set()
-
-        if self.uservar.get() == "" and self.passvar.get() == "":
-            showerror(
-                "Error", "Username or Password fields cannot be empty", parent=self.admin_win)
-            self.usernameentry.focus_set()
+        pass
 
     def takesurvey(self):
         """
