@@ -5,17 +5,16 @@ from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
 from PIL import ImageTk, Image
-from form_database import submitform  # Import -sqlite3- Database
+# from database.form_database import submitform  # Import -sqlite3- Database
 
 
 class Mainframe:
     def __init__(self, master):
-
         self.master = master
         self.master.title("UKULELE")
-        self.master.geometry('1300x700+0+0')
+        self.master.geometry('1350x680+5+5')
         self.master.iconimage = PhotoImage(file='images/icon_img.ico')
-        self.master.iconphoto(True, root.iconimage)
+        self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -43,11 +42,11 @@ class Mainframe:
         self.topLabel = ttk.Label(
             topframe, text=slidertext, style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
-        self.topLabel.pack(side=LEFT, anchor=NW, padx=5)
+        self.topLabel.pack(side=LEFT, anchor=W, padx=5)
         # Admin Log-in Button
         self.topButton = ttk.Button(
             topframe, text='Admin Log-in', cursor='hand2', style='TButton', command=self.adminlogin)
-        self.topButton.pack(side=RIGHT, anchor=NE, padx=5)
+        self.topButton.pack(side=RIGHT, anchor=E, padx=5)
 
         # Create Welcome Message Frame
         midframe = ttk.Frame(master)
@@ -63,18 +62,27 @@ class Mainframe:
         self.secondLabel.config(font=("Bell MT", 25, "bold"))
         self.secondLabel.pack(side=TOP, anchor=CENTER, pady=20)
 
-        # Create Label and Survey Button Frame
+        # Create Frame for Label and Survey Button
         bottomframe = ttk.Frame(master)
-        bottomframe.pack(side=BOTTOM, fill=X,
+        bottomframe.pack(side=TOP, fill=X,
                          anchor=CENTER, pady=20)
-        # Create Bottom Label
-        self.bottomLabel = ttk.Label(
+        # Create Label and Button
+        self.surveyLabel = ttk.Label(
             bottomframe, text="Kindly Click on the Button Below to Take a Quick 60 Secs Survey", style='TLabel')
-        self.bottomLabel.config(font=("Bell MT", 20, "bold"))
-        self.bottomLabel.pack(side=TOP, anchor=CENTER, pady=10)
+        self.surveyLabel.config(font=("Bell MT", 20, "bold"))
+        self.surveyLabel.pack(side=TOP, anchor=CENTER, pady=10)
         self.surveyButton = ttk.Button(
             bottomframe, text="Take Survey", width=20, style='TButton', command=self.takesurvey)
         self.surveyButton.pack(side=TOP, anchor=CENTER, pady=10)
+
+        # Create Copyright Label
+        self.cpyrightLabel = ttk.Label(
+            master, text="© Copyright 2023 | Lexi-Clair Designs", style='TLabel')
+        self.cpyrightLabel.config(font=("times new roman", 8, "bold"))
+        self.cpyrightLabel.config(foreground="blue")
+        self.cpyrightLabel.config(background="light grey")
+        self.cpyrightLabel.pack(side=BOTTOM, fill=X,
+                                anchor=W, pady=(10, 0))
 
     # Admin Log-in Toplevel
     def adminlogin(self):
@@ -114,8 +122,8 @@ class Mainframe:
 
         # Direct input focus to the first entry widget of the log-in window
         self.usernameentry.focus_set()
-    # Admin Login Toplevel Functions
 
+    # Admin Login Toplevel Functions
     def adlog(self):
         """
             Allows access to serverside / admin window
@@ -292,7 +300,7 @@ class Mainframe:
             emailframe, textvariable=self.emailvar, width=40, justify=CENTER, state="disabled")
         self.emailentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
 
-        # Create Bottom Frame for Buttons
+        # Create Bottom Frame for Submit Button
         bottomframe = ttk.Frame(self.survey_win)
         bottomframe.pack(side=BOTTOM)
         # Create Submit Button for Survey Form

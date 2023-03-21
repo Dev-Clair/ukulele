@@ -30,7 +30,7 @@ class _window():
 
         # Widget Styling
         apply_style = ttk.Style(master)
-        apply_style.configure('TLabel', foreground="blue",
+        apply_style.configure('TLabel', foreground="black",
                               font=("Helvetica", 10, "bold"))
         apply_style.configure('TEntry', foreground="blue",
                               background="WhiteSmoke", font=("Helvetica", 12, "normal"))

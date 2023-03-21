@@ -11,7 +11,7 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
-from form_database import submitform  # Import -sqlite3- Database
+# from database.form_database import submitform  # Import -sqlite3- Database
 
 
 class Mainwindow:
@@ -28,7 +28,7 @@ class Mainwindow:
         self.master.title("UKULELE - Survey Form")
         self.master.geometry('550x650+342+20')
         self.master.iconimage = PhotoImage(file='images/icon_img.ico')
-        self.master.iconphoto(True, root.iconimage)
+        self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
