@@ -5,7 +5,7 @@ from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
 from PIL import ImageTk, Image
-# from database.form_database import submitform  # Import -sqlite3- Database
+# from database.form_database import addrecord  # Import -sqlite3- Database
 
 
 class Mainframe:

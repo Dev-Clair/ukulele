@@ -1,5 +1,5 @@
 import sqlite3
 
 
-def submitform():
+def addrecord():
     pass
