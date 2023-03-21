@@ -11,6 +11,7 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
+from form_database import submitform  # Import -sqlite3- Database
 
 
 class Mainwindow:
@@ -97,17 +98,17 @@ class Mainwindow:
         genderframe = ttk.Labelframe(
             mainframe, text="Gender: *", labelanchor=NW)
         genderframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
-        gender = ["--Click to Select--", "Male", "Female", "Transgender", "Gender-neutral", "Non-binary",
+        gender = ["--Click to Select Gender--", "Male", "Female", "Transgender", "Gender-neutral", "Non-binary",
                   "Agender", "Pangender", "Genderqueer", "Two-spirit", "Third-gender"]
         self.gendervar = tk.StringVar(value=gender[0])
         self.genderdrop = ttk.OptionMenu(
             genderframe, self.gendervar, *gender, direction="right", style='TMenubutton')
         self.genderdrop.pack(side=TOP, expand=1, anchor=CENTER)
-        # Ethnicity
+        # Ethnicity/Race
         ethnicframe = ttk.Labelframe(
             mainframe, text="Ethnicity: *", labelanchor=NW)
         ethnicframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
-        ethnic = ["--Click to Select--", "Arab", "Black",
+        ethnic = ["--Click to Select Race--", "Arab", "Black",
                   "Chinese", "Indo-Asian", "Latin", "White"]
         self.ethnicvar = tk.StringVar(value=ethnic[0])
         self.ethnicdrop = ttk.OptionMenu(
@@ -117,11 +118,15 @@ class Mainwindow:
         disabilityframe = ttk.Labelframe(
             mainframe, text="Disability: *", labelanchor=NW)
         disabilityframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
-        disability = ["--Click to Select--", "Yes", "No"]
-        self.disabilityvar = tk.StringVar(value=disability[0])
-        self.disabilitydrop = ttk.OptionMenu(
-            disabilityframe, self.disabilityvar, *disability, direction="right", style='TMenubutton')
-        self.disabilitydrop.pack(side=TOP, expand=1, anchor=CENTER)
+        self.disabilityvar = tk.StringVar()
+        self.disability_firstradio = ttk.Radiobutton(
+            disabilityframe, text='Yes', value="Yes", variable=self.disabilityvar, style='TRadiobutton')
+        self.disability_firstradio.pack(
+            side=LEFT, expand=1, padx=5, pady=2, anchor=W)
+        self.disability_secondradio = ttk.Radiobutton(
+            disabilityframe, text='No', value="No", variable=self.disabilityvar, style='TRadiobutton')
+        self.disability_secondradio.pack(
+            side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Form Separator
         self.formdivide = ttk.Separator(
             mainframe, orient="horizontal", style='TSeparator')
@@ -199,7 +204,7 @@ class Mainwindow:
         # Direct input focus to the first entry widget of the survey form
         self.identry.focus_set()
 
-    # Widget Functions
+    # Class Functions
     def select_DOB(self, event):
         self.dob_window = tk.Toplevel()
         self.dob_window.grab_set()
@@ -241,7 +246,7 @@ class Mainwindow:
             self.answer = askokcancel('Confirm Submission',
                                       'Click OK to confirm submission.')
             if self.answer:
-                # Daatabase Takes it over from here
+                # Database takes it over from here
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
                 root.quit()
