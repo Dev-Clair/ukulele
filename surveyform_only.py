@@ -18,7 +18,7 @@ class Mainwindow:
     def __init__(self, master):
         """
             contains top labels:
-                title label - "UKULELE"
+                Title label - "UKULELE"
                 Notice Label - "Kindly enter the required information into the fields below"
             labeframes which hold demographoc and survey questions
             and a bottom frame which holds the submit button

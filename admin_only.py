@@ -1,3 +1,11 @@
+"""
+    The code contained in this file is to be imported as a top level window into Main.
+    The program is basically an authentication window which,
+     1. receives userinput - username and password
+     2. grants access to the server side of the application - Backend GUI
+"""
+
+
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import PhotoImage
@@ -8,12 +16,8 @@ from tkinter.messagebox import showerror, showinfo, askokcancel
 class _window():
     def __init__(self, master):
         """
-            contains top labels:
-                title label - "UKULELE"
-                Notice Label - "Kindly enter the required information into the fields below"
-            labeframes which hold demographoc and survey questions
-            and a bottom frame which holds the submit button
-            The submit button is will not submit any information until all mandatory fields "*" have been filled
+            contains username and password label and entry widgets
+            The submit button is will not submit any information unless correct information has been provided into the fileds
         """
         self.master = master
         self.master.title('Admin Log-in')
