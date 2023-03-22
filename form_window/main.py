@@ -133,7 +133,7 @@ class Mainframe:
             self.admin_win.quit()
             # import adminwindow
 
-        if self.uservar.get() != "sponsor" and self.passvar.get() != "ukulele":
+        if self.uservar.get() != "admin" and self.passvar.get() != "ukulele":
             showerror("Error", "Please enter the correct log-in details",
                       parent=self.admin_win)
             self.usernameentry.delete(0, END)
