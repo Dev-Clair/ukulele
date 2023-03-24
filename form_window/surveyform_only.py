@@ -11,6 +11,8 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
+import time
+from datetime import *
 # from database.form_database import submitform  # Import -sqlite3- Database
 
 
@@ -211,7 +213,7 @@ class Mainwindow:
         self.dob_window.title("Select Date of Birth")
         self.dob_window.geometry("350x250+450+100")
         self.cal = Calendar(
-            self.dob_window, selectmode="day", date_pattern="dd/mm/yyyy", background="violet red", foreground="white", headersforeground="violet red", selectforeground="violet red", headersbackground="white", )
+            self.dob_window, selectmode="day", datepattern="dd/mm/yyyy", background="violet red", foreground="white", headersforeground="violet red", selectforeground="violet red", headersbackground="white")
         self.cal.pack(expand=1, fill=BOTH)
 
         self.submit_date = ttk.Button(
@@ -219,8 +221,16 @@ class Mainwindow:
         self.submit_date.pack(expand=1, pady=5)
 
     def grab_selection(self):
+        # Calculate Age using the Datetime Module
+        self.today_date = datetime.today()
+        self.birth_date = datetime.strptime(
+            self.cal.get_date(), '%m/%d/%y')
+        self.current_age = self.today_date.year - self.birth_date.year - \
+            ((self.today_date.month, self.today_date.day) <
+             (self.birth_date.month, self.birth_date.day))
+        # Insert Current Age into Age
         self.ageentry.delete(0, END)
-        self.ageentry.insert(0, self.cal.get_date())
+        self.ageentry.insert(0, self.current_age)
         self.dob_window.destroy()
 
     def emailoption(self):

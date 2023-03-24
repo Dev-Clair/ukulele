@@ -218,7 +218,7 @@ class Mainframe:
                            "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future")
         self.table = ttk.Treeview(
             rightframe, columns=self.treecolumn, show="headings", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2')
-        # Configure Scrollbars to treeview
+        # Configure Scrollbars to -treeview- Table
         self.hsbar.config(command=self.table.xview)
         self.vsbar.config(command=self.table.yview)
         # Define Table -Treeview- Headings
@@ -246,7 +246,7 @@ class Mainframe:
         self.table.column("Name", width=200, stretch=1, anchor=CENTER)
         self.table.column("Age", width=100, stretch=1, anchor=CENTER)
         self.table.column("Email", width=200, stretch=1, anchor=CENTER)
-        self.table.column("Gender", width=100, stretch=1)
+        self.table.column("Gender", width=100, stretch=1, anchor=CENTER)
         self.table.column("Ethnicity", width=100, stretch=1, anchor=CENTER)
         self.table.column("Disability", width=100, stretch=1, anchor=CENTER)
         self.table.column("Enjoyed", width=100, stretch=1, anchor=CENTER)

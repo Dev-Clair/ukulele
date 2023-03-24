@@ -5,6 +5,8 @@ from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
 from PIL import ImageTk, Image
+import time
+from datetime import *
 # from database.form_database import addrecord  # Import -sqlite3- Database
 
 
@@ -101,11 +103,15 @@ class Mainframe:
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)
         # create Label Widgets
         self.usernamelabel = ttk.Label(
-            self.admin_win, text="Username:", style='TLabel')
+            self.admin_win, text="Admin Id:", style='TLabel', justify=LEFT)
         self.usernamelabel.grid(row=1, column=0, padx=2, pady=10)
         self.passwordlabel = ttk.Label(
-            self.admin_win, text="Password:", style='TLabel')
+            self.admin_win, text="Password:", style='TLabel', justify=LEFT)
         self.passwordlabel.grid(row=2, column=0, padx=2, pady=10)
+        self.forgetlabel = ttk.Label(
+            self.admin_win, text="forgot password? default password is surname in lowercase", style='TLabel', justify=LEFT)
+        self.forgetlabel.config(font=("times", 8, "normal"))
+        self.forgetlabel.grid(row=3, columnspan=2, padx=2, pady=(2, 3))
         # Create Entry Widgets
         self.uservar = tk.StringVar()
         self.usernameentry = ttk.Entry(
@@ -118,7 +124,7 @@ class Mainframe:
         # Create log-in Button
         self.logbutton = ttk.Button(
             self.admin_win, text="Log-in", command=self.adlog, style='TButton')
-        self.logbutton.grid(row=3, columnspan=2, padx=2, pady=10)
+        self.logbutton.grid(row=4, columnspan=2, padx=2, pady=10)
 
         # Direct input focus to the first entry widget of the log-in window
         self.usernameentry.focus_set()
@@ -128,7 +134,7 @@ class Mainframe:
         """
             Allows access to serverside / admin window
         """
-        if self.uservar.get() == "sponsor" and self.passvar.get() == "ukulele":
+        if self.uservar.get() == "admin" and self.passvar.get() == "ukulele":
             showinfo('Welcome', 'Log-in Successful', parent=self.admin_win)
             self.admin_win.quit()
             # import adminwindow
@@ -319,7 +325,7 @@ class Mainframe:
         self.dob_window.title("Select Date of Birth")
         self.dob_window.geometry("350x250+450+100")
         self.cal = Calendar(
-            self.dob_window, selectmode="day", date_pattern="dd/mm/yyyy", background="violet red", foreground="white", headersforeground="violet red", selectforeground="violet red", headersbackground="white", )
+            self.dob_window, selectmode="day", datepattern="dd/mm/yyyy", background="violet red", foreground="white", headersforeground="violet red", selectforeground="violet red", headersbackground="white", )
         self.cal.pack(expand=1, fill=BOTH)
 
         self.submit_date = ttk.Button(
@@ -327,8 +333,16 @@ class Mainframe:
         self.submit_date.pack(expand=1, pady=5)
 
     def grab_selection(self):
+        # Calculate Age using the Datetime Module
+        self.today_date = datetime.today()
+        self.birth_date = datetime.strptime(
+            self.cal.get_date(), '%m/%d/%y')
+        self.current_age = self.today_date.year - self.birth_date.year - \
+            ((self.today_date.month, self.today_date.day) <
+             (self.birth_date.month, self.birth_date.day))
+        # Insert Current Age into Age Widget
         self.ageentry.delete(0, END)
-        self.ageentry.insert(0, self.cal.get_date())
+        self.ageentry.insert(0, self.current_age)
         self.dob_window.destroy()
 
     def emailoption(self):
