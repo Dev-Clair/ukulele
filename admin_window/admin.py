@@ -79,21 +79,21 @@ class Mainframe:
         self.titlelabel.config(font=("times new roman", 10, "bold"))
         self.titlelabel.config(foreground="black")
         self.titlelabel.pack(side=TOP, expand=1)
-        # Age
+        # Age     ##################### Values of RadioButton Needs to Be Adjusted to work with Database Data Types
         ageframe = ttk.Labelframe(
             topleftframe, text="Age:", labelanchor=NW)
         ageframe.pack(side=TOP, expand=0, fill=X, padx=2)
         self.agevar = tk.StringVar()
         self.age_firstradio = ttk.Radiobutton(
-            ageframe, text='less than 25', value="1", variable=self.agevar, style='TRadiobutton')
+            ageframe, text='less than 25', value="< 25", variable=self.agevar, style='TRadiobutton')
         self.age_firstradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
         self.age_secondradio = ttk.Radiobutton(
-            ageframe, text='above 25\nbelow 40', value="2", variable=self.agevar, style='TRadiobutton')
+            ageframe, text='above 25\nbelow 40', value="25><40", variable=self.agevar, style='TRadiobutton')
         self.age_secondradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
         self.age_thirdradio = ttk.Radiobutton(
-            ageframe, text='above 40', value="3", variable=self.agevar, style='TRadiobutton')
+            ageframe, text='above 40', value=">40", variable=self.agevar, style='TRadiobutton')
         self.age_thirdradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
         # Gender
@@ -214,7 +214,7 @@ class Mainframe:
         self.vsbar = ttk.Scrollbar(
             rightframe)
         # Create Treeview Widget
-        self.treecolumn = ("Id", "Name", "Age", "Email", "Gender",
+        self.treecolumn = ("Id", "Tag", "Name", "Age", "Email", "Gender",
                            "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future")
         self.table = ttk.Treeview(
             rightframe, columns=self.treecolumn, show="headings", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2')
@@ -223,6 +223,8 @@ class Mainframe:
         self.vsbar.config(command=self.table.yview)
         # Define Table -Treeview- Headings
         self.table.heading("Id", text="Id", anchor=CENTER)  # Add Callback
+        self.table.heading("Tag", text="Tag No.",
+                           anchor=CENTER)  # Add Callback
         self.table.heading("Name", text="Name", anchor=CENTER)  # Add Callback
         self.table.heading("Age", text="Age", anchor=CENTER)  # Add Callback
         self.table.heading("Email", text="Email",
@@ -243,6 +245,7 @@ class Mainframe:
                            anchor=CENTER)  # Add Callback
         # Configure Table -Treeview- Columns
         self.table.column("Id", width=50, stretch=1, anchor=CENTER)
+        self.table.column("Tag", width=50, stretch=1, anchor=CENTER)
         self.table.column("Name", width=200, stretch=1, anchor=CENTER)
         self.table.column("Age", width=100, stretch=1, anchor=CENTER)
         self.table.column("Email", width=200, stretch=1, anchor=CENTER)
@@ -262,7 +265,7 @@ class Mainframe:
         # Generate Sample Data
         contacts = []
         for i in range(1, 80):
-            contacts.append((f'id{i}', f'first last{i}', f'age{i}', f'first.last{i}@yahoo.com', f'gender{i}', f'ethnicity{i}',
+            contacts.append((f'id{i}', f'tag{i}', f'first last{i}', f'age{i}', f'first.last{i}@yahoo.com', f'gender{i}', f'ethnicity{i}',
                              f'disability{i}', f'enjoyed{i}', f'curious{i}', f'science{i}', f'future{i}'))
         # Insert Sample Data into Treeview Table
         for contact in contacts:

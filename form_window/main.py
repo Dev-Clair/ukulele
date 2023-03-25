@@ -172,14 +172,15 @@ class Mainframe:
         self.textlabel = ttk.Label(
             mainframe, text="Kindly enter the required information into the fields below", foreground='black', font=('times', 12, 'bold italic'))
         self.textlabel.pack(side=TOP)
-        # id/Tag No.
-        idframe = ttk.Labelframe(
-            mainframe, text="Id/Tag no.: *", labelanchor=NW)
-        idframe.pack(side=TOP, expand=0, fill=X, anchor=CENTER, padx=5, pady=2)
-        self.idvar = tk.StringVar()
-        self.identry = ttk.Entry(
-            idframe, textvariable=self.idvar, width=40, justify=CENTER)
-        self.identry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+        # Tag No.
+        tagframe = ttk.Labelframe(
+            mainframe, text="Tag no.: *", labelanchor=NW)
+        tagframe.pack(side=TOP, expand=0, fill=X,
+                      anchor=CENTER, padx=5, pady=2)
+        self.tagvar = tk.StringVar()
+        self.tagentry = ttk.Entry(
+            tagframe, textvariable=self.tagvar, width=40, justify=CENTER)
+        self.tagentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
         # First Name
         fnameframe = ttk.Labelframe(
             mainframe, text="First name: *", labelanchor=NW)
@@ -316,7 +317,7 @@ class Mainframe:
                                padx=(20, 25), pady=2, anchor=CENTER)
 
         # Direct input focus to the first entry widget of the survey form
-        self.identry.focus_set()
+        self.tagentry.focus_set()
 
     # Survey Form Toplevel Functions
     def select_DOB(self, event):
@@ -361,7 +362,7 @@ class Mainframe:
             A tkinter messagebox should be used to ask respondent to confirm they have satisfactorily entered all required information 
             if any of the mandatory fields * are left empty, the button show throw/dispaly an error messagebox
         """
-        if self.idvar.get() == "" or self.agevar.get() == "" or self.gendervar.get() == "" or self.ethnicvar.get() == "" or self.disabilityvar.get() == "":
+        if self.tagvar.get() == "" or self.agevar.get() == "" or self.gendervar.get() == "" or self.ethnicvar.get() == "" or self.disabilityvar.get() == "":
             showerror('Mandatory Fields',
                       '* information fields cannot be empty')
         else:
@@ -371,8 +372,8 @@ class Mainframe:
                 # Database takes it over from here
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
-                root.quit()
-            print(f"{self.idvar.get()}\n{self.fnamevar.get()} {self.lnamevar.get()}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
+                print(f"{self.tagvar.get()}\n{self.fnamevar.get()} {self.lnamevar.get()}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
+                self.survey_win.after(3000, self.survey_win.quit())
 
     # Sliding Text Function
     # def slider(self):
