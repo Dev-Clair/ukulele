@@ -21,7 +21,7 @@ class Connection:
 def createtable():
     with Connection("tryrdb.db") as connection:
         connection.execute(
-            "CREATE TABLE IF NOT EXISTS surveytable (Id INT PRIMARY KEY, Tag TEXT, Name TEXT, Age TEXT, Email TEXT, Gender TEXT, Ethnicity TEXT, Disability TEXT, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)")
+            "CREATE TABLE IF NOT EXISTS surveytable (Id INTEGER PRIMARY KEY, Tag TEXT, Name TEXT, Age TEXT, Email TEXT, Gender TEXT, Ethnicity TEXT, Disability TEXT, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)")
 
 
 def addrecord(tag, name, age, email, gender, ethnicity, disability, enjoyed, curious, science, future):
