@@ -21,7 +21,7 @@ class Connection:
 
 # Define Query Variables
 # Create Table
-create_table = "CREATE TABLE IF NOT EXISTS surveytable (Id Integer PRIMARY KEY, Tag Text, Name Text, Age Text, Email Text, Gender Text, Ethnicity Text, Disability Text, Enjoyed Text, Curious Text, Science Text, Future Text);"
+create_table = "CREATE TABLE IF NOT EXISTS surveytable (Id Integer PRIMARY KEY, Tag Text, Name Text, Age Text, Email Text, Gender Text, Ethnicity Text, Disability Text, Enjoyed Text, Curious Text, Science Text, Future Text)"
 # Add Record
 insert_data = "INSERT INTO surveytable VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 # Select Record
