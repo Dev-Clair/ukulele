@@ -37,6 +37,7 @@ def selectrecord(age, gender, ethnicity, disability):
     """
         Selects record(s) from database
     """
+    # Variables have been assigned a default argument, if no selection is made for each argument at function call
     with Connection("tryrdb.db") as connection:
         result = connection.execute(
             "SELECT * FROM surveytable WHERE (Age=? AND Gender=? AND Ethnicity=? AND Disability=?)", (age, gender, ethnicity, disability))

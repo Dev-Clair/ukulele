@@ -1,10 +1,11 @@
 import sqlite3
 
-# Build a context manager for better resource - network connection- management
-
 
 class Connection:
     def __init__(self, filename: str):
+        """
+            Create a context manager for better resource (database connection) management
+        """
         self.filename = filename
         self.connection = sqlite3.connect(self.filename)
 
@@ -20,11 +21,11 @@ class Connection:
 
 # Define Query Variables
 # Create Table
-create_table = "CREATE TABLE IF NOT EXISTS surveytable (Id INT PRIMARY KEY, Tag TEXT, Name TEXT, Age TEXT, Email TEXT, Gender TEXT, Ethnicity TEXT, Disability TEXT, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT);"
+create_table = "CREATE TABLE IF NOT EXISTS surveytable (Id Integer PRIMARY KEY, Tag Text, Name Text, Age Text, Email Text, Gender Text, Ethnicity Text, Disability Text, Enjoyed Text, Curious Text, Science Text, Future Text);"
 # Add Record
 insert_data = "INSERT INTO surveytable VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 # Select Record
-select_data = "SELECT * FROM surveytable WHERE (Age=? AND Gender=? AND Ethnicity=? AND DISABILITY=?))"
+select_data = "SELECT * FROM surveytable WHERE (Age=? AND Gender=? AND Ethnicity=? AND DISABILITY=?)"
 
 
 def createtable():
@@ -39,15 +40,20 @@ def addrecord(tag, name, age, email, gender,
     """
     with Connection('surveydb.db') as connection:
         connection.execute(insert_data, (tag, name, age, email, gender,
-                           ethnicity, disability, enjoyed, curious, science, future))
+                                         ethnicity, disability, enjoyed, curious, science, future))
     # Submits to Database
 
 
-def selectrecord(age, gender, ethnicity, disability):
+def selectrecord(age="*", gender="*", ethnicity="*", disability="*"):
     """
         Selects record(s) from database
     """
+    # Variables have been assigned a default argument, if no selection is made for each argument at function call
     with Connection('surveydb.db') as connection:
         connection.execute(
             select_data, (age, gender, ethnicity, disability))
     # Retrieves From Database and Display on Treeview Table
+
+
+if __name__ == "__main__":
+    createtable()

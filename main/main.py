@@ -7,7 +7,7 @@ from tkcalendar import Calendar
 from PIL import ImageTk, Image
 import time
 from datetime import *
-# from database.form_database import addrecord  # Import -sqlite3- Database
+from form_database import addrecord  # Import -sqlite3- Database
 
 
 class Mainframe:
@@ -15,7 +15,7 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='images/icon_img.ico')
+        self.master.iconimage = PhotoImage(file='pic/icon_img.ico')
         self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
@@ -362,6 +362,7 @@ class Mainframe:
             A tkinter messagebox should be used to ask respondent to confirm they have satisfactorily entered all required information 
             if any of the mandatory fields * are left empty, the button show throw/dispaly an error messagebox
         """
+        self.name = self.fnamevar.get() + " " + self.lnamevar.get()
         if self.tagvar.get() == "" or self.agevar.get() == "" or self.gendervar.get() == "" or self.ethnicvar.get() == "" or self.disabilityvar.get() == "":
             showerror('Mandatory Fields',
                       '* information fields cannot be empty')
@@ -369,10 +370,13 @@ class Mainframe:
             self.answer = askokcancel('Confirm Submission',
                                       'Click OK to confirm submission.')
             if self.answer:
-                # Database takes it over from here
+                # Submits Entries to Database
+                addrecord(self.tagvar.get(), self.name, self.agevar.get(), self.emailvar.get(), self.gender.get(
+                ), self.ethnicvar.get(), self.disabilityvar.get(), self.enjoyedvar.get(), self.curiousvar.get(), self.sciencevar.get(), self.futurevar.get())
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
-                print(f"{self.tagvar.get()}\n{self.fnamevar.get()} {self.lnamevar.get()}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
+                # Prints Entries to Console
+                print(f"{self.tagvar.get()}\n{self.name}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
                 self.survey_win.after(3000, self.survey_win.quit())
 
     # Sliding Text Function

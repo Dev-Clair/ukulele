@@ -3,15 +3,15 @@ import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
-# from database.form_database import addrecord  # Import -sqlite3- Database
+from form_database import selectrecord  # Import -sqlite3- Database
 
 
 class Mainframe:
     def __init__(self, master):
         self.master = master
-        self.master.title("UKULELE - Admin Window")
+        self.master.title("UKULELE - Admin")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='images/icon_img.ico')
+        self.master.iconimage = PhotoImage(file='pic/icon_img.ico')
         self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
@@ -33,6 +33,8 @@ class Mainframe:
         #                       font=("Helvetica", 10, "bold"))
         apply_style.configure(
             'TSeparator', foreground="blue", background="blue")
+        apply_style.configure(
+            'Treeview.Heading', foreground="lightgreen", background="lightblue")
 
        # Create Title Label
         slidertext = 'UKULELE - \"The Singing Sculpture\"'  # Slider Text
@@ -49,23 +51,23 @@ class Mainframe:
             self.databaseButton, tearoff=False, cursor='hand2')
         self.databaseButton["menu"] = self.databaseButton.menu
         self.databaseButton.menu.add_command(
-            label="Connect Database", command=self.connectdb)
+            label="Connect to Database", command=self.connectdb)
         self.databaseButton.menu.add_command(
-            label="Upload Database", command=self.uploaddb)
+            label="Upload Database to Server", command=self.uploaddb)
         # Export Button
         self.exportButton = ttk.Menubutton(
-            master, text='export', cursor='hand2', direction="left", style='TMenubutton')
+            master, text='Export', cursor='hand2', direction="left", style='TMenubutton')
         self.exportButton.place(x=1265, y=0)
         # Configure Export Menubutton
         self.exportButton.menu = tk.Menu(
             self.exportButton, tearoff=False)
         self.exportButton["menu"] = self.exportButton.menu
         self.exportButton.menu.add_command(
-            label="Export to Excel", command=self.exportexcel)
+            label="...export to Excel", command=self.exportexcel)
         self.exportButton.menu.add_command(
-            label="Export to CSV", command=self.exportcsv)
+            label="...export to CSV", command=self.exportcsv)
         self.exportButton.menu.add_command(
-            label="Export as XML", command=self.exportxml)
+            label="...export as XML", command=self.exportxml)
 
         # Create TOP LEFT Frame
         topleftframe = ttk.Frame(
@@ -217,7 +219,7 @@ class Mainframe:
         self.treecolumn = ("Id", "Tag", "Name", "Age", "Email", "Gender",
                            "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future")
         self.table = ttk.Treeview(
-            rightframe, columns=self.treecolumn, show="headings", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2')
+            rightframe, columns=self.treecolumn, show="headings", style="Treewview.Heading", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2')
         # Configure Scrollbars to -treeview- Table
         self.hsbar.config(command=self.table.xview)
         self.vsbar.config(command=self.table.yview)
@@ -235,13 +237,13 @@ class Mainframe:
                            anchor=CENTER)  # Add Callback
         self.table.heading("Disability", text="Disability",
                            anchor=CENTER)  # Add Callback
-        self.table.heading("Enjoyed", text="Enjoyed the Event",
+        self.table.heading("Enjoyed", text="Enjoyed",
                            anchor=CENTER)  # Add Callback
         self.table.heading(
-            "Curious", text="Curious about the Ukulele", anchor=CENTER)  # Add Callback
+            "Curious", text="Curious", anchor=CENTER)  # Add Callback
         self.table.heading(
-            "Science", text="Learn about the Science of Acoustics", anchor=CENTER)  # Add Callback
-        self.table.heading("Future", text="Attend Future Events",
+            "Science", text="Science", anchor=CENTER)  # Add Callback
+        self.table.heading("Future", text="Future",
                            anchor=CENTER)  # Add Callback
         # Configure Table -Treeview- Columns
         self.table.column("Id", width=50, stretch=1, anchor=CENTER)
@@ -295,7 +297,10 @@ class Mainframe:
         pass
 
     def submitentry(self):
-        pass
+        print(
+            f"\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}")
+        selectrecord(self.agevar.get(), self.gendervar.get(),
+                     self.ethnicvar.get(), self.disabilityvar.get())
 
 
 if __name__ == "__main__":
