@@ -2,8 +2,8 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
-from tkinter.messagebox import showerror, showinfo, askokcancel
-from form_database import selectrecord  # Import -sqlite3- Database
+from tkinter.messagebox import showerror, showinfo
+from form_database import displayrecord, selectrecord  # Import -sqlite3- Database
 
 
 class Mainframe:
@@ -81,7 +81,8 @@ class Mainframe:
         self.titlelabel.config(font=("times new roman", 10, "bold"))
         self.titlelabel.config(foreground="black")
         self.titlelabel.pack(side=TOP, expand=1)
-        # Age     ##################### Values of RadioButton Needs to Be Adjusted to work with Database Data Types
+
+        # Age
         ageframe = ttk.Labelframe(
             topleftframe, text="Age:", labelanchor=NW)
         ageframe.pack(side=TOP, expand=0, fill=X, padx=2)
@@ -91,13 +92,14 @@ class Mainframe:
         self.age_firstradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
         self.age_secondradio = ttk.Radiobutton(
-            ageframe, text='above 25\nbelow 40', value="25><40", variable=self.agevar, style='TRadiobutton')
+            ageframe, text='above 25\nbelow 40', value="BETWEEN 25 AND 40", variable=self.agevar, style='TRadiobutton')
         self.age_secondradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
         self.age_thirdradio = ttk.Radiobutton(
-            ageframe, text='above 40', value=">40", variable=self.agevar, style='TRadiobutton')
+            ageframe, text='above 40', value="> 40", variable=self.agevar, style='TRadiobutton')
         self.age_thirdradio.pack(
             side=LEFT, expand=1, padx=2, pady=3, anchor=W)
+
         # Gender
         genderframe = ttk.Labelframe(
             topleftframe, text="Gender:", labelanchor=NW)
@@ -108,6 +110,7 @@ class Mainframe:
         self.genderdrop = ttk.OptionMenu(
             genderframe, self.gendervar, *gender, direction="right", style='TMenubutton')
         self.genderdrop.pack(side=TOP, expand=1, anchor=CENTER)
+
         # Ethnicity/Race
         ethnicframe = ttk.Labelframe(
             topleftframe, text="Ethnicity:", labelanchor=NW)
@@ -118,6 +121,7 @@ class Mainframe:
         self.ethnicdrop = ttk.OptionMenu(
             ethnicframe, self.ethnicvar, *ethnic, direction="right", style='TMenubutton')
         self.ethnicdrop.pack(side=TOP, expand=1, anchor=CENTER)
+        # self.ethnicvar.set(value="*")  # Incase this option isn't selected
         # Disability
         disabilityframe = ttk.Labelframe(
             topleftframe, text="Disability:", labelanchor=NW)
@@ -136,6 +140,7 @@ class Mainframe:
             topleftframe, text="Submit", command=self.submitentry, style='TButton')
         self.submitbutton.pack(
             side=TOP, expand=1, padx=5, pady=5, anchor=CENTER)
+        # self.disabilityvar.set(value="*")  # Incase this option isn't selected
 
         # Create Separator
         displayseparator = ttk.Separator(master, style='TSeparator')
@@ -164,7 +169,7 @@ class Mainframe:
         self.totallabel.pack(side=TOP, expand=0, padx=2, pady=3)
         # Percentage of Women
         womenframe = ttk.Labelframe(
-            bottomleftframe, text="Percentage (%) of Women:", labelanchor=NW)
+            bottomleftframe, text="Percentage (%) Of Women:", labelanchor=NW)
         womenframe.pack(side=TOP, expand=0, fill=X,
                         anchor=CENTER, padx=2)
         self.womenvar = tk.IntVar()
@@ -173,7 +178,7 @@ class Mainframe:
         self.womenlabel.pack(side=TOP, expand=0, padx=2, pady=3)
         # Average No. Who Enjoyed the Tour
         enjoyframe = ttk.Labelframe(
-            bottomleftframe, text="Average No. of People Who Enjoyed the Tour:", labelanchor=NW)
+            bottomleftframe, text="Average No. Of People Who Enjoyed The Tour:", labelanchor=NW)
         enjoyframe.pack(side=TOP, expand=0, fill=X,
                         anchor=CENTER, padx=2)
         self.enjoyvar = tk.DoubleVar()
@@ -182,7 +187,7 @@ class Mainframe:
         self.enjoylabel.pack(side=TOP, expand=0, padx=5, pady=3)
         # Average No. Curious about the Sculpture
         curiousframe = ttk.Labelframe(
-            bottomleftframe, text="Average No. of people curious about the Ukulele:", labelanchor=NW)
+            bottomleftframe, text="Average No. Of People Curious About The Ukulele:", labelanchor=NW)
         curiousframe.pack(side=TOP, expand=0, fill=X,
                           anchor=CENTER, padx=2)
         self.curiousvar = tk.DoubleVar()
@@ -191,7 +196,7 @@ class Mainframe:
         self.curiouslabel.pack(side=TOP, expand=0, padx=2, pady=3)
         # Average No. Who will like to learn more about the Science of Acoustics
         scienceframe = ttk.Labelframe(
-            bottomleftframe, text="Average No. Who will like to learn more about the science of acoustics:", labelanchor=NW)
+            bottomleftframe, text="Average No. Who Will Like To Learn More About The Science Of Acoustics:", labelanchor=NW)
         scienceframe.pack(side=TOP, expand=0, fill=X,
                           anchor=CENTER, padx=2)
         self.sciencevar = tk.DoubleVar()
@@ -200,7 +205,7 @@ class Mainframe:
         self.sciencelabel.pack(side=TOP, expand=0, padx=2, pady=3)
         # No. Who will like to attend future events
         futureframe = ttk.Labelframe(
-            bottomleftframe, text="No. of people who will like to attend future events:", labelanchor=NW)
+            bottomleftframe, text="No. Of People Who Will Like To Attend Future Events:", labelanchor=NW)
         futureframe.pack(side=TOP, expand=0, fill=X,
                          anchor=CENTER, padx=2)
         self.futurevar = tk.IntVar()
@@ -216,15 +221,14 @@ class Mainframe:
         self.vsbar = ttk.Scrollbar(
             rightframe)
         # Create Treeview Widget
-        self.treecolumn = ("Id", "Tag", "Name", "Age", "Email", "Gender",
+        self.treecolumn = ("Tag", "Name", "Age", "Email", "Gender",
                            "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future")
         self.table = ttk.Treeview(
-            rightframe, columns=self.treecolumn, show="headings", style="Treewview.Heading", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2')
+            rightframe, columns=self.treecolumn, show="headings", style="Treewview.Heading", xscrollcommand=self.hsbar.set, yscrollcommand=self.vsbar.set, cursor='hand2', selectmode=EXTENDED)
         # Configure Scrollbars to -treeview- Table
         self.hsbar.config(command=self.table.xview)
         self.vsbar.config(command=self.table.yview)
         # Define Table -Treeview- Headings
-        self.table.heading("Id", text="Id", anchor=CENTER)  # Add Callback
         self.table.heading("Tag", text="Tag No.",
                            anchor=CENTER)  # Add Callback
         self.table.heading("Name", text="Name", anchor=CENTER)  # Add Callback
@@ -246,8 +250,7 @@ class Mainframe:
         self.table.heading("Future", text="Future",
                            anchor=CENTER)  # Add Callback
         # Configure Table -Treeview- Columns
-        self.table.column("Id", width=50, stretch=1, anchor=CENTER)
-        self.table.column("Tag", width=50, stretch=1, anchor=CENTER)
+        self.table.column("Tag", width=75, stretch=1, anchor=CENTER)
         self.table.column("Name", width=200, stretch=1, anchor=CENTER)
         self.table.column("Age", width=100, stretch=1, anchor=CENTER)
         self.table.column("Email", width=200, stretch=1, anchor=CENTER)
@@ -264,43 +267,109 @@ class Mainframe:
         self.table.pack(fill=BOTH, expand=1)
         rightframe.place(x=470, y=60, width=880, height=600)
 
-        # Generate Sample Data
-        contacts = []
-        for i in range(1, 80):
-            contacts.append((f'id{i}', f'tag{i}', f'first last{i}', f'age{i}', f'first.last{i}@yahoo.com', f'gender{i}', f'ethnicity{i}',
-                             f'disability{i}', f'enjoyed{i}', f'curious{i}', f'science{i}', f'future{i}'))
-        # Insert Sample Data into Treeview Table
-        for contact in contacts:
-            self.table.insert("", END, values=contact)
+        # # Generate Sample Data
+        # contacts = []
+        # for i in range(1, 80):
+        #     contacts.append((f'id{i}', f'tag{i}', f'first last{i}', f'age{i}', f'first.last{i}@yahoo.com', f'gender{i}', f'ethnicity{i}',
+        #                      f'disability{i}', f'enjoyed{i}', f'curious{i}', f'science{i}', f'future{i}'))
+        # # Insert Sample Data into Treeview Table
+        # for contact in contacts:
+        #     self.table.insert("", END, values=contact)
 
         # Copyright Label
         self.cpyrightLabel = ttk.Label(
-            master, text="© Copyright 2023 | Lexi-Clair Designs", style='TLabel', width=1350)
+            master, text="© Copyright 2023 | Lexi-Clair Designs", style='TLabel')
         self.cpyrightLabel.config(font=("times new roman", 8, "bold"))
         self.cpyrightLabel.config(foreground="blue")
         self.cpyrightLabel.config(background="light grey")
-        self.cpyrightLabel.place(x=0, y=665)
+        self.cpyrightLabel.place(x=0, y=665, width=1350)
 
     def connectdb(self):
-        pass
+        """
+            connects to database and displays table on treeview
+        """
+        for item in self.table.get_children():
+            self.table.delete(item)
+        self.datarecord = displayrecord()
+        for record in self.datarecord:
+            self.table.insert(parent="", index=END, values=record)
 
     def uploaddb(self):
+        """
+            uploads database ato server
+        """
         pass
 
     def exportexcel(self):
+        """
+            exports table -all or selection- to Ms-Excel
+        """
         pass
 
     def exportcsv(self):
+        """
+            exports table -all or selection- to CSV file
+        """
         pass
 
     def exportxml(self):
+        """
+            exports table -all or selection- to XML
+        """
         pass
 
     def submitentry(self):
-        print(
-            f"\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}")
-        selectrecord(self.agevar.get(), self.gendervar.get(),
-                     self.ethnicvar.get(), self.disabilityvar.get())
+
+        # Displays Result For Selected Options
+        for item in self.table.get_children():
+            self.table.delete(item)
+        self.datarecord = selectrecord(self.agevar.get(), self.gendervar.get(),
+                                       self.ethnicvar.get(), self.disabilityvar.get())
+        for record in self.datarecord:
+            self.table.insert(parent="", index=END, values=record)
+
+    # Result Functions - To be derived from Treeview Display
+    def totalnumber(self):
+        """
+            Calculates the total number of atendees based on selection and
+            updates the self.totalvar variable afterwards
+        """
+        pass
+
+    def percentwomen(self):
+        """
+            Calculates the percentage of women based on selection and
+            updates the self.womenvar variable afterwards
+        """
+        pass
+
+    def averageenjoyed(self):
+        """
+            Calculates the average number of atendees based on selection who enjoyed the tour and
+            updates the self.enjoyvar variable afterwards
+        """
+        pass
+
+    def averagecurious(self):
+        """
+            Calculates the average number of atendees based on selection who are curious as to how the sculpture sings and
+            updates the self.curiousvar variable afterwards
+        """
+        pass
+
+    def averagescience(self):
+        """
+            Calculates the average number of atendees based on selection who will like to learn more about science and
+            updates the self.sciencevar  afterwards
+        """
+        pass
+
+    def numberfuture(self):
+        """
+            Calculates the number of atendees based on selection who will like to attend future 
+            and updates the self.futurevar variable afterwards
+        """
+        pass
 
 
 if __name__ == "__main__":

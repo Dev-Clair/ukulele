@@ -13,7 +13,7 @@ class Connection:
         self.cursor = self.connection.cursor()
         return self.cursor
 
-    def __exit__(self):
+    def __exit__(self, exc_typ, exc_val, exc_tb):
         if self.cursor:
             self.connection.commit()
             self.connection.close()
@@ -21,14 +21,19 @@ class Connection:
 
 # Define Query Variables
 # Create Table
-create_table = "CREATE TABLE IF NOT EXISTS surveytable (Id Integer PRIMARY KEY, Tag Text, Name Text, Age Text, Email Text, Gender Text, Ethnicity Text, Disability Text, Enjoyed Text, Curious Text, Science Text, Future Text)"
+create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age TEXT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
 # Add Record
-insert_data = "INSERT INTO surveytable VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+insert_data = "INSERT INTO surveytable VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+# Display Records
+display_data = "SELECT * FROM surveytable"
 # Select Record
-select_data = "SELECT * FROM surveytable WHERE (Age=? AND Gender=? AND Ethnicity=? AND DISABILITY=?)"
+select_data = "SELECT * FROM surveytable WHERE (Age=?) AND (Gender=?) AND (Ethnicity=?) AND (DISABILITY=?)"
 
 
 def createtable():
+    """
+        Creates table in database
+    """
     with Connection('surveydb.db') as connection:
         connection.execute(create_table)
 
@@ -40,20 +45,32 @@ def addrecord(tag, name, age, email, gender,
     """
     with Connection('surveydb.db') as connection:
         connection.execute(insert_data, (tag, name, age, email, gender,
-                                         ethnicity, disability, enjoyed, curious, science, future))
-    # Submits to Database
+                           ethnicity, disability, enjoyed, curious, science, future))
+
+
+def displayrecord():
+    """
+        displays all record(s) in database
+    """
+    with Connection('surveydb.db') as connection:
+        rows = connection.execute(display_data)
+        records = rows.fetchall()
+        print(records)
+        return records
 
 
 def selectrecord(age="*", gender="*", ethnicity="*", disability="*"):
     """
         Selects record(s) from database
     """
-    # Variables have been assigned a default argument, if no selection is made for each argument at function call
+    # Variables have been assigned a default argument, if no selection is made for any argument at function call
     with Connection('surveydb.db') as connection:
-        connection.execute(
+        rows = connection.execute(
             select_data, (age, gender, ethnicity, disability))
-    # Retrieves From Database and Display on Treeview Table
+        records = rows.fetchall()
+        return records
 
 
 if __name__ == "__main__":
     createtable()
+    displayrecord()

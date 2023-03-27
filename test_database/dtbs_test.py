@@ -47,17 +47,22 @@ def selectrecord(age, gender, ethnicity, disability):
 
 def main():
     createtable()
-    addrecord(tag=(input("Tag: \n")),
-              name=(input("Name: \n")),
-              age=(input("Age: \n")),
-              email=(input("Email: \n")),
-              gender=(input("Gender: \n")),
-              ethnicity=(input("Ethnicity: \n")),
-              disability=(input("Disability: \n")),
-              enjoyed=(input("Enjoyed: \n")),
-              curious=(input("Curious: \n")),
-              science=(input("Science: \n")),
-              future=(input("Future: \n")))
+    while True:
+        addrecord(tag=(input("Tag: \n")),
+                  name=(input("Name: \n")),
+                  age=(input("Age: \n")),
+                  email=(input("Email: \n")),
+                  gender=(input("Gender: \n")),
+                  ethnicity=(input("Ethnicity: \n")),
+                  disability=(input("Disability: \n")),
+                  enjoyed=(input("Enjoyed: \n")),
+                  curious=(input("Curious: \n")),
+                  science=(input("Science: \n")),
+                  future=(input("Future: \n")))
+        print("\nWill you like to add another record? Yes or No")
+        choice = input("\nChoice? ")
+        if choice == "No":
+            break
     selectrecord(age=(input("Age: \n")),
                  gender=(input("Gender: \n")),
                  ethnicity=(input("Ethnicity: \n")),

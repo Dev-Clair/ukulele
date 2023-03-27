@@ -29,7 +29,7 @@ class Mainwindow:
         self.master = master
         self.master.title("UKULELE - Survey Form")
         self.master.geometry('550x650+342+20')
-        self.master.iconimage = PhotoImage(file='images/icon_img.ico')
+        self.master.iconimage = PhotoImage(file='pic/icon_img.ico')
         self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)

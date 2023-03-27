@@ -23,7 +23,7 @@ class _window():
         self.master.title('Admin Log-in')
         self.master.geometry("350x350+325+100")
         self.master.resizable(0, 0)
-        self.master.iconimage = PhotoImage(file='images/icon_img.ico')
+        self.master.iconimage = PhotoImage(file='pic/icon_img.ico')
         self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
@@ -45,7 +45,7 @@ class _window():
         apply_style.configure('TSeparator', foreground="black")
 
         self.admin_img = PhotoImage(
-            file='images/person_imgL.png')
+            file='pic/person_imgL.png')
         self.login_img = ttk.Label(
             master, image=self.admin_img, justify=CENTER)
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)

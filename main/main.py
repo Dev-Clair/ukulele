@@ -4,8 +4,7 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
-from PIL import ImageTk, Image
-import time
+import time  # import time to calaculate how long it will take to complete the survey
 from datetime import *
 from form_database import addrecord  # Import -sqlite3- Database
 
@@ -40,11 +39,13 @@ class Mainframe:
         topframe = ttk.Frame(master)
         topframe.pack(side=TOP, fill=X, anchor=NW)
         # Top Label
-        slidertext = 'UKULELE - \"The Singing Sculpture\"'  # Slider Text
+        self.slidertext = 'UKULELE - \"The Singing Sculpture\"'  # Slider Text
         self.topLabel = ttk.Label(
-            topframe, text=slidertext, style='TLabel')
+            topframe, text=self.slidertext, style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.pack(side=LEFT, anchor=W, padx=5)
+        self.slider()
+
         # Admin Log-in Button
         self.topButton = ttk.Button(
             topframe, text='Admin Log-in', cursor='hand2', style='TButton', command=self.adminlogin)
@@ -86,6 +87,18 @@ class Mainframe:
         self.cpyrightLabel.pack(side=BOTTOM, fill=X,
                                 anchor=W, pady=(10, 0))
 
+    # Sliding Text Function
+    def slider(self):
+        self.count = 0
+        self.text = ""
+        if self.count == len(self.slidertext):
+            self.count == 0
+            self.text = ""
+        self.text = self.text+self.slidertext[self.count]
+        self.topLabel.config(text=self.text)
+        self.count += 1
+        self.topLabel.after(1000, self.slider)
+
     # Admin Log-in Toplevel
     def adminlogin(self):
         """
@@ -97,7 +110,7 @@ class Mainframe:
         self.admin_win.resizable(0, 0)
 
         self.admin_img = PhotoImage(
-            file='images/person_imgL.png')
+            file='pic/person_imgL.png')
         self.login_img = ttk.Label(
             self.admin_win, image=self.admin_img, justify=CENTER)
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)
@@ -111,7 +124,7 @@ class Mainframe:
         self.forgetlabel = ttk.Label(
             self.admin_win, text="forgot password? default password is surname in lowercase", style='TLabel', justify=LEFT)
         self.forgetlabel.config(font=("times", 8, "normal"))
-        self.forgetlabel.grid(row=3, columnspan=2, padx=2, pady=(2, 3))
+        self.forgetlabel.grid(row=3, columnspan=2, padx=2, pady=(1, 2))
         # Create Entry Widgets
         self.uservar = tk.StringVar()
         self.usernameentry = ttk.Entry(
@@ -134,11 +147,6 @@ class Mainframe:
         """
             Allows access to serverside / admin window
         """
-        if self.uservar.get() == "admin" and self.passvar.get() == "ukulele":
-            showinfo('Welcome', 'Log-in Successful', parent=self.admin_win)
-            self.admin_win.quit()
-            # import adminwindow
-
         if self.uservar.get() != "admin" and self.passvar.get() != "ukulele":
             showerror("Error", "Please enter the correct log-in details",
                       parent=self.admin_win)
@@ -150,6 +158,9 @@ class Mainframe:
             showerror(
                 "Error", "Username or Password fields cannot be empty", parent=self.admin_win)
             self.usernameentry.focus_set()
+        else:
+            showinfo('Welcome', 'Log-in Successful', parent=self.admin_win)
+            self.admin_win.quit()
 
     # Survey Form Toplevel
     def takesurvey(self):
@@ -370,26 +381,14 @@ class Mainframe:
             self.answer = askokcancel('Confirm Submission',
                                       'Click OK to confirm submission.')
             if self.answer:
-                # Submits Entries to Database
-                addrecord(self.tagvar.get(), self.name, self.agevar.get(), self.emailvar.get(), self.gender.get(
-                ), self.ethnicvar.get(), self.disabilityvar.get(), self.enjoyedvar.get(), self.curiousvar.get(), self.sciencevar.get(), self.futurevar.get())
+                # Submits Entry to Database
+                addrecord(self.tagvar.get(), self.name, self.agevar.get(), self.emailvar.get(), self.gendervar.get(
+                ), self.ethnicvar.get(), self.disabilityvar.get(), self.q1_variable.get(), self.q2_variable.get(), self.q3_variable.get(), self.q4_variable.get())
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
-                # Prints Entries to Console
+                # Prints Entry to Console
                 print(f"{self.tagvar.get()}\n{self.name}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
-                self.survey_win.after(3000, self.survey_win.quit())
-
-    # Sliding Text Function
-    # def slider(self):
-    #     self.count = 0
-    #     self.text = ''
-    #     if self.count == len(self.slidertext):
-    #         self.count == 0
-    #         self.text = ''
-    #     self.text = self.text+self.slidertext[self.count]
-    #     self.topLabel.config(text=self.text)
-    #     self.count += 1
-    #     self.topLabel.after(300, self.slider)
+        self.survey_win.after(3000, self.survey_win.quit())
 
 
 if __name__ == "__main__":
