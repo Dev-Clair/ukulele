@@ -55,11 +55,10 @@ def displayrecord():
     with Connection('surveydb.db') as connection:
         rows = connection.execute(display_data)
         records = rows.fetchall()
-        print(records)
         return records
 
 
-def selectrecord(age="*", gender="*", ethnicity="*", disability="*"):
+def selectrecord(age, gender, ethnicity, disability):
     """
         Selects record(s) from database
     """
