@@ -5,6 +5,8 @@ from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo
 # Import -sqlite3- Database
 from form_database import createtable, displayrecord, selectrecord
+from csv import DictWriter, DictReader
+from openpyxl import Workbook
 
 
 class Mainframe:
@@ -133,7 +135,7 @@ class Mainframe:
         self.ethnicdrop = ttk.OptionMenu(
             ethnicframe, self.ethnicvar, *ethnic, direction="right", style='TMenubutton')
         self.ethnicdrop.pack(side=TOP, expand=1, anchor=CENTER)
-        # self.ethnicvar.set(value="*")  # Incase this option isn't selected
+
         # Disability
         disabilityframe = ttk.Labelframe(
             topleftframe, text="Disability:", labelanchor=NW)
@@ -147,12 +149,12 @@ class Mainframe:
             disabilityframe, text='No', value="No", variable=self.disabilityvar, style='TRadiobutton')
         self.disability_secondradio.pack(
             side=LEFT, expand=1, padx=2, anchor=W)
+
         # Create Submit Button
         self.submitbutton = ttk.Button(
             topleftframe, text="Submit", command=self.submitentry, style='TButton')
         self.submitbutton.pack(
             side=TOP, expand=1, padx=5, pady=5, anchor=CENTER)
-        # self.disabilityvar.set(value="*")  # Incase this option isn't selected
 
         # Create Separator
         displayseparator = ttk.Separator(master, style='TSeparator')
@@ -311,7 +313,7 @@ class Mainframe:
 
     def uploaddb(self):
         """
-            uploads database ato server
+            uploads database to server
         """
         pass
 
@@ -319,13 +321,55 @@ class Mainframe:
         """
             exports table -all or selection- to Ms-Excel
         """
-        pass
+        self.excelexport = tk.Toplevel()
+        self.excelexport.title('Select Export')
+        self.excelexport.geometry("250x100+325+100")
+        self.excelexport.resizable(0, 0)
+
+        self.excelchoicevar = tk.StringVar()
+        self.exportdatabase = ttk.Radiobutton(self.excelexport, text="Export Database to Excel (.xlsx)",
+                                              value="db.xlsx", variable=self.excelchoicevar, style='TRadiobutton', cursor='hand2', command=self.excelexportselect)
+        self.exportdatabase.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.exporttreeview = ttk.Radiobutton(self.excelexport, text="Export Treeview to Excel (.xlsx)",
+                                              value="tree.xlsx", variable=self.excelchoicevar, style='TRadiobutton', cursor='hand2', command=self.excelexportselect)
+        self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.exportclose = ttk.Button(self.excelexport, text="Close",
+                                      style='TButton', cursor='hand2', command=lambda: self.excelexport.quit())
+        self.exportclose.pack(side=TOP, padx=5, pady=5)
+
+    def excelexportselect(self):
+        if self.excelchoicevar.get() == "db.xlsx":
+            print("\nExport Database")
+
+        if self.excelchoicevar.get() == "tree.xlsx":
+            print("\nExport Treeview")
 
     def exportcsv(self):
         """
             exports table -all or selection- to CSV file
         """
-        pass
+        self.csvexport = tk.Toplevel()
+        self.csvexport.title('Select Export')
+        self.csvexport.geometry("250x100+325+100")
+        self.csvexport.resizable(0, 0)
+
+        self.csvchoicevar = tk.StringVar()
+        self.exportdatabase = ttk.Radiobutton(self.csvexport, text="Export Database to CSV (.csv)",
+                                              value="db.csv", variable=self.csvchoicevar, style='TRadiobutton', cursor='hand2', command=self.csvexportselect)
+        self.exportdatabase.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.exporttreeview = ttk.Radiobutton(self.csvexport, text="Export Treeview to CSV (.csv)",
+                                              value="tree.csv", variable=self.csvchoicevar, style='TRadiobutton', cursor='hand2', command=self.csvexportselect)
+        self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.exportclose = ttk.Button(self.csvexport, text="Close",
+                                      style='TButton', cursor='hand2', command=lambda: self.csvexport.quit())
+        self.exportclose.pack(side=TOP, padx=5, pady=5)
+
+    def csvexportselect(self):
+        if self.csvchoicevar.get() == "db.csv":
+            print("\nExport Database")
+
+        if self.csvchoicevar.get() == "tree.csv":
+            print("\nExport Treeview")
 
     def exportxml(self):
         """
