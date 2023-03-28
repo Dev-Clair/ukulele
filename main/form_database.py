@@ -21,13 +21,13 @@ class Connection:
 
 # Define Query Variables
 # Create Table
-create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age TEXT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
+create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age INT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
 # Add Record
 insert_data = "INSERT INTO surveytable VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 # Display Records
 display_data = "SELECT * FROM surveytable"
 # Select Record
-select_data = "SELECT * FROM surveytable WHERE (Age=?) AND (Gender=?) AND (Ethnicity=?) AND (DISABILITY=?)"
+select_data = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
 
 
 def createtable():
@@ -58,18 +58,18 @@ def displayrecord():
         return records
 
 
-def selectrecord(age, gender, ethnicity, disability):
+def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethnicity=" ", disability=" "):
     """
         Selects record(s) from database
     """
-    # Variables have been assigned a default argument, if no selection is made for any argument at function call
     with Connection('surveydb.db') as connection:
+        values = (lower_range_value, upper_range_value,
+                  gender, ethnicity, disability)
         rows = connection.execute(
-            select_data, (age, gender, ethnicity, disability))
+            select_data, values)
         records = rows.fetchall()
         return records
 
 
 if __name__ == "__main__":
     createtable()
-    displayrecord()

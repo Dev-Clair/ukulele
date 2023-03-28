@@ -44,7 +44,7 @@ class Mainframe:
             topframe, text=self.slidertext, style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.pack(side=LEFT, anchor=W, padx=5)
-        self.slider()
+        # self.slider()
 
         # Admin Log-in Button
         self.topButton = ttk.Button(
@@ -88,16 +88,18 @@ class Mainframe:
                                 anchor=W, pady=(10, 0))
 
     # Sliding Text Function
-    def slider(self):
-        self.count = 0
-        self.text = ""
-        if self.count == len(self.slidertext):
-            self.count == 0
-            self.text = ""
-        self.text = self.text+self.slidertext[self.count]
-        self.topLabel.config(text=self.text)
-        self.count += 1
-        self.topLabel.after(1000, self.slider)
+    # global count, text
+
+    # def slider(self):
+    #     count = 0
+    #     text = ""
+    #     if count == len(self.slidertext):
+    #         count == 0
+    #         text = ""
+    #     text = text+self.slidertext[count]
+    #     self.topLabel.config(text=text)
+    #     count += 1
+    #     self.topLabel.after(1000, self.slider)
 
     # Admin Log-in Toplevel
     def adminlogin(self):
@@ -373,6 +375,7 @@ class Mainframe:
             A tkinter messagebox should be used to ask respondent to confirm they have satisfactorily entered all required information 
             if any of the mandatory fields * are left empty, the button show throw/dispaly an error messagebox
         """
+        # Concatenate stringvar variables - self.fnamevar and self.lnamevar
         self.name = self.fnamevar.get() + " " + self.lnamevar.get()
         if self.tagvar.get() == "" or self.agevar.get() == "" or self.gendervar.get() == "" or self.ethnicvar.get() == "" or self.disabilityvar.get() == "":
             showerror('Mandatory Fields',
@@ -386,8 +389,6 @@ class Mainframe:
                 ), self.ethnicvar.get(), self.disabilityvar.get(), self.q1_variable.get(), self.q2_variable.get(), self.q3_variable.get(), self.q4_variable.get())
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
-                # Prints Entry to Console
-                print(f"{self.tagvar.get()}\n{self.name}\n{self.agevar.get()}\n{self.gendervar.get()}\n{self.ethnicvar.get()}\n{self.disabilityvar.get()}\n{self.q1_variable.get()}\n{self.q2_variable.get()}\n{self.q3_variable.get()}\n{self.q4_variable.get()}\n{self.emailvar.get()}")
         self.survey_win.after(3000, self.survey_win.quit())
 
 

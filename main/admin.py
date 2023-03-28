@@ -3,7 +3,8 @@ import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo
-from form_database import displayrecord, selectrecord  # Import -sqlite3- Database
+# Import -sqlite3- Database
+from form_database import createtable, displayrecord, selectrecord
 
 
 class Mainframe:
@@ -24,7 +25,7 @@ class Mainframe:
         apply_style.configure('TEntry', foreground="blue",
                               background="WhiteSmoke", font=("Helvetica", 12, "normal"))
         apply_style.configure('TButton', foreground="blue",
-                              background="MistyRose", font=("Helvetica", 10, "bold"))
+                              background="MistyRose", font=("Bell MT", 8, "normal"))
         apply_style.configure('TRadiobutton', foreground="blue",
                               font=("times new roman", 10, "bold"))
         apply_style.configure('TMenubutton', foreground="blue",
@@ -42,6 +43,10 @@ class Mainframe:
             master, text=slidertext, style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.place(x=10, y=0)
+        # Show-All Button
+        self.showButton = ttk.Button(
+            master, text='Show All Results', cursor='hand2',  style='TButton', command=self.showall, state="disabled")
+        self.showButton.place(x=1065, y=0)
         # Database Button
         self.databaseButton = ttk.Menubutton(
             master, text='Database', cursor='hand2', direction="left", style='TMenubutton')
@@ -86,19 +91,26 @@ class Mainframe:
         ageframe = ttk.Labelframe(
             topleftframe, text="Age:", labelanchor=NW)
         ageframe.pack(side=TOP, expand=0, fill=X, padx=2)
-        self.agevar = tk.StringVar()
-        self.age_firstradio = ttk.Radiobutton(
-            ageframe, text='less than 25', value="< 25", variable=self.agevar, style='TRadiobutton')
-        self.age_firstradio.pack(
-            side=LEFT, expand=1, padx=2, pady=3, anchor=W)
-        self.age_secondradio = ttk.Radiobutton(
-            ageframe, text='above 25\nbelow 40', value="BETWEEN 25 AND 40", variable=self.agevar, style='TRadiobutton')
-        self.age_secondradio.pack(
-            side=LEFT, expand=1, padx=2, pady=3, anchor=W)
-        self.age_thirdradio = ttk.Radiobutton(
-            ageframe, text='above 40', value="> 40", variable=self.agevar, style='TRadiobutton')
-        self.age_thirdradio.pack(
-            side=LEFT, expand=1, padx=2, pady=3, anchor=W)
+        # Lower Bound
+        lowerage = [i for i in range(16, 46)]
+        self.loweragevar = tk.IntVar(value=lowerage[0])
+        self.loweragelabel = ttk.Label(
+            ageframe, text="Select Lower Age Bound: ", style="TLabel")
+        self.loweragelabel.config(font=("Bell MT", 8, "bold"))
+        self.loweragelabel.pack(side=LEFT, expand=1, anchor=W)
+        self.loweragedrop = ttk.OptionMenu(
+            ageframe, self.loweragevar, *lowerage, direction="right", style='TMenubutton')
+        self.loweragedrop.pack(side=LEFT, expand=1, anchor=W)
+        # Upper Bound
+        upperage = [i for i in range(40, 70)]
+        self.upperagevar = tk.IntVar(value=upperage[0])
+        self.upperagedrop = ttk.OptionMenu(
+            ageframe, self.upperagevar, *upperage, direction="right", style='TMenubutton')
+        self.upperagedrop.pack(side=RIGHT, expand=1, anchor=E)
+        self.upperagelabel = ttk.Label(
+            ageframe, text="Select Upper Age Bound: ", style="TLabel")
+        self.upperagelabel.config(font=("Bell MT", 8, "bold"))
+        self.upperagelabel.pack(side=RIGHT, expand=1, anchor=E)
 
         # Gender
         genderframe = ttk.Labelframe(
@@ -267,15 +279,6 @@ class Mainframe:
         self.table.pack(fill=BOTH, expand=1)
         rightframe.place(x=470, y=60, width=880, height=600)
 
-        # # Generate Sample Data
-        # contacts = []
-        # for i in range(1, 80):
-        #     contacts.append((f'id{i}', f'tag{i}', f'first last{i}', f'age{i}', f'first.last{i}@yahoo.com', f'gender{i}', f'ethnicity{i}',
-        #                      f'disability{i}', f'enjoyed{i}', f'curious{i}', f'science{i}', f'future{i}'))
-        # # Insert Sample Data into Treeview Table
-        # for contact in contacts:
-        #     self.table.insert("", END, values=contact)
-
         # Copyright Label
         self.cpyrightLabel = ttk.Label(
             master, text="© Copyright 2023 | Lexi-Clair Designs", style='TLabel')
@@ -284,15 +287,27 @@ class Mainframe:
         self.cpyrightLabel.config(background="light grey")
         self.cpyrightLabel.place(x=0, y=665, width=1350)
 
-    def connectdb(self):
+    def showall(self):
         """
-            connects to database and displays table on treeview
+            can be used to show all results on treeview after connection to database
         """
         for item in self.table.get_children():
             self.table.delete(item)
         self.datarecord = displayrecord()
-        for record in self.datarecord:
+        for record in sorted(self.datarecord, key=lambda record: record[0]):
             self.table.insert(parent="", index=END, values=record)
+
+    def connectdb(self):
+        """
+            connects to database and displays table on treeview
+        """
+        try:
+            createtable()
+            showinfo('Database', 'Database Connection Successful')
+            self.showButton.config(state="normal")
+        except:
+            showerror('Database', 'Database Connection was Unsuccessful')
+            self.showButton.config(state="disabled")
 
     def uploaddb(self):
         """
@@ -319,13 +334,12 @@ class Mainframe:
         pass
 
     def submitentry(self):
-
         # Displays Result For Selected Options
         for item in self.table.get_children():
             self.table.delete(item)
-        self.datarecord = selectrecord(self.agevar.get(), self.gendervar.get(),
+        self.viewrecord = selectrecord(self.loweragevar.get(), self.upperagevar.get(), self.gendervar.get(),
                                        self.ethnicvar.get(), self.disabilityvar.get())
-        for record in self.datarecord:
+        for record in sorted(self.viewrecord, key=lambda record: record[0]):
             self.table.insert(parent="", index=END, values=record)
 
     # Result Functions - To be derived from Treeview Display
