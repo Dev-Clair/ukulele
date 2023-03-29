@@ -45,7 +45,7 @@ def createtable():
 def addrecord(tag, name, age, email, gender,
               ethnicity, disability, enjoyed, curious, science, future):
     """
-        Adds record to database
+        Adds record to table in database
     """
     with Connection('surveydb.db') as connection:
         connection.execute(insert_data, (tag, name, age, email, gender,
@@ -54,7 +54,7 @@ def addrecord(tag, name, age, email, gender,
 
 def displayrecord():
     """
-        displays all record(s) in database
+        displays all record(s) in table
     """
     with Connection('surveydb.db') as connection:
         rows = connection.execute(display_data)
@@ -64,7 +64,7 @@ def displayrecord():
 
 def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethnicity=" ", disability=" "):
     """
-        Selects record(s) from database
+        Selects record(s) from table
     """
     with Connection('surveydb.db') as connection:
         values = (lower_range_value, upper_range_value,
@@ -77,7 +77,7 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
 
 def updaterecord(column=" ", tag=" "):
     """
-        updates student record
+        updates student record in table
     """
     with Connection('surveydb.db') as connection:
         values = (column, tag)
