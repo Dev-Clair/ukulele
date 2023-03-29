@@ -28,6 +28,10 @@ insert_data = "INSERT INTO surveytable VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 display_data = "SELECT * FROM surveytable"
 # Select Record
 select_data = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
+# Update Record - Column Should Only be Updated as Needed
+update_data = "UPDATE surveytable SET Gender=? WHERE Tag=?"
+# Delete Record
+delete_data = "DELETE * FROM surveytable WHERE Tag=?"
 
 
 def createtable():
@@ -69,6 +73,23 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
             select_data, values)
         records = rows.fetchall()
         return records
+
+
+def updaterecord(column=" ", tag=" "):
+    """
+        updates student record
+    """
+    with Connection('surveydb.db') as connection:
+        values = (column, tag)
+        connection.execute(update_data, values)
+
+
+def deleterecord(tag=" "):
+    """
+       deletes selected record from database
+    """
+    with Connection('surveydb.db') as connection:
+        connection.execute(delete_data, tag)
 
 
 if __name__ == "__main__":

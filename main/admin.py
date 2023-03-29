@@ -3,10 +3,13 @@ import tkinter.ttk as ttk
 from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo
-# Import -sqlite3- Database
+# Import -SQLite3- Database
 from form_database import createtable, displayrecord, selectrecord
-from csv import DictWriter, DictReader
+# Import CSV - Module
+from csv import writer
+# Import OPENPYXL Module
 from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
 
 
 class Mainframe:
@@ -74,7 +77,7 @@ class Mainframe:
         self.exportButton.menu.add_command(
             label="...export to CSV", command=self.exportcsv)
         self.exportButton.menu.add_command(
-            label="...export as XML", command=self.exportxml)
+            label="...export as XML", command=self.exportxml, state="disabled")
 
         # Create TOP LEFT Frame
         topleftframe = ttk.Frame(
@@ -94,7 +97,7 @@ class Mainframe:
             topleftframe, text="Age:", labelanchor=NW)
         ageframe.pack(side=TOP, expand=0, fill=X, padx=2)
         # Lower Bound
-        lowerage = [i for i in range(16, 46)]
+        lowerage = [i for i in range(15, 46)]
         self.loweragevar = tk.IntVar(value=lowerage[0])
         self.loweragelabel = ttk.Label(
             ageframe, text="Select Lower Age Bound: ", style="TLabel")
@@ -104,7 +107,7 @@ class Mainframe:
             ageframe, self.loweragevar, *lowerage, direction="right", style='TMenubutton')
         self.loweragedrop.pack(side=LEFT, expand=1, anchor=W)
         # Upper Bound
-        upperage = [i for i in range(40, 70)]
+        upperage = [i for i in range(46, 76)]
         self.upperagevar = tk.IntVar(value=upperage[0])
         self.upperagedrop = ttk.OptionMenu(
             ageframe, self.upperagevar, *upperage, direction="right", style='TMenubutton')
@@ -323,7 +326,7 @@ class Mainframe:
         """
         self.excelexport = tk.Toplevel()
         self.excelexport.title('Select Export')
-        self.excelexport.geometry("250x100+325+100")
+        self.excelexport.geometry("250x70+450+250")
         self.excelexport.resizable(0, 0)
 
         self.excelchoicevar = tk.StringVar()
@@ -333,16 +336,96 @@ class Mainframe:
         self.exporttreeview = ttk.Radiobutton(self.excelexport, text="Export Treeview to Excel (.xlsx)",
                                               value="tree.xlsx", variable=self.excelchoicevar, style='TRadiobutton', cursor='hand2', command=self.excelexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
-        self.exportclose = ttk.Button(self.excelexport, text="Close",
-                                      style='TButton', cursor='hand2', command=lambda: self.excelexport.quit())
-        self.exportclose.pack(side=TOP, padx=5, pady=5)
 
     def excelexportselect(self):
+        """
+            credits: https://medium.com/@azmideliaslan/how-to-output-excel-with-openpyxl-python-c1039436dc24
+        """
         if self.excelchoicevar.get() == "db.xlsx":
-            print("\nExport Database")
+            # Create Workbook
+            self.wb = Workbook()
+            # Get Active Sheet
+            self.ws = self.wb.active
+            # Create Headings
+            self.ws.cell(row=1, column=1).value = "Tag"
+            self.ws.cell(row=1, column=2).value = "Name"
+            self.ws.cell(row=1, column=3).value = "Age"
+            self.ws.cell(row=1, column=4).value = "Email"
+            self.ws.cell(row=1, column=5).value = "Gender"
+            self.ws.cell(row=1, column=6).value = "Ethnicity"
+            self.ws.cell(row=1, column=7).value = "Disability"
+            self.ws.cell(row=1, column=8).value = "Enjoyed"
+            self.ws.cell(row=1, column=9).value = "Curious"
+            self.ws.cell(row=1, column=10).value = "Science"
+            self.ws.cell(row=1, column=11).value = "Future"
+            # Style Headings
+            for val in range(1, 12):
+                self.ws.cell(row=1, column=val).font = Font(
+                    bold=True, name='Times New Roman', size=12)
+                self.ws.cell(row=1, column=val).fill = PatternFill(
+                    patternType="solid", fgColor="00e5ee")
+                self.ws.cell(row=1, column=val).alignment = Alignment(
+                    horizontal="center")
+            # Set Column Dimensions- Width
+            self.ws.column_dimensions["A"].width = 7
+            self.ws.column_dimensions["B"].width = 28
+            self.ws.column_dimensions["D"].width = 38
+            for col in "CEFGHIJK":
+                self.ws.column_dimensions[col].width = 15
+            # Retrieve Data from Database
+            self.databaseimport = displayrecord()
+            # Insert into Excel
+            for self.ws_row, row in enumerate(self.databaseimport):
+                for self.ws_col, item in enumerate(row):
+                    self.ws.cell(row=self.ws_row + 2,
+                                 column=self.ws_col + 1).value = item
+                    self.ws.cell(row=self.ws_row + 2, column=self.ws_col +
+                                 1).alignment = Alignment(horizontal="center")
+
+            self.wb.save("db_survey_report.xlsx")
 
         if self.excelchoicevar.get() == "tree.xlsx":
-            print("\nExport Treeview")
+            # Create Workbook
+            self.wb = Workbook()
+            # Get Active Sheet
+            self.ws = self.wb.active
+            # Create Headings
+            self.ws.cell(row=1, column=1).value = "Tag"
+            self.ws.cell(row=1, column=2).value = "Name"
+            self.ws.cell(row=1, column=3).value = "Age"
+            self.ws.cell(row=1, column=4).value = "Email"
+            self.ws.cell(row=1, column=5).value = "Gender"
+            self.ws.cell(row=1, column=6).value = "Ethnicity"
+            self.ws.cell(row=1, column=7).value = "Disability"
+            self.ws.cell(row=1, column=8).value = "Enjoyed"
+            self.ws.cell(row=1, column=9).value = "Curious"
+            self.ws.cell(row=1, column=10).value = "Science"
+            self.ws.cell(row=1, column=11).value = "Future"
+            # Style Headings
+            for val in range(1, 12):
+                self.ws.cell(row=1, column=val).font = Font(
+                    bold=True, name='Times New Roman', size=12)
+                self.ws.cell(row=1, column=val).fill = PatternFill(
+                    patternType="solid", fgColor="00e5ee")
+                self.ws.cell(row=1, column=val).alignment = Alignment(
+                    horizontal="center")
+            # Set Column Dimensions- Width
+            self.ws.column_dimensions["A"].width = 7
+            self.ws.column_dimensions["B"].width = 28
+            self.ws.column_dimensions["D"].width = 38
+            for col in "CEFGHIJK":
+                self.ws.column_dimensions[col].width = 15
+            # Retrieve Displayed Treeview Data from Database
+            self.treeviewexport = self.viewrecord
+            # Insert into Excel
+            for self.ws_row, row in enumerate(self.treeviewexport):
+                for self.ws_col, item in enumerate(row):
+                    self.ws.cell(row=self.ws_row + 2,
+                                 column=self.ws_col + 1).value = item
+                    self.ws.cell(row=self.ws_row + 2, column=self.ws_col +
+                                 1).alignment = Alignment(horizontal="center")
+
+            self.wb.save("tree_survey_report.xlsx")
 
     def exportcsv(self):
         """
@@ -350,7 +433,7 @@ class Mainframe:
         """
         self.csvexport = tk.Toplevel()
         self.csvexport.title('Select Export')
-        self.csvexport.geometry("250x100+325+100")
+        self.csvexport.geometry("250x70+450+250")
         self.csvexport.resizable(0, 0)
 
         self.csvchoicevar = tk.StringVar()
@@ -360,16 +443,31 @@ class Mainframe:
         self.exporttreeview = ttk.Radiobutton(self.csvexport, text="Export Treeview to CSV (.csv)",
                                               value="tree.csv", variable=self.csvchoicevar, style='TRadiobutton', cursor='hand2', command=self.csvexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
-        self.exportclose = ttk.Button(self.csvexport, text="Close",
-                                      style='TButton', cursor='hand2', command=lambda: self.csvexport.quit())
-        self.exportclose.pack(side=TOP, padx=5, pady=5)
 
     def csvexportselect(self):
         if self.csvchoicevar.get() == "db.csv":
-            print("\nExport Database")
+            headings = ["Tag", "Name", "Age", "Email", "Gender",
+                        "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future"]
+            with open('new_survey_report.csv', 'w', newline='', encoding="UTF-8") as self.newfile:
+                # Create Writer object
+                self.write = writer(self.newfile)
+                # Write Headings
+                self.write.writerow(headings)
+                # Write Rows
+                self.write.writerows(
+                    sorted(self.datarecord, key=lambda record: record[1]))
 
         if self.csvchoicevar.get() == "tree.csv":
-            print("\nExport Treeview")
+            headings = ["Tag", "Name", "Age", "Email", "Gender",
+                        "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future"]
+            with open('tree_survey_report.csv', 'w', newline='', encoding="UTF-8") as self.newfile:
+                # Create Writer object
+                self.write = writer(self.newfile)
+                # Write Headings
+                self.write.writerow(headings)
+                # Write Rows
+                self.write.writerows(
+                    sorted(self.viewrecord, key=lambda record: record[0]))
 
     def exportxml(self):
         """
@@ -424,7 +522,7 @@ class Mainframe:
 
     def numberfuture(self):
         """
-            Calculates the number of atendees based on selection who will like to attend future 
+            Calculates the number of atendees based on selection who will like to attend future
             and updates the self.futurevar variable afterwards
         """
         pass

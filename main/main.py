@@ -106,39 +106,39 @@ class Mainframe:
         """
             Launches a toplevel window for administrative authentication details
         """
-        self.admin_win = tk.Toplevel()
-        self.admin_win.title('Admin Login')
-        self.admin_win.geometry("350x350+325+100")
-        self.admin_win.resizable(0, 0)
+        admin_win = tk.Toplevel()
+        admin_win.title('Admin Login')
+        admin_win.geometry("350x350+325+100")
+        admin_win.resizable(0, 0)
 
         self.admin_img = PhotoImage(
             file='pic/person_imgL.png')
         self.login_img = ttk.Label(
-            self.admin_win, image=self.admin_img, justify=CENTER)
+            admin_win, image=self.admin_img, justify=CENTER)
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)
         # create Label Widgets
         self.usernamelabel = ttk.Label(
-            self.admin_win, text="Admin Id:", style='TLabel', justify=LEFT)
+            admin_win, text="Admin Id:", style='TLabel', justify=LEFT)
         self.usernamelabel.grid(row=1, column=0, padx=2, pady=10)
         self.passwordlabel = ttk.Label(
-            self.admin_win, text="Password:", style='TLabel', justify=LEFT)
+            admin_win, text="Password:", style='TLabel', justify=LEFT)
         self.passwordlabel.grid(row=2, column=0, padx=2, pady=10)
         self.forgetlabel = ttk.Label(
-            self.admin_win, text="forgot password? default password is surname in lowercase", style='TLabel', justify=LEFT)
+            admin_win, text="forgot password? default password is surname in lowercase", style='TLabel', justify=LEFT)
         self.forgetlabel.config(font=("times", 8, "normal"))
         self.forgetlabel.grid(row=3, columnspan=2, padx=2, pady=(1, 2))
         # Create Entry Widgets
         self.uservar = tk.StringVar()
         self.usernameentry = ttk.Entry(
-            self.admin_win, textvariable=self.uservar, width=40, justify=CENTER)
+            admin_win, textvariable=self.uservar, width=40, justify=CENTER)
         self.usernameentry.grid(row=1, column=1, padx=2, pady=10)
         self.passvar = tk.StringVar()
         self.passwordentry = ttk.Entry(
-            self.admin_win, textvariable=self.passvar, width=40, justify=CENTER, show="*")
+            admin_win, textvariable=self.passvar, width=40, justify=CENTER, show="*")
         self.passwordentry.grid(row=2, column=1, padx=2, pady=10)
         # Create log-in Button
         self.logbutton = ttk.Button(
-            self.admin_win, text="Log-in", command=self.adlog, style='TButton')
+            admin_win, text="Log-in", command=self.adlog, style='TButton')
         self.logbutton.grid(row=4, columnspan=2, padx=2, pady=10)
 
         # Direct input focus to the first entry widget of the log-in window
@@ -150,33 +150,31 @@ class Mainframe:
             Allows access to serverside / admin window
         """
         if self.uservar.get() != "admin" and self.passvar.get() != "ukulele":
-            showerror("Error", "Please enter the correct log-in details",
-                      parent=self.admin_win)
+            showerror("Error", "Please enter the correct log-in details")
             self.usernameentry.delete(0, END)
             self.passwordentry.delete(0, END)
             self.usernameentry.focus_set()
 
         if self.uservar.get() == "" and self.passvar.get() == "":
             showerror(
-                "Error", "Username or Password fields cannot be empty", parent=self.admin_win)
+                "Error", "Username or Password fields cannot be empty")
             self.usernameentry.focus_set()
         else:
-            showinfo('Welcome', 'Log-in Successful', parent=self.admin_win)
-            self.admin_win.quit()
+            showinfo('Welcome', 'Log-in Successful')
 
     # Survey Form Toplevel
     def takesurvey(self):
         """
             Launches a top level window of the surveyform to read input from user/respondent at runtime
         """
-        self.survey_win = tk.Toplevel()
-        self.survey_win.title("UKULELE - Survey Form")
-        self.survey_win.geometry("550x650+342+20")
-        self.master.minsize(100, 100)
-        self.survey_win.resizable(0, 0)
+        survey_win = tk.Toplevel()
+        survey_win.title("UKULELE - Survey Form")
+        survey_win.geometry("550x650+342+20")
+        survey_win.minsize(100, 100)
+        survey_win.resizable(0, 0)
 
         # Create Main Frame
-        mainframe = ttk.Frame(self.survey_win)
+        mainframe = ttk.Frame(survey_win)
         mainframe.pack(side=TOP, expand=1, fill=BOTH)
         # Title Label
         titlelabel = ttk.Label(
@@ -321,7 +319,7 @@ class Mainframe:
         self.emailentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
 
         # Create Bottom Frame for Submit Button
-        bottomframe = ttk.Frame(self.survey_win)
+        bottomframe = ttk.Frame(survey_win)
         bottomframe.pack(side=BOTTOM)
         # Create Submit Button for Survey Form
         self.submitbutton = ttk.Button(
@@ -389,7 +387,6 @@ class Mainframe:
                 ), self.ethnicvar.get(), self.disabilityvar.get(), self.q1_variable.get(), self.q2_variable.get(), self.q3_variable.get(), self.q4_variable.get())
                 showinfo('Survey Form',
                          'Thank you for your time\n Enjoy the rest of the event.')
-        self.survey_win.after(3000, self.survey_win.quit())
 
 
 if __name__ == "__main__":
