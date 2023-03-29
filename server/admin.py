@@ -77,7 +77,7 @@ class Mainframe:
         self.exportButton.menu.add_command(
             label="...export to CSV", command=self.exportcsv)
         self.exportButton.menu.add_command(
-            label="...export as XML", command=self.exportxml, state="disabled")
+            label="...export as XML", command=self.exportxml)
 
         # Create TOP LEFT Frame
         topleftframe = ttk.Frame(
@@ -294,7 +294,7 @@ class Mainframe:
 
     def showall(self):
         """
-            can be used to show all results on treeview after connection to database
+            On-click, shows table on treeview after connection to database
         """
         for item in self.table.get_children():
             self.table.delete(item)
@@ -318,11 +318,11 @@ class Mainframe:
         """
             uploads database to server
         """
-        pass
+        showerror("Error", "This feature is currently unavailable")
 
     def exportexcel(self):
         """
-            exports table -all or selection- to Ms-Excel
+            exports database -all or selection- to Ms-Excel
         """
         self.excelexport = tk.Toplevel()
         self.excelexport.title('Select Export')
@@ -429,7 +429,7 @@ class Mainframe:
 
     def exportcsv(self):
         """
-            exports table -all or selection- to CSV file
+            exports database -all or selection- to CSV file
         """
         self.csvexport = tk.Toplevel()
         self.csvexport.title('Select Export')
@@ -454,8 +454,7 @@ class Mainframe:
                 # Write Headings
                 self.write.writerow(headings)
                 # Write Rows
-                self.write.writerows(
-                    sorted(self.datarecord, key=lambda record: record[1]))
+                self.write.writerows(self.datarecord)
 
         if self.csvchoicevar.get() == "tree.csv":
             headings = ["Tag", "Name", "Age", "Email", "Gender",
@@ -466,14 +465,13 @@ class Mainframe:
                 # Write Headings
                 self.write.writerow(headings)
                 # Write Rows
-                self.write.writerows(
-                    sorted(self.viewrecord, key=lambda record: record[0]))
+                self.write.writerows(self.viewrecord)
 
     def exportxml(self):
         """
             exports table -all or selection- to XML
         """
-        pass
+        showerror("Error", "This feature is currently unavailable")
 
     def submitentry(self):
         # Displays Result For Selected Options

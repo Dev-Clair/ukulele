@@ -4,7 +4,7 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
-import time  # import time to calaculate how long it will take to complete the survey
+import time  # import time to calculate how long it will take to complete the survey
 from datetime import *
 from form_database import addrecord  # Import -sqlite3- Database
 
