@@ -54,7 +54,7 @@ def addrecord(tag, name, age, email, gender,
 
 def displayrecord():
     """
-        displays all record(s) in table
+        Displays all record(s) in table
     """
     with Connection('surveydb.db') as connection:
         rows = connection.execute(display_data)
@@ -77,7 +77,7 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
 
 def updaterecord(column=" ", tag=" "):
     """
-        updates student record in table
+        Updates student record in table
     """
     with Connection('surveydb.db') as connection:
         values = (column, tag)
@@ -86,7 +86,7 @@ def updaterecord(column=" ", tag=" "):
 
 def deleterecord(tag=" "):
     """
-       deletes selected record from database
+        Deletes selected record from database
     """
     with Connection('surveydb.db') as connection:
         connection.execute(delete_data, tag)
