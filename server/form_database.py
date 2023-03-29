@@ -28,7 +28,7 @@ insert_data = "INSERT INTO surveytable VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 display_data = "SELECT * FROM surveytable"
 # Select Record
 select_data = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
-# Update Record - Column Should Only be Updated as Needed
+# Update Record - Column Should Only be Updated as Required
 update_data = "UPDATE surveytable SET Gender=? WHERE Tag=?"
 # Delete Record
 delete_data = "DELETE * FROM surveytable WHERE Tag=?"
