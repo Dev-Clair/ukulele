@@ -171,11 +171,11 @@ class Mainframe:
         # Create Child Widgets
         # Title Label
         self.titlelabel = ttk.Label(
-            bottomleftframe, text="Showing results for selected options:", style='TLabel', justify=LEFT)
+            bottomleftframe, text="QUICK SURVEY SUMMARY:", style='TLabel', justify=LEFT)
         self.titlelabel.config(font=("times new roman", 10, "bold"))
         self.titlelabel.config(foreground="black")
         self.titlelabel.pack(side=TOP, expand=0)
-        # Total Number based on selection
+        # Total Number based on Selection
         totalframe = ttk.Labelframe(
             bottomleftframe, text="Total No.:", labelanchor=NW)
         totalframe.pack(side=TOP, expand=0, fill=X,
@@ -189,7 +189,7 @@ class Mainframe:
             bottomleftframe, text="Percentage (%) Of Women:", labelanchor=NW)
         womenframe.pack(side=TOP, expand=0, fill=X,
                         anchor=CENTER, padx=2)
-        self.womenvar = tk.IntVar()
+        self.womenvar = tk.DoubleVar()
         self.womenlabel = ttk.Label(
             womenframe, textvariable=self.womenvar, justify=CENTER)
         self.womenlabel.pack(side=TOP, expand=0, padx=2, pady=3)
@@ -310,6 +310,12 @@ class Mainframe:
             createtable()
             showinfo('Database', 'Database Connection Successful')
             self.showButton.config(state="normal")
+            self.totalnumber()
+            self.percentwomen()
+            self.averageenjoyed()
+            self.averagecurious()
+            self.averagescience()
+            self.numberfuture()
         except:
             showerror('Database', 'Database Connection was Unsuccessful')
             self.showButton.config(state="disabled")
@@ -485,7 +491,7 @@ class Mainframe:
     # Result Functions - To be derived from Treeview Display
     def totalnumber(self):
         """
-            Calculates the total number of atendees based on selection and
+            Calculates the total number of attendees based on selection and
             updates the self.totalvar variable afterwards
         """
         self.value = total_num()
