@@ -92,5 +92,92 @@ def deleterecord(tag=" "):
         connection.execute(delete_data, tag)
 
 
+def total_num():
+    """
+        returns total number of rows/records in the table
+    """
+    totalno = "SELECT COUNT(*) FROM surveytable"
+    with Connection('surveydb.db') as connection:
+        totalval1 = connection.execute(totalno)
+        totalval2 = totalval1.fetchall()
+        totalcount = totalval2[0][0]
+        return totalcount
+
+
+def womenpercent():
+    """
+        returns percentage of 'female' women in the table
+    """
+    women_per = "SELECT COUNT(*) FROM surveytable WHERE Gender=?"
+    with Connection('surveydb.db') as connection:
+        total_women1 = connection.execute(women_per, ("Female",))
+        total_women2 = total_women1.fetchall()
+        total_women3 = total_women2[0][0]
+        total_women = total_women3
+
+    totalno = "SELECT COUNT(*) FROM surveytable"
+    with Connection('surveydb.db') as connection:
+        totalval1 = connection.execute(totalno)
+        totalval2 = totalval1.fetchall()
+        totalval3 = totalval2[0][0]
+        totalval = totalval3
+
+    return (total_women/totalval)*100
+
+
+def enjoytour():
+    """
+        returns average number of people who enjoyed the tour
+    """
+    aver_enj = "SELECT COUNT(*) FROM surveytable WHERE Enjoyed=?"
+    with Connection('surveydb.db') as connection:
+        enjoy1 = connection.execute(aver_enj, ("Yes",))
+        enjoy2 = enjoy1.fetchall()
+        enjoy = enjoy2[0][0]
+        return enjoy
+
+
+def curious():
+    """
+        returns average number of people curious about the singing sculpture
+    """
+    aver_cur = "SELECT COUNT(*) FROM surveytable WHERE Curious=?"
+    with Connection('surveydb.db') as connection:
+        curious1 = connection.execute(aver_cur, ("Yes",))
+        curious2 = curious1.fetchall()
+        curious = curious2[0][0]
+        return curious
+
+
+def science():
+    """
+        returns total number of people who will like to learn more about the science of acoustics
+    """
+    aver_sci = "SELECT COUNT(*) FROM surveytable WHERE Science=?"
+    with Connection('surveydb.db') as connection:
+        science1 = connection.execute(aver_sci, ("Yes",))
+        science2 = science1.fetchall()
+        science = science2[0][0]
+        return science
+
+
+def future():
+    """
+        returns total number of people who will like to attend future events
+    """
+    future_eve = "SELECT COUNT(*) FROM surveytable WHERE Future=?"
+    with Connection('surveydb.db') as connection:
+        future1 = connection.execute(future_eve, ("Yes",))
+        future2 = future1.fetchall()
+        future = future2[0][0]
+        return future
+
+
 if __name__ == "__main__":
     createtable()
+    print(total_num())
+    print(womenpercent())
+    print(enjoytour())
+    print(curious())
+    print(science())
+    print(future())

@@ -4,7 +4,7 @@ from tkinter import PhotoImage
 from tkinter.constants import *
 from tkinter.messagebox import showerror, showinfo
 # Import -SQLite3- Database
-from form_database import createtable, displayrecord, selectrecord
+from form_database import createtable, displayrecord, selectrecord, total_num, womenpercent, enjoytour, curious, science, future
 # Import CSV - Module
 from csv import writer
 # Import OPENPYXL Module
@@ -198,7 +198,7 @@ class Mainframe:
             bottomleftframe, text="Average No. Of People Who Enjoyed The Tour:", labelanchor=NW)
         enjoyframe.pack(side=TOP, expand=0, fill=X,
                         anchor=CENTER, padx=2)
-        self.enjoyvar = tk.DoubleVar()
+        self.enjoyvar = tk.IntVar()
         self.enjoylabel = ttk.Label(
             enjoyframe, textvariable=self.enjoyvar, justify=CENTER)
         self.enjoylabel.pack(side=TOP, expand=0, padx=5, pady=3)
@@ -207,7 +207,7 @@ class Mainframe:
             bottomleftframe, text="Average No. Of People Curious About The Ukulele:", labelanchor=NW)
         curiousframe.pack(side=TOP, expand=0, fill=X,
                           anchor=CENTER, padx=2)
-        self.curiousvar = tk.DoubleVar()
+        self.curiousvar = tk.IntVar()
         self.curiouslabel = ttk.Label(
             curiousframe, textvariable=self.curiousvar, justify=CENTER)
         self.curiouslabel.pack(side=TOP, expand=0, padx=2, pady=3)
@@ -216,7 +216,7 @@ class Mainframe:
             bottomleftframe, text="Average No. Who Will Like To Learn More About The Science Of Acoustics:", labelanchor=NW)
         scienceframe.pack(side=TOP, expand=0, fill=X,
                           anchor=CENTER, padx=2)
-        self.sciencevar = tk.DoubleVar()
+        self.sciencevar = tk.IntVar()
         self.sciencelabel = ttk.Label(
             scienceframe, textvariable=self.sciencevar, justify=CENTER)
         self.sciencelabel.pack(side=TOP, expand=0, padx=2, pady=3)
@@ -488,42 +488,48 @@ class Mainframe:
             Calculates the total number of atendees based on selection and
             updates the self.totalvar variable afterwards
         """
-        pass
+        self.value = total_num()
+        self.totalvar.set(value=self.value)
 
     def percentwomen(self):
         """
             Calculates the percentage of women based on selection and
             updates the self.womenvar variable afterwards
         """
-        pass
+        self.value = womenpercent()
+        self.womenvar.set(value=self.value)
 
     def averageenjoyed(self):
         """
             Calculates the average number of atendees based on selection who enjoyed the tour and
             updates the self.enjoyvar variable afterwards
         """
-        pass
+        self.value = enjoytour()
+        self.enjoyvar.set(value=self.value)
 
     def averagecurious(self):
         """
             Calculates the average number of atendees based on selection who are curious as to how the sculpture sings and
             updates the self.curiousvar variable afterwards
         """
-        pass
+        self.value = curious()
+        self.curiousvar.set(value=self.value)
 
     def averagescience(self):
         """
             Calculates the average number of atendees based on selection who will like to learn more about science and
             updates the self.sciencevar  afterwards
         """
-        pass
+        self.value = science()
+        self.sciencevar.set(value=self.value)
 
     def numberfuture(self):
         """
             Calculates the number of atendees based on selection who will like to attend future
             and updates the self.futurevar variable afterwards
         """
-        pass
+        self.value = future()
+        self.futurevar.set(value=self.value)
 
 
 if __name__ == "__main__":
