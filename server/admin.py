@@ -301,6 +301,12 @@ class Mainframe:
         self.datarecord = displayrecord()
         for record in sorted(self.datarecord, key=lambda record: record[0]):
             self.table.insert(parent="", index=END, values=record)
+        self.totalnumber()
+        self.percentwomen()
+        self.averageenjoyed()
+        self.averagecurious()
+        self.averagescience()
+        self.numberfuture()
 
     def connectdb(self):
         """
@@ -310,12 +316,6 @@ class Mainframe:
             createtable()
             showinfo('Database', 'Database Connection Successful')
             self.showButton.config(state="normal")
-            self.totalnumber()
-            self.percentwomen()
-            self.averageenjoyed()
-            self.averagecurious()
-            self.averagescience()
-            self.numberfuture()
         except:
             showerror('Database', 'Database Connection was Unsuccessful')
             self.showButton.config(state="disabled")
