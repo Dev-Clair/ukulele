@@ -122,7 +122,7 @@ def womenpercent():
         totalval3 = totalval2[0]
         totalval = totalval3
 
-    return (total_women/totalval)*100
+    return round((total_women/totalval)*100, 2)
 
 
 def enjoytour():

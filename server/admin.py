@@ -26,7 +26,7 @@ class Mainframe:
         apply_style = ttk.Style(master)
         apply_style.configure('TFrame')
         apply_style.configure('TLabel', foreground="black",
-                              font=("Bell MT", 12, "bold"))
+                              font=("Century", 10, "bold"))
         apply_style.configure('TEntry', foreground="blue",
                               background="WhiteSmoke", font=("Helvetica", 12, "normal"))
         apply_style.configure('TButton', foreground="blue",
@@ -171,7 +171,7 @@ class Mainframe:
         # Create Child Widgets
         # Title Label
         self.titlelabel = ttk.Label(
-            bottomleftframe, text="QUICK SURVEY SUMMARY:", style='TLabel', justify=LEFT)
+            bottomleftframe, text="QUICK SURVEY SUMMARY", style='TLabel', justify=LEFT)
         self.titlelabel.config(font=("times new roman", 10, "bold"))
         self.titlelabel.config(foreground="black")
         self.titlelabel.pack(side=TOP, expand=0)
@@ -301,6 +301,13 @@ class Mainframe:
         self.datarecord = displayrecord()
         for record in sorted(self.datarecord, key=lambda record: record[0]):
             self.table.insert(parent="", index=END, values=record)
+        # BOTTOM LEFT FRAME Label FUnction Call
+        self.totalnumber()
+        self.percentwomen()
+        self.averageenjoyed()
+        self.averagecurious()
+        self.averagescience()
+        self.numberfuture()
 
     def connectdb(self):
         """
@@ -310,12 +317,6 @@ class Mainframe:
             createtable()
             showinfo('Database', 'Database Connection Successful')
             self.showButton.config(state="normal")
-            self.totalnumber()
-            self.percentwomen()
-            self.averageenjoyed()
-            self.averagecurious()
-            self.averagescience()
-            self.numberfuture()
         except:
             showerror('Database', 'Database Connection was Unsuccessful')
             self.showButton.config(state="disabled")
@@ -531,7 +532,7 @@ class Mainframe:
 
     def numberfuture(self):
         """
-            Calculates the number of atendees based on selection who will like to attend future
+            Calculates the number of attendees based on selection who will like to attend future
             and updates the self.futurevar variable afterwards
         """
         self.value = future()
