@@ -1,7 +1,6 @@
 import tkinter as tk
-# import tkinter.ttk as ttk
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+import tkinter.ttk as ttk
+from tkinter.constants import *
 from tkinter import PhotoImage
 from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
@@ -20,18 +19,36 @@ class Mainframe:
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
+        # Widget Styling
+        apply_style = ttk.Style(master)
+        apply_style.configure('TFrame')
+        apply_style.configure('TLabel', foreground="black",
+                              font=("Century", 10, "bold"))
+        apply_style.configure('TEntry', foreground="blue",
+                              background="WhiteSmoke", font=("Helvetica", 12, "normal"))
+        apply_style.configure('TButton', foreground="blue",
+                              background="MistyRose", font=("Bell MT", 10, "bold"))
+        apply_style.configure('TRadiobutton', foreground="blue",
+                              font=("times new roman", 10, "bold"))
+        apply_style.configure('TMenubutton', foreground="blue",
+                              font=("Helvetica", 10, "bold"))
+        # apply_style.configure('TLabelframe', foreground="violet red",
+        #                       font=("Helvetica", 10, "bold"))
+        apply_style.configure(
+            'TSeparator', foreground="blue", background="blue")
+
         # Create Page Top Frame
         topframe = ttk.Frame(master)
         topframe.pack(side=TOP, fill=X, anchor=NW)
         # Top Label
         self.topLabel = ttk.Label(
-            topframe, text='UKULELE - \"The Singing Sculpture\"', bootstyle="primary", )
+            topframe, text='UKULELE - \"The Singing Sculpture\"', style='TLabel', )
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.pack(side=LEFT, anchor=W, padx=5)
 
         # Admin Log-in Button
         self.topButton = ttk.Button(
-            topframe, text='Admin Log-in', cursor='hand2', bootstyle=(INFO, OUTLINE), command=self.adminlogin)
+            topframe, text='Admin Log-in', cursor='hand2', style='TButton', command=self.adminlogin)
         self.topButton.pack(side=RIGHT, anchor=E, padx=5)
 
         # Create Welcome Message Frame
@@ -39,12 +56,12 @@ class Mainframe:
         midframe.pack(side=TOP, expand=1, fill=X, anchor=CENTER, pady=20)
         # First Child Label
         self.firstLabel = ttk.Label(
-            midframe, text="WELCOME TO UKULELE!!!", bootstyle="primary")
+            midframe, text="WELCOME TO UKULELE!!!", style='TLabel')
         self.firstLabel.config(font=("Bell MT", 40, "bold"))
         self.firstLabel.pack(side=TOP, anchor=CENTER, pady=20)
         # Second Child Label
         self.secondLabel = ttk.Label(
-            midframe, text="We Are Glad You Are Here", bootstyle="primary")
+            midframe, text="We Are Glad You Are Here", style='TLabel')
         self.secondLabel.config(font=("Bell MT", 25, "bold"))
         self.secondLabel.pack(side=TOP, anchor=CENTER, pady=20)
 
@@ -54,16 +71,16 @@ class Mainframe:
                          anchor=CENTER, pady=20)
         # Create Label and Button
         self.surveyLabel = ttk.Label(
-            bottomframe, text="Kindly Click on the Button Below to Take a Quick 60 Secs Survey", bootstyle="primary")
+            bottomframe, text="Kindly Click on the Button Below to Take a Quick 60 Secs Survey", style='TLabel')
         self.surveyLabel.config(font=("Bell MT", 20, "bold"))
         self.surveyLabel.pack(side=TOP, anchor=CENTER, pady=10)
         self.surveyButton = ttk.Button(
-            bottomframe, text="Take Survey", width=20, bootstyle=(INFO, OUTLINE), command=self.takesurvey)
+            bottomframe, text="Take Survey", width=20, style='TButton', command=self.takesurvey)
         self.surveyButton.pack(side=TOP, anchor=CENTER, pady=10)
 
         # Create Copyright Label
         self.cpyrightLabel = ttk.Label(
-            master, text="© Copyright 2023 | Lexi-Clair Designs", bootstyle="primary")
+            master, text="© Copyright 2023 | Lexi-Clair Designs", style='TLabel')
         self.cpyrightLabel.config(font=("times new roman", 8, "bold"))
         self.cpyrightLabel.config(foreground="blue")
         self.cpyrightLabel.config(background="light grey")
@@ -87,13 +104,13 @@ class Mainframe:
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)
         # create Label Widgets
         self.usernamelabel = ttk.Label(
-            admin_win, text="Admin Id:", bootstyle="primary", justify=LEFT)
+            admin_win, text="Admin Id:", style='TLabel', justify=LEFT)
         self.usernamelabel.grid(row=1, column=0, padx=2, pady=10)
         self.passwordlabel = ttk.Label(
-            admin_win, text="Password:", bootstyle="primary", justify=LEFT)
+            admin_win, text="Password:", style='TLabel', justify=LEFT)
         self.passwordlabel.grid(row=2, column=0, padx=2, pady=10)
         self.forgetlabel = ttk.Label(
-            admin_win, text="forgot password? default password is surname in lowercase", bootstyle="primary", justify=LEFT)
+            admin_win, text="forgot password? default password is surname in lowercase", style='TLabel', justify=LEFT)
         self.forgetlabel.config(font=("times", 8, "normal"))
         self.forgetlabel.grid(row=3, columnspan=2, padx=2, pady=(1, 2))
         # Create Entry Widgets
@@ -107,7 +124,7 @@ class Mainframe:
         self.passwordentry.grid(row=2, column=1, padx=2, pady=10)
         # Create log-in Button
         self.logbutton = ttk.Button(
-            admin_win, text="Log-in", command=self.adlog, bootstyle=(INFO, OUTLINE))
+            admin_win, text="Log-in", command=self.adlog, style='TButton')
         self.logbutton.grid(row=4, columnspan=2, padx=2, pady=10)
 
         # Direct input focus to the first entry widget of the log-in window
@@ -192,7 +209,7 @@ class Mainframe:
                   "Agender", "Pangender", "Genderqueer", "Two-spirit", "Third-gender"]
         self.gendervar = tk.StringVar(value=gender[0])
         self.genderdrop = ttk.OptionMenu(
-            genderframe, self.gendervar, *gender, direction="right", bootstyle="primary")
+            genderframe, self.gendervar, *gender, direction="right")
         self.genderdrop.pack(side=TOP, expand=1, anchor=CENTER)
         # Ethnicity/Race
         ethnicframe = ttk.Labelframe(
@@ -202,7 +219,7 @@ class Mainframe:
                   "Chinese", "Indo-Asian", "Latin", "White"]
         self.ethnicvar = tk.StringVar(value=ethnic[0])
         self.ethnicdrop = ttk.OptionMenu(
-            ethnicframe, self.ethnicvar, *ethnic, direction="right", bootstyle="primary")
+            ethnicframe, self.ethnicvar, *ethnic, direction="right")
         self.ethnicdrop.pack(side=TOP, expand=1, anchor=CENTER)
         # Disability
         disabilityframe = ttk.Labelframe(
@@ -210,16 +227,16 @@ class Mainframe:
         disabilityframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.disabilityvar = tk.StringVar()
         self.disability_firstradio = ttk.Radiobutton(
-            disabilityframe, text='Yes', value="Yes", variable=self.disabilityvar, bootstyle="primary")
+            disabilityframe, text='Yes', value="Yes", variable=self.disabilityvar, style='TRadiobutton')
         self.disability_firstradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         self.disability_secondradio = ttk.Radiobutton(
-            disabilityframe, text='No', value="No", variable=self.disabilityvar, bootstyle="primary")
+            disabilityframe, text='No', value="No", variable=self.disabilityvar, style='TRadiobutton')
         self.disability_secondradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Form Separator
         self.formdivide = ttk.Separator(
-            mainframe, orient="horizontal", bootstyle="primary")
+            mainframe, orient="horizontal", style='TSeparator')
         self.formdivide.pack(side=TOP, fill=X, expand=0, padx=5)
         # Question 1
         q1_frame = ttk.Labelframe(
@@ -227,11 +244,11 @@ class Mainframe:
         q1_frame.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.q1_variable = tk.StringVar()
         self.q1_firstradio = ttk.Radiobutton(
-            q1_frame, text='Yes', value="Yes", variable=self.q1_variable, bootstyle="primary")
+            q1_frame, text='Yes', value="Yes", variable=self.q1_variable, style='TRadiobutton')
         self.q1_firstradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         self.q1_secondradio = ttk.Radiobutton(
-            q1_frame, text='No', value="No", variable=self.q1_variable, bootstyle="primary")
+            q1_frame, text='No', value="No", variable=self.q1_variable, style='TRadiobutton')
         self.q1_secondradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Question 2
@@ -240,11 +257,11 @@ class Mainframe:
         q2_frame.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.q2_variable = tk.StringVar()
         self.q2_firstradio = ttk.Radiobutton(
-            q2_frame, text='Yes', value="Yes", variable=self.q2_variable, bootstyle="primary")
+            q2_frame, text='Yes', value="Yes", variable=self.q2_variable, style='TRadiobutton')
         self.q2_firstradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         self.q2_secondradio = ttk.Radiobutton(
-            q2_frame, text='No', value="No", variable=self.q2_variable, bootstyle="primary")
+            q2_frame, text='No', value="No", variable=self.q2_variable, style='TRadiobutton')
         self.q2_secondradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Question 3
@@ -253,11 +270,11 @@ class Mainframe:
         q3_frame.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.q3_variable = tk.StringVar()
         self.q3_firstradio = ttk.Radiobutton(
-            q3_frame, text='Yes', value="Yes", variable=self.q3_variable, bootstyle="primary")
+            q3_frame, text='Yes', value="Yes", variable=self.q3_variable, style='TRadiobutton')
         self.q3_firstradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         self.q3_secondradio = ttk.Radiobutton(
-            q3_frame, text='No', value="No", variable=self.q3_variable, bootstyle="primary")
+            q3_frame, text='No', value="No", variable=self.q3_variable, style='TRadiobutton')
         self.q3_secondradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Question 4
@@ -266,11 +283,11 @@ class Mainframe:
         q4_frame.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.q4_variable = tk.StringVar()
         self.q4_firstradio = ttk.Radiobutton(
-            q4_frame, text='Yes', value="Yes", variable=self.q4_variable, bootstyle="primary", command=self.emailoption)
+            q4_frame, text='Yes', value="Yes", variable=self.q4_variable, style='TRadiobutton', command=self.emailoption)
         self.q4_firstradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         self.q4_secondradio = ttk.Radiobutton(
-            q4_frame, text='No', value="No", variable=self.q4_variable, bootstyle="primary", command=self.emailoption)
+            q4_frame, text='No', value="No", variable=self.q4_variable, style='TRadiobutton', command=self.emailoption)
         self.q4_secondradio.pack(
             side=LEFT, expand=1, padx=5, pady=2, anchor=W)
         # Email
@@ -305,7 +322,7 @@ class Mainframe:
         self.cal.pack(expand=1, fill=BOTH)
 
         self.submit_date = ttk.Button(
-            self.dob_window, text="Submit", bootstyle="primary", command=self.grab_selection)
+            self.dob_window, text="Submit", style='TLabel', command=self.grab_selection)
         self.submit_date.pack(expand=1, pady=5)
 
     def grab_selection(self: object):
