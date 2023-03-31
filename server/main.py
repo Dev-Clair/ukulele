@@ -39,12 +39,10 @@ class Mainframe:
         topframe = ttk.Frame(master)
         topframe.pack(side=TOP, fill=X, anchor=NW)
         # Top Label
-        self.slidertext = 'UKULELE - \"The Singing Sculpture\"'  # Slider Text
         self.topLabel = ttk.Label(
-            topframe, text=self.slidertext, style='TLabel')
+            topframe, text='UKULELE - \"The Singing Sculpture\"', style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.pack(side=LEFT, anchor=W, padx=5)
-        # self.slider()
 
         # Admin Log-in Button
         self.topButton = ttk.Button(
@@ -86,20 +84,6 @@ class Mainframe:
         self.cpyrightLabel.config(background="light grey")
         self.cpyrightLabel.pack(side=BOTTOM, fill=X,
                                 anchor=W, pady=(10, 0))
-
-    # Sliding Text Function
-    # global count, text
-
-    # def slider(self):
-    #     count = 0
-    #     text = ""
-    #     if count == len(self.slidertext):
-    #         count == 0
-    #         text = ""
-    #     text = text+self.slidertext[count]
-    #     self.topLabel.config(text=text)
-    #     count += 1
-    #     self.topLabel.after(1000, self.slider)
 
     # Admin Log-in Toplevel
     def adminlogin(self):
@@ -153,11 +137,6 @@ class Mainframe:
             showerror("Error", "Please enter the correct log-in details")
             self.usernameentry.delete(0, END)
             self.passwordentry.delete(0, END)
-            self.usernameentry.focus_set()
-
-        if self.uservar.get() == "" and self.passvar.get() == "":
-            showerror(
-                "Error", "Username or Password fields cannot be empty")
             self.usernameentry.focus_set()
         else:
             showinfo('Welcome', 'Log-in Successful')
