@@ -175,9 +175,3 @@ def future():
 
 if __name__ == "__main__":
     createtable()
-    # print(total_num())
-    # print(womenpercent())
-    # print(enjoytour())
-    # print(curious())
-    # print(science())
-    # print(future())
