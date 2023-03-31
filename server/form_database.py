@@ -34,7 +34,7 @@ update_data = "UPDATE surveytable SET Gender=? WHERE Tag=?"
 delete_data = "DELETE * FROM surveytable WHERE Tag=?"
 
 
-def createtable():
+def createtable() -> None:
     """
         Creates table in database
     """
@@ -42,8 +42,8 @@ def createtable():
         connection.execute(create_table)
 
 
-def addrecord(tag, name, age, email, gender,
-              ethnicity, disability, enjoyed, curious, science, future):
+def addrecord(tag: str, name: str, age: str, email: str, gender: str,
+              ethnicity: str, disability: str, enjoyed: str, curious: str, science: str, future: str):
     """
         Adds record to table in database
     """
@@ -52,7 +52,7 @@ def addrecord(tag, name, age, email, gender,
                            ethnicity, disability, enjoyed, curious, science, future))
 
 
-def displayrecord():
+def displayrecord() -> list:
     """
         Displays all record(s) in table
     """
@@ -62,7 +62,7 @@ def displayrecord():
         return records
 
 
-def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethnicity=" ", disability=" "):
+def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethnicity=" ", disability=" ") -> list:
     """
         Selects record(s) from table
     """
@@ -75,7 +75,7 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
         return records
 
 
-def updaterecord(column=" ", tag=" "):
+def updaterecord(column=" ", tag=" ") -> None:
     """
         Updates student record in table
     """
@@ -84,7 +84,7 @@ def updaterecord(column=" ", tag=" "):
         connection.execute(update_data, values)
 
 
-def deleterecord(tag=" "):
+def deleterecord(tag=" ") -> None:
     """
         Deletes selected record from database
     """
@@ -92,7 +92,7 @@ def deleterecord(tag=" "):
         connection.execute(delete_data, tag)
 
 
-def total_num():
+def total_num() -> int:
     """
         returns total number of rows/records in the table
     """
@@ -104,7 +104,7 @@ def total_num():
         return totalcount
 
 
-def womenpercent():
+def womenpercent() -> int:
     """
         returns percentage of 'female' women in the table
     """
@@ -125,7 +125,7 @@ def womenpercent():
     return round((total_women/totalval)*100, 2)
 
 
-def enjoytour():
+def enjoytour() -> int:
     """
         returns average number of people who enjoyed the tour
     """
@@ -137,7 +137,7 @@ def enjoytour():
         return enjoy
 
 
-def curious():
+def curious() -> int:
     """
         returns average number of people curious about the singing sculpture
     """
@@ -149,7 +149,7 @@ def curious():
         return curious
 
 
-def science():
+def science() -> int:
     """
         returns total number of people who will like to learn more about the science of acoustics
     """
@@ -161,7 +161,7 @@ def science():
         return science
 
 
-def future():
+def future() -> int:
     """
         returns total number of people who will like to attend future events
     """

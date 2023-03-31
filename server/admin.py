@@ -292,7 +292,7 @@ class Mainframe:
         self.cpyrightLabel.config(background="light grey")
         self.cpyrightLabel.place(x=0, y=665, width=1350)
 
-    def showall(self):
+    def showall(self: object):
         """
             On-click, shows table on treeview after connection to database
         """
@@ -315,7 +315,7 @@ class Mainframe:
         self.averagescience()
         self.numberfuture()
 
-    def connectdb(self):
+    def connectdb(self: object):
         """
             connects to database and displays table on treeview
         """
@@ -327,13 +327,13 @@ class Mainframe:
             showerror('Database', 'Database Connection was Unsuccessful')
             self.showButton.config(state="disabled")
 
-    def uploaddb(self):
+    def uploaddb(self: object):
         """
             uploads database to server
         """
         showerror("Error", "This feature is currently unavailable")
 
-    def exportexcel(self):
+    def exportexcel(self: object):
         """
             exports database -all or selection- to Ms-Excel
         """
@@ -350,7 +350,7 @@ class Mainframe:
                                               value="tree.xlsx", variable=self.excelchoicevar, style='TRadiobutton', cursor='hand2', command=self.excelexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
 
-    def excelexportselect(self):
+    def excelexportselect(self: object):
         """
             credits: https://medium.com/@azmideliaslan/how-to-output-excel-with-openpyxl-python-c1039436dc24
         """
@@ -440,7 +440,7 @@ class Mainframe:
 
             self.wb.save("tree_survey_report.xlsx")
 
-    def exportcsv(self):
+    def exportcsv(self: object):
         """
             exports database -all or selection- to CSV file
         """
@@ -457,7 +457,7 @@ class Mainframe:
                                               value="tree.csv", variable=self.csvchoicevar, style='TRadiobutton', cursor='hand2', command=self.csvexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
 
-    def csvexportselect(self):
+    def csvexportselect(self: object):
         if self.csvchoicevar.get() == "db.csv":
             headings = ["Tag", "Name", "Age", "Email", "Gender",
                         "Ethnicity", "Disability", "Enjoyed", "Curious", "Science", "Future"]
@@ -480,13 +480,13 @@ class Mainframe:
                 # Write Rows
                 self.write.writerows(self.viewrecord)
 
-    def exportxml(self):
+    def exportxml(self: object):
         """
             exports table -all or selection- to XML
         """
         showerror("Error", "This feature is currently unavailable")
 
-    def submitentry(self):
+    def submitentry(self: object):
         # Displays Result For Selected Options
         for item in self.table.get_children():
             self.table.delete(item)
@@ -496,7 +496,7 @@ class Mainframe:
             self.table.insert(parent="", index=END, values=record)
 
     # Result Functions - To be derived from Treeview Display
-    def totalnumber(self):
+    def totalnumber(self: object) -> int:
         """
             Calculates the total number of attendees based on selection and
             updates the self.totalvar variable afterwards
@@ -504,7 +504,7 @@ class Mainframe:
         self.value = total_num()
         self.totalvar.set(value=self.value)
 
-    def percentwomen(self):
+    def percentwomen(self: object) -> int:
         """
             Calculates the percentage of women based on selection and
             updates the self.womenvar variable afterwards
@@ -512,7 +512,7 @@ class Mainframe:
         self.value = womenpercent()
         self.womenvar.set(value=self.value)
 
-    def averageenjoyed(self):
+    def averageenjoyed(self: object) -> int:
         """
             Calculates the average number of atendees based on selection who enjoyed the tour and
             updates the self.enjoyvar variable afterwards
@@ -520,7 +520,7 @@ class Mainframe:
         self.value = enjoytour()
         self.enjoyvar.set(value=self.value)
 
-    def averagecurious(self):
+    def averagecurious(self: object) -> int:
         """
             Calculates the average number of atendees based on selection who are curious as to how the sculpture sings and
             updates the self.curiousvar variable afterwards
@@ -528,7 +528,7 @@ class Mainframe:
         self.value = curious()
         self.curiousvar.set(value=self.value)
 
-    def averagescience(self):
+    def averagescience(self: object) -> int:
         """
             Calculates the average number of atendees based on selection who will like to learn more about science and
             updates the self.sciencevar  afterwards
@@ -536,7 +536,7 @@ class Mainframe:
         self.value = science()
         self.sciencevar.set(value=self.value)
 
-    def numberfuture(self):
+    def numberfuture(self: object) -> int:
         """
             Calculates the number of attendees based on selection who will like to attend future
             and updates the self.futurevar variable afterwards
