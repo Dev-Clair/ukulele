@@ -29,12 +29,12 @@ display_data = "SELECT * FROM surveytable"
 # Select Record
 select_data = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
 # Update Record - Column Should Only be Updated as Required
-update_data = "UPDATE surveytable SET Gender=? WHERE Tag=?"
+update_data = "UPDATE surveytable SET Email=? WHERE Tag=?"
 # Delete Record
 delete_data = "DELETE * FROM surveytable WHERE Tag=?"
 
 
-def createtable() -> None:
+def createtable():
     """
         Creates table in database
     """
@@ -75,7 +75,7 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
         return records
 
 
-def updaterecord(column=" ", tag=" ") -> None:
+def updaterecord(column=" ", tag=" "):
     """
         Updates student record in table
     """
@@ -84,7 +84,7 @@ def updaterecord(column=" ", tag=" ") -> None:
         connection.execute(update_data, values)
 
 
-def deleterecord(tag=" ") -> None:
+def deleterecord(tag=" "):
     """
         Deletes selected record from database
     """
