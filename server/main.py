@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+# import ttkthemes
 from tkinter.constants import *
 from tkinter import PhotoImage
 from tkinter.messagebox import showerror, showinfo, askokcancel
@@ -14,8 +15,10 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='pic\icon_img.png')
+        self.master.iconimage = PhotoImage(file='pic/icon_img.png')
         self.master.iconphoto(True, self.master.iconimage)
+        # self.master.get_themes()
+        # self.master.set_theme('equilux')
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -322,7 +325,7 @@ class Mainframe:
         self.cal.pack(expand=1, fill=BOTH)
 
         self.submit_date = ttk.Button(
-            self.dob_window, text="Submit", style='TLabel', command=self.grab_selection)
+            self.dob_window, text="Submit", style='TButton', command=self.grab_selection)
         self.submit_date.pack(expand=1, pady=5)
 
     def grab_selection(self: object):
@@ -371,6 +374,7 @@ class Mainframe:
 
 
 if __name__ == "__main__":
+    # root = ttkthemes.ThemedTk()
     root = tk.Tk()
     window = Mainframe(root)
     root.mainloop()
