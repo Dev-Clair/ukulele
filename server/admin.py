@@ -331,7 +331,7 @@ class Mainframe:
         """
             uploads database to server
         """
-        showerror("Error", "This feature is currently unavailable")
+        print("Filezilla will hold database for client")
 
     def exportexcel(self: object):
         """

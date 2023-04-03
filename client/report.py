@@ -63,7 +63,7 @@ class Mainframe:
         self.databaseButton.menu.add_command(
             label="Connect to Database", command=self.connectdb)
         self.databaseButton.menu.add_command(
-            label="Fetch Database from Server", command=self.uploaddb)
+            label="Fetch Database from Server", command=self.fetchdb)
         # Export Button
         self.exportButton = ttk.Menubutton(
             master, text='Export', cursor='hand2', direction="left", style='TMenubutton')
@@ -314,11 +314,11 @@ class Mainframe:
             showerror('Database', 'Database Connection was Unsuccessful')
             self.showButton.config(state="disabled")
 
-    def uploaddb(self):
+    def fetchdb(self):
         """
             uploads database to server
         """
-        showerror("Error", "This feature is currently unavailable")
+        print("Will access server via ftp protocol")
 
     def exportexcel(self):
         """
@@ -478,7 +478,7 @@ class Mainframe:
         for item in self.table.get_children():
             self.table.delete(item)
         # self.viewrecord = selectrecord(self.loweragevar.get(), self.upperagevar.get(), self.gendervar.get(),
-                                    #    self.ethnicvar.get(), self.disabilityvar.get())
+            #    self.ethnicvar.get(), self.disabilityvar.get())
         for record in sorted(self.viewrecord, key=lambda record: record[0]):
             self.table.insert(parent="", index=END, values=record)
 
