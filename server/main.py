@@ -7,7 +7,50 @@ from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
 import time  # import time to calculate how long it will take to complete the survey
 from datetime import *
-from form_database import addrecord  # Import -sqlite3- Database
+import sqlite3
+
+
+class Connection:
+    def __init__(self, filename: str):
+        """
+            Create a context manager for better resource (database connection) management
+        """
+        self.filename = filename
+        self.connection = sqlite3.connect(self.filename)
+
+    def __enter__(self):
+        self.cursor = self.connection.cursor()
+        return self.cursor
+
+    def __exit__(self, exc_typ, exc_val, exc_tb):
+        if self.cursor:
+            self.connection.commit()
+            self.connection.close()
+
+
+# Define Query Variables
+# Create Table
+create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age INT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
+# Add Record
+insert_data = "INSERT INTO surveytable VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+
+
+def createtable():
+    """
+        Creates table in database
+    """
+    with Connection('surveydb.db') as connection:
+        connection.execute(create_table)
+
+
+def addrecord(tag: str, name: str, age: str, email: str, gender: str,
+              ethnicity: str, disability: str, enjoyed: str, curious: str, science: str, future: str):
+    """
+        Adds record to table in database
+    """
+    with Connection('surveydb.db') as connection:
+        connection.execute(insert_data, (tag, name, age, email, gender,
+                           ethnicity, disability, enjoyed, curious, science, future))
 
 
 class Mainframe:
@@ -15,8 +58,8 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='pic/icon_img.png')
-        self.master.iconphoto(True, self.master.iconimage)
+        # self.master.iconimage = PhotoImage(file='pic/icon_img.png')
+        # self.master.iconphoto(True, self.master.iconimage)
         # self.master.get_themes()
         # self.master.set_theme('equilux')
         self.master.minsize(100, 100)
@@ -151,6 +194,7 @@ class Mainframe:
         """
             Launches a top level window of the surveyform to read input from user/respondent at runtime
         """
+        createtable()
         survey_win = tk.Toplevel()
         survey_win.title("UKULELE - Survey Form")
         survey_win.geometry("550x650+342+20")
