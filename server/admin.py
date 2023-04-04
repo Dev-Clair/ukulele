@@ -17,8 +17,8 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE - Admin")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='pic\icon_img.png')
-        self.master.iconphoto(True, self.master.iconimage)
+        # self.master.iconimage = PhotoImage(file='pic\icon_img.png')
+        # self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
