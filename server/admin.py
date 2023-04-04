@@ -1,3 +1,4 @@
+# Import the Tkinter Class
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import PhotoImage
@@ -34,13 +35,13 @@ class Connection:
 # Create Table
 create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age INT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
 # Display Records
-display_data = "SELECT * FROM surveytable"
+display_record = "SELECT * FROM surveytable"
 # Select Record
-select_data = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
+select_record = "SELECT * FROM surveytable WHERE Age BETWEEN ? AND ? AND Gender=? AND Ethnicity=? AND DISABILITY=?"
 # Update Record - Column Should Only be Updated as Required
-update_data = "UPDATE surveytable SET Email=? WHERE Tag=?"
+update_record = "UPDATE surveytable SET Email=? WHERE Tag=?"
 # Delete Record
-delete_data = "DELETE * FROM surveytable WHERE Tag=?"
+delete_record = "DELETE * FROM surveytable WHERE Tag=?"
 
 
 def createtable():
@@ -56,7 +57,7 @@ def displayrecord() -> list:
         Displays all record(s) in table
     """
     with Connection('surveydb.db') as connection:
-        rows = connection.execute(display_data)
+        rows = connection.execute(display_record)
         records = rows.fetchall()
         return records
 
@@ -69,7 +70,7 @@ def selectrecord(lower_range_value=" ", upper_range_value=" ", gender=" ", ethni
         values = (lower_range_value, upper_range_value,
                   gender, ethnicity, disability)
         rows = connection.execute(
-            select_data, values)
+            select_record, values)
         records = rows.fetchall()
         return records
 
@@ -80,7 +81,7 @@ def updaterecord(column=" ", tag=" "):
     """
     with Connection('surveydb.db') as connection:
         values = (column, tag)
-        connection.execute(update_data, values)
+        connection.execute(update_record, values)
 
 
 def deleterecord(tag=" "):
@@ -88,7 +89,7 @@ def deleterecord(tag=" "):
         Deletes selected record from database
     """
     with Connection('surveydb.db') as connection:
-        connection.execute(delete_data, tag)
+        connection.execute(delete_record, tag)
 
 
 def total_num() -> int:

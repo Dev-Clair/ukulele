@@ -92,20 +92,6 @@ class Mainframe:
         else:
             showinfo('Welcome', 'Log-in Successful')
 
-    # Sliding Text Function
-    # global count, text
-
-    # def slider(self):
-    #     count = 0
-    #     text = ""
-    #     if count == len(self.slidertext):
-    #         count == 0
-    #         text = ""
-    #     text = text+self.slidertext[count]
-    #     self.topLabel.config(text=text)
-    #     count += 1
-    #     self.topLabel.after(1000, self.slider)
-
 
 if __name__ == "__main__":
     root = tk.Tk()
