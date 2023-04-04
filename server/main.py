@@ -1,6 +1,5 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-# import ttkthemes
 from tkinter.constants import *
 from tkinter import PhotoImage
 from tkinter.messagebox import showerror, showinfo, askokcancel
@@ -60,8 +59,6 @@ class Mainframe:
         self.master.geometry('1350x680+5+5')
         # self.master.iconimage = PhotoImage(file='pic/icon_img.png')
         # self.master.iconphoto(True, self.master.iconimage)
-        # self.master.get_themes()
-        # self.master.set_theme('equilux')
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -418,7 +415,6 @@ class Mainframe:
 
 
 if __name__ == "__main__":
-    # root = ttkthemes.ThemedTk()
     root = tk.Tk()
     window = Mainframe(root)
     root.mainloop()
