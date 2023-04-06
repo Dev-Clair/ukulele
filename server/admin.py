@@ -675,7 +675,7 @@ class Mainframe:
 
     def averageenjoyed(self: object) -> int:
         """
-            Calculates the average number of atendees based on selection who enjoyed the tour and
+            Calculates the average number of attendees based on selection who enjoyed the tour and
             updates the self.enjoyvar variable afterwards
         """
         self.value = enjoytour()
@@ -683,7 +683,7 @@ class Mainframe:
 
     def averagecurious(self: object) -> int:
         """
-            Calculates the average number of atendees based on selection who are curious as to how the sculpture sings and
+            Calculates the average number of attendees based on selection who are curious as to how the sculpture sings and
             updates the self.curiousvar variable afterwards
         """
         self.value = curious()
@@ -691,7 +691,7 @@ class Mainframe:
 
     def averagescience(self: object) -> int:
         """
-            Calculates the average number of atendees based on selection who will like to learn more about science and
+            Calculates the average number of attendees based on selection who will like to learn more about science and
             updates the self.sciencevar  afterwards
         """
         self.value = science()
