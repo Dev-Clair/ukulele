@@ -178,8 +178,8 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE - Admin")
         self.master.geometry('1350x680+5+5')
-        # self.master.iconimage = PhotoImage(file='pic\icon_img.png')
-        # self.master.iconphoto(True, self.master.iconimage)
+        self.master.iconimage = PhotoImage(file='ukulele/pic/icon_img.ico')
+        self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -492,7 +492,7 @@ class Mainframe:
         """
             uploads database to server
         """
-        print("Filezilla will hold database for client")
+        showinfo("Upload File", "Filezilla will hold database for client")
 
     def exportexcel(self: object):
         """
@@ -510,6 +510,7 @@ class Mainframe:
         self.exporttreeview = ttk.Radiobutton(self.excelexport, text="Export Treeview to Excel (.xlsx)",
                                               value="tree.xlsx", variable=self.excelchoicevar, style='TRadiobutton', cursor='hand2', command=self.excelexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.excelexport.mainloop()
 
     def excelexportselect(self: object):
         """
@@ -600,6 +601,7 @@ class Mainframe:
                                  1).alignment = Alignment(horizontal="center")
 
             self.wb.save("tree_survey_report.xlsx")
+        self.excelexport.destroy()
 
     def exportcsv(self: object):
         """
@@ -617,6 +619,7 @@ class Mainframe:
         self.exporttreeview = ttk.Radiobutton(self.csvexport, text="Export Treeview to CSV (.csv)",
                                               value="tree.csv", variable=self.csvchoicevar, style='TRadiobutton', cursor='hand2', command=self.csvexportselect)
         self.exporttreeview.pack(side=TOP, fill=X, padx=5, pady=5)
+        self.csvexport.mainloop()
 
     def csvexportselect(self: object):
         if self.csvchoicevar.get() == "db.csv":
@@ -640,6 +643,7 @@ class Mainframe:
                 self.write.writerow(headings)
                 # Write Rows
                 self.write.writerows(self.viewrecord)
+        self.csvexport.destroy()
 
     def exportxml(self: object):
         """
