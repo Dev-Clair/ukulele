@@ -10,8 +10,8 @@ class Mainframe:
         self.master = master
         self.master.title("UKULELE")
         self.master.geometry('1350x680+5+5')
-        # self.master.iconimage = PhotoImage(file='pic\icon_img.png')
-        # self.master.iconphoto(True, self.master.iconimage)
+        self.master.iconimage = PhotoImage(file='ukulele/pic/icon_img.png')
+        self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
 
@@ -31,13 +31,12 @@ class Mainframe:
             master, text=self.slidertext, style='TLabel')
         self.topLabel.config(font=("Bell MT", 30, "bold"))
         self.topLabel.pack(side=TOP, anchor=W, padx=5)
-        # self.slider()
 
         # Create Log-in Frame
         login_win = ttk.Frame(master, relief=FLAT, style='TFrame')
         login_win.place(x=450, y=150, width=350, height=350)
         # Create Image Label
-        self.top_img = PhotoImage(file='pic\person_imgL.png')
+        self.top_img = PhotoImage(file='ukulele/pic/person_imgL.png')
         self.login_img = ttk.Label(
             login_win, image=self.top_img, justify=CENTER)
         self.login_img.grid(row=0, columnspan=2, padx=2, pady=10)

@@ -12,6 +12,8 @@ from csv import writer
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 
+# ******************************************** DATABASE ********************************************
+
 
 class Connection:
     def __init__(self, filename: str):
@@ -33,7 +35,7 @@ class Connection:
 
 # Define Query Variables
 # Create Table
-create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age INT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
+# create_table = "CREATE TABLE IF NOT EXISTS surveytable (Tag INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Age INT NOT NULL, Email TEXT, Gender TEXT NOT NULL, Ethnicity TEXT NOT NULL, Disability TEXT NOT NULL, Enjoyed TEXT, Curious TEXT, Science TEXT, Future TEXT)"
 # Display Records
 display_record = "SELECT * FROM surveytable"
 # Select Record
@@ -44,12 +46,12 @@ update_record = "UPDATE surveytable SET Email=? WHERE Tag=?"
 delete_record = "DELETE * FROM surveytable WHERE Tag=?"
 
 
-def createtable():
-    """
-        Creates table in database
-    """
-    with Connection('surveydb.db') as connection:
-        connection.execute(create_table)
+# def createtable():
+#     """
+#         Creates table in database
+#     """
+#     with Connection('surveydb.db') as connection:
+#         connection.execute(create_table)
 
 
 def displayrecord() -> list:
@@ -172,13 +174,16 @@ def future() -> int:
         future = future2[0]
         return future
 
+# ******************************************** MAIN ********************************************
+
 
 class Mainframe:
     def __init__(self, master):
         self.master = master
         self.master.title("UKULELE - Admin")
         self.master.geometry('1350x680+5+5')
-        self.master.iconimage = PhotoImage(file='ukulele/pic/icon_img.ico')
+        self.master.iconimage = PhotoImage(
+            file='pic/icon_img.ico')
         self.master.iconphoto(True, self.master.iconimage)
         self.master.minsize(100, 100)
         self.master.resizable(0, 0)
@@ -481,7 +486,6 @@ class Mainframe:
             connects to database and displays table on treeview
         """
         try:
-            createtable()
             showinfo('Database', 'Database Connection Successful')
             self.showButton.config(state="normal")
         except:
