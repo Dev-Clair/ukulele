@@ -6,7 +6,12 @@ from tkinter.messagebox import showerror, showinfo, askokcancel
 from tkcalendar import Calendar
 import time  # import time to calculate how long it will take to complete the survey
 from datetime import *
+# Import -SQLite3- Database
 import sqlite3
+# Import Regular Expressions
+import re
+
+# ******************************************** DATABASE ********************************************
 
 
 class Connection:
@@ -52,6 +57,9 @@ def addrecord(tag: str, name: str, age: str, email: str, gender: str,
                            ethnicity, disability, enjoyed, curious, science, future))
 
 
+# ******************************************** REGEX PATTERNS ********************************************
+
+# ******************************************** MAIN ********************************************
 class Mainframe:
     def __init__(self, master):
         self.master = master
