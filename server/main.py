@@ -365,7 +365,7 @@ class Mainframe:
         self.emailvar = tk.StringVar()
         self.emailentry = ttk.Entry(
             emailframe, textvariable=self.emailvar, width=40, justify=CENTER, state="disabled", validatecommand=self.emailvalidation, validate="focusout")
-        self.emailentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
+        self.emailentry.pack(side=LEFT, expand=1, padx=5, anchor=CENTER)
         self.emaillabel = ttk.Label(emailframe, font=(
             'times', 10, 'bold'), justify=CENTER)
 
@@ -513,8 +513,9 @@ class Mainframe:
         self.submit_date = ttk.Button(
             self.dob_window, text="Submit", style='TButton', command=self.grab_selection)
         self.submit_date.pack(expand=1, pady=5)
+        self.dob_window.mainloop()
 
-    def grab_selection(self: object, event):
+    def grab_selection(self: object):
         # Calculate Age using the Datetime Module
         self.today_date = datetime.today()
         self.birth_date = datetime.strptime(
