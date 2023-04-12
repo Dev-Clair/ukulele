@@ -59,11 +59,11 @@ def addrecord(tag: str, name: str, age: str, email: str, gender: str,
 
 # ******************************************** REGEX PATTERNS ********************************************
 # Pattern for tag entry
-tag_pattern = r"\d{4}"
+tag_pattern = r"\d{3}"
 # Pattern for name entry
 name_pattern = r"[a-zA-Z0-9-_]+"
 # Pattern for email entry
-email_pattern = r"[a-zA-Z0-9-_+]+@[a-zA-Z0-9-]+\.[a-z]+"
+email_pattern = r"[a-zA-Z0-9.-_+]+@[a-zA-Z0-9-]+\.[a-z]+"
 
 # ******************************************** MAIN ********************************************
 
