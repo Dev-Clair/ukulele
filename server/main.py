@@ -63,7 +63,7 @@ tag_pattern = r"\d{4}"
 # Pattern for name entry
 name_pattern = r"[a-zA-Z0-9-_]+"
 # Pattern for email entry
-email_pattern = r"[a-zA-Z0-9-_+]+@[a-zA-Z0-9-]+\.[a-z]{2,3}"
+email_pattern = r"[a-zA-Z0-9-_+]+@[a-zA-Z0-9-]+\.[a-z]+"
 
 # ******************************************** MAIN ********************************************
 
@@ -233,11 +233,10 @@ class Mainframe:
                       anchor=CENTER, padx=5, pady=2)
         self.tagvar = tk.StringVar()
         self.tagentry = ttk.Entry(
-            tagframe, textvariable=self.tagvar, width=40, justify=CENTER, validatecommand=self.tagvalidation, validate="focusout")
+            tagframe, textvariable=self.tagvar, justify=CENTER, validatecommand=self.tagvalidation, validate="focusout")
         self.tagentry.pack(side=LEFT, expand=1, fill=X, padx=(5, 0), anchor=W)
         self.taglabel = ttk.Label(tagframe, font=(
             'times', 10, 'bold'), justify=CENTER)
-
         # First Name
         fnameframe = ttk.Labelframe(
             mainframe, text="First name: *", labelanchor=NW)
@@ -245,8 +244,10 @@ class Mainframe:
                         anchor=CENTER, padx=5, pady=2)
         self.fnamevar = tk.StringVar()
         self.fnameentry = ttk.Entry(
-            fnameframe, textvariable=self.fnamevar, width=40, justify=CENTER)
-        self.fnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+            fnameframe, textvariable=self.fnamevar, justify=CENTER, validatecommand=self.fnamevalidation, validate="focusout")
+        self.fnameentry.pack(side=LEFT, expand=1, fill=X, padx=5, anchor=W)
+        self.fnamelabel = ttk.Label(fnameframe, font=(
+            'times', 10, 'bold'), justify=CENTER)
         # Last Name
         lnameframe = ttk.Labelframe(
             mainframe, text="Last name: *", labelanchor=NW)
@@ -254,8 +255,10 @@ class Mainframe:
                         anchor=CENTER, padx=5, pady=2)
         self.lnamevar = tk.StringVar()
         self.lnameentry = ttk.Entry(
-            lnameframe, textvariable=self.lnamevar, width=40, justify=CENTER)
-        self.lnameentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+            lnameframe, textvariable=self.lnamevar, justify=CENTER, validatecommand=self.lnamevalidation, validate="focusout")
+        self.lnameentry.pack(side=LEFT, expand=1, fill=X, padx=5, anchor=W)
+        self.lnamelabel = ttk.Label(lnameframe, font=(
+            'times', 10, 'bold'), justify=CENTER)
         # Age
         ageframe = ttk.Labelframe(
             mainframe, text="Age: *", labelanchor=NW)
@@ -361,8 +364,10 @@ class Mainframe:
         emailframe.pack(side=TOP, expand=0, fill=X, padx=5, pady=2)
         self.emailvar = tk.StringVar()
         self.emailentry = ttk.Entry(
-            emailframe, textvariable=self.emailvar, width=40, justify=CENTER, state="disabled")
+            emailframe, textvariable=self.emailvar, width=40, justify=CENTER, state="disabled", validatecommand=self.emailvalidation, validate="focusout")
         self.emailentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
+        self.emaillabel = ttk.Label(emailframe, font=(
+            'times', 10, 'bold'), justify=CENTER)
 
         # Create Bottom Frame for Submit Button
         bottomframe = ttk.Frame(self.survey_win)
@@ -381,7 +386,7 @@ class Mainframe:
 
     def tagvalidation(self):
         """
-            Validates userinput to prevent errors or entries that might compromise the data integrity in databsae
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
         """
         self.tag_entry = self.tagvar.get()
         self.tag = re.match(pattern=tag_pattern,
@@ -412,6 +417,90 @@ class Mainframe:
                       message='Tag No. cannot contain alphabet\nor non-alphanumeric characters', parent=self.survey_win)
             return False
 
+    def fnamevalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.fname_entry = self.fnamevar.get()
+        self.fname = re.match(pattern=name_pattern,
+                              string=self.fname_entry, flags=re.IGNORECASE)
+
+        if len(self.fname_entry) > 15:
+            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.fnamelabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
+            return False
+
+        if self.fname_entry.isascii():
+            if self.fname != None:
+                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.fnamelabel.config(text="valid ", foreground="light green")
+                return True
+            else:
+                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.fnamelabel.config(text="invalid ", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='First Name field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.fnamelabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot contain numbers', parent=self.survey_win)
+            return False
+
+    def lnamevalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.lname_entry = self.lnamevar.get()
+        self.lname = re.match(pattern=name_pattern,
+                              string=self.lname_entry, flags=re.IGNORECASE)
+
+        if len(self.lname_entry) > 15:
+            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.lnamelabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
+            return False
+
+        if self.lname_entry.isascii():
+            if self.lname != None:
+                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.lnamelabel.config(text="valid ", foreground="light green")
+                return True
+            else:
+                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.lnamelabel.config(text="invalid ", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='First Name field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.lnamelabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot contain numbers', parent=self.survey_win)
+            return False
+
+    def emailvalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.email_entry = self.emailvar.get()
+        self.email = re.match(pattern=email_pattern,
+                              string=self.email_entry, flags=re.IGNORECASE)
+        if self.email != None:
+            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.emaillabel.config(text="valid ", foreground="light green")
+            return True
+        else:
+            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.emaillabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Email Invalid', parent=self.survey_win)
+            return False
+
     def select_DOB(self: object):
         self.dob_window = tk.Toplevel()
         self.dob_window.grab_set()
@@ -425,7 +514,7 @@ class Mainframe:
             self.dob_window, text="Submit", style='TButton', command=self.grab_selection)
         self.submit_date.pack(expand=1, pady=5)
 
-    def grab_selection(self: object):
+    def grab_selection(self: object, event):
         # Calculate Age using the Datetime Module
         self.today_date = datetime.today()
         self.birth_date = datetime.strptime(
