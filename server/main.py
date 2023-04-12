@@ -58,8 +58,16 @@ def addrecord(tag: str, name: str, age: str, email: str, gender: str,
 
 
 # ******************************************** REGEX PATTERNS ********************************************
+# Pattern for tag entry
+tag_pattern = r"\d{4}"
+# Pattern for name entry
+name_pattern = r"[a-zA-Z0-9-_]+"
+# Pattern for email entry
+email_pattern = r"[a-zA-Z0-9-_+]+@[a-zA-Z0-9-]+\.[a-z]{2,3}"
 
 # ******************************************** MAIN ********************************************
+
+
 class Mainframe:
     def __init__(self, master):
         self.master = master
@@ -145,7 +153,7 @@ class Mainframe:
         """
         self.admin_win = tk.Toplevel()
         self.admin_win.title('Admin Login')
-        self.admin_win.geometry("350x350+325+100")
+        self.admin_win.geometry("350x350+500+100")
         self.admin_win.resizable(0, 0)
 
         self.admin_img = PhotoImage(
@@ -212,9 +220,9 @@ class Mainframe:
         mainframe = ttk.Frame(self.survey_win)
         mainframe.pack(side=TOP, expand=1, fill=BOTH)
         # Title Label
-        titlelabel = ttk.Label(
+        self.titlelabel = ttk.Label(
             mainframe, text='UKULELE!!!', foreground='black', font=('times', 20, 'bold'))
-        titlelabel.pack(side=TOP)
+        self.titlelabel.pack(side=TOP)
         self.textlabel = ttk.Label(
             mainframe, text="Kindly enter the required information into the fields below", foreground='black', font=('times', 12, 'bold italic'))
         self.textlabel.pack(side=TOP)
@@ -225,8 +233,11 @@ class Mainframe:
                       anchor=CENTER, padx=5, pady=2)
         self.tagvar = tk.StringVar()
         self.tagentry = ttk.Entry(
-            tagframe, textvariable=self.tagvar, width=40, justify=CENTER)
-        self.tagentry.pack(side=TOP, expand=1, fill=X, padx=5, anchor=W)
+            tagframe, textvariable=self.tagvar, width=40, justify=CENTER, validatecommand=self.tagvalidation, validate="focusout")
+        self.tagentry.pack(side=LEFT, expand=1, fill=X, padx=(5, 0), anchor=W)
+        self.taglabel = ttk.Label(tagframe, font=(
+            'times', 10, 'bold'), justify=CENTER)
+
         # First Name
         fnameframe = ttk.Labelframe(
             mainframe, text="First name: *", labelanchor=NW)
@@ -367,7 +378,41 @@ class Mainframe:
         self.survey_win.mainloop()
 
     # Survey Form Toplevel Functions
-    def select_DOB(self: object, event):
+
+    def tagvalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity in databsae
+        """
+        self.tag_entry = self.tagvar.get()
+        self.tag = re.match(pattern=tag_pattern,
+                            string=self.tag_entry, flags=re.IGNORECASE)
+
+        if len(self.tag_entry) != 4:
+            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.taglabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Tag No. must be a four(4) digits number', parent=self.survey_win)
+            return False
+
+        if self.tag_entry.isdigit():
+            if self.tag != None:
+                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.taglabel.config(text="valid ", foreground="light green")
+                return True
+            else:
+                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.taglabel.config(text="invalid ", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='Tag No. field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.taglabel.config(text="invalid ", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Tag No. cannot contain alphabet\nor non-alphanumeric characters', parent=self.survey_win)
+            return False
+
+    def select_DOB(self: object):
         self.dob_window = tk.Toplevel()
         self.dob_window.grab_set()
         self.dob_window.title("Select Date of Birth")
