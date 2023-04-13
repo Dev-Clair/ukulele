@@ -424,7 +424,7 @@ class Mainframe:
 
         if len(self.tag_entry) != 4:
             self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.taglabel.config(text="X", foreground="red")
+            self.taglabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
                       message='Tag No. must be a four(4) digits number', parent=self.survey_win)
             return False
@@ -432,17 +432,17 @@ class Mainframe:
         if self.tag_entry.isdigit():
             if self.tag != None:
                 self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.taglabel.config(text="\u2713", foreground="light green")
+                self.taglabel.config(text="\u2714", foreground="light green")
                 return True
             else:
                 self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.taglabel.config(text="X", foreground="red")
+                self.taglabel.config(text="\u274C", foreground="red")
                 showerror(title='* Mandatory Fields',
                           message='Tag No. field cannot be empty', parent=self.survey_win)
                 return False
         else:
             self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.taglabel.config(text="X", foreground="red")
+            self.taglabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
                       message='Tag No. cannot contain alphabet\nor non-alphanumeric characters', parent=self.survey_win)
             return False
@@ -457,26 +457,26 @@ class Mainframe:
 
         if len(self.fname_entry) > 15:
             self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.fnamelabel.config(text="X", foreground="red")
+            self.fnamelabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
                       message='First Name cannot be longer than 15 characters', parent=self.survey_win)
             return False
 
-        if self.fname_entry.isascii():
+        if self.fname_entry.isalpha():
             if self.fname != None:
                 self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
                 self.fnamelabel.config(
-                    text="\u2713", foreground="light green")
+                    text="\u2714", foreground="light green")
                 return True
             else:
                 self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.fnamelabel.config(text="X", foreground="red")
+                self.fnamelabel.config(text="\u274C", foreground="red")
                 showerror(title='* Mandatory Fields',
                           message='First Name field cannot be empty', parent=self.survey_win)
                 return False
         else:
             self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.fnamelabel.config(text="X", foreground="red")
+            self.fnamelabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
                       message='First Name cannot contain numbers', parent=self.survey_win)
             return False
@@ -491,27 +491,27 @@ class Mainframe:
 
         if len(self.lname_entry) > 15:
             self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.lnamelabel.config(text="X", foreground="red")
+            self.lnamelabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
-                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
+                      message='Last Name cannot be longer than 15 characters', parent=self.survey_win)
             return False
 
-        if self.lname_entry.isascii():
+        if self.lname_entry.isalpha():
             if self.lname != None:
                 self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.lnamelabel.config(text="\u2713", foreground="light green")
+                self.lnamelabel.config(text="\u2714", foreground="light green")
                 return True
             else:
                 self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.lnamelabel.config(text="X", foreground="red")
+                self.lnamelabel.config(text="\u274C", foreground="red")
                 showerror(title='* Mandatory Fields',
-                          message='First Name field cannot be empty', parent=self.survey_win)
+                          message='Last Name field cannot be empty', parent=self.survey_win)
                 return False
         else:
             self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.lnamelabel.config(text="X", foreground="red")
+            self.lnamelabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
-                      message='First Name cannot contain numbers', parent=self.survey_win)
+                      message='Last Name cannot contain numbers', parent=self.survey_win)
             return False
 
     def agevalidation(self):
@@ -525,11 +525,11 @@ class Mainframe:
         if self.age_entry >= 18:
             if self.age != None:
                 self.agelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.agelabel.config(text="\u2713", foreground="light green")
+                self.agelabel.config(text="\u2714", foreground="light green")
                 return True
             else:
                 self.agelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.agelabel.config(text="X", foreground="red")
+                self.agelabel.config(text="\u274C", foreground="red")
                 showerror(title='* Mandatory Fields',
                           message='Sorry!!!\nMinors are not allowed to fill in form entries', parent=self.survey_win)
                 return False
@@ -543,11 +543,11 @@ class Mainframe:
                               string=self.email_entry, flags=re.IGNORECASE)
         if self.email != None:
             self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.emaillabel.config(text="\u2713", foreground="light green")
+            self.emaillabel.config(text="\u2714", foreground="light green")
             return True
         else:
             self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.emaillabel.config(text="X", foreground="red")
+            self.emaillabel.config(text="\u274C", foreground="red")
             showerror(title='* Mandatory Fields',
                       message='Email Invalid', parent=self.survey_win)
             return False
@@ -570,18 +570,14 @@ class Mainframe:
         """
         # Concatenate stringvar variables - self.fnamevar and self.lnamevar
         self.name = self.fnamevar.get() + " " + self.lnamevar.get()
-        if self.tagvar.get() == "" or self.agevar.get() == "" or self.gendervar.get() == "" or self.ethnicvar.get() == "" or self.disabilityvar.get() == "":
-            showerror('Mandatory Fields',
-                      '* information fields cannot be empty')
-        else:
-            self.answer = askokcancel('Confirm Submission',
-                                      'Click OK to confirm submission.')
-            if self.answer:
-                # Submits Entry to Database
-                addrecord(self.tagvar.get(), self.name, self.agevar.get(), self.emailvar.get(), self.gendervar.get(
-                ), self.ethnicvar.get(), self.disabilityvar.get(), self.q1_variable.get(), self.q2_variable.get(), self.q3_variable.get(), self.q4_variable.get())
-                showinfo('Survey Form',
-                         'Thank you for your time\n Enjoy the rest of the event.')
+        self.answer = askokcancel('Confirm Submission',
+                                  'Click OK to confirm submission.')
+        if self.answer:
+            # Submits Entry to Database
+            addrecord(self.tagvar.get(), self.name, self.agevar.get(), self.emailvar.get(), self.gendervar.get(
+            ), self.ethnicvar.get(), self.disabilityvar.get(), self.q1_variable.get(), self.q2_variable.get(), self.q3_variable.get(), self.q4_variable.get())
+            showinfo('Survey Form',
+                     'Thank you for your time\nEnjoy the rest of the event.')
         self.survey_win.destroy()
 
 
