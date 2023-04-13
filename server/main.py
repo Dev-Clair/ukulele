@@ -62,6 +62,8 @@ def addrecord(tag: str, name: str, age: str, email: str, gender: str,
 tag_pattern = r"\d{3}"
 # Pattern for name entry
 name_pattern = r"[a-zA-Z0-9-_]+"
+# Pattern for age entry
+age_pattern = r"\d{2}"
 # Pattern for email entry
 email_pattern = r"[a-zA-Z0-9.-_+]+@[a-zA-Z0-9-]+\.[a-z]+"
 
@@ -223,9 +225,9 @@ class Mainframe:
         self.titlelabel = ttk.Label(
             mainframe, text='UKULELE!!!', foreground='black', font=('times', 20, 'bold'))
         self.titlelabel.pack(side=TOP)
-        self.textlabel = ttk.Label(
+        self.infolabel = ttk.Label(
             mainframe, text="Kindly enter the required information into the fields below", foreground='black', font=('times', 12, 'bold italic'))
-        self.textlabel.pack(side=TOP)
+        self.infolabel.pack(side=TOP)
         # Tag No.
         tagframe = ttk.Labelframe(
             mainframe, text="Tag no.: *", labelanchor=NW)
@@ -260,15 +262,16 @@ class Mainframe:
         self.lnamelabel = ttk.Label(lnameframe, font=(
             'times', 10, 'bold'), justify=CENTER)
         # Age
-        ageframe = ttk.Labelframe(
-            mainframe, text="Age: *", labelanchor=NW)
+        ageframe = ttk.Labelframe(mainframe, text="Age: *", labelanchor=NW)
         ageframe.pack(side=TOP, expand=0, fill=BOTH, padx=5, pady=2)
         self.agevar = tk.StringVar()
         self.ageentry = ttk.Entry(
-            ageframe, textvariable=self.agevar, cursor='hand2', width=40, justify=CENTER)
-        self.ageentry.pack(side=TOP, expand=1, padx=5, anchor=CENTER)
+            ageframe, textvariable=self.agevar, cursor='hand2', width=40, justify=CENTER, validatecommand=self.agevalidation, validate="focusout")
+        self.ageentry.pack(side=LEFT, expand=1, padx=5, anchor=CENTER)
         self.ageentry.insert(0, "---dd/mm/yyyy---")
         self.ageentry.bind("<Button-1>", self.select_DOB)
+        self.agelabel = ttk.Label(ageframe, font=(
+            'times', 10, 'bold'), justify=CENTER)
         # Gender
         genderframe = ttk.Labelframe(
             mainframe, text="Gender: *", labelanchor=NW)
@@ -384,123 +387,6 @@ class Mainframe:
 
     # Survey Form Toplevel Functions
 
-    def tagvalidation(self):
-        """
-            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
-        """
-        self.tag_entry = self.tagvar.get()
-        self.tag = re.match(pattern=tag_pattern,
-                            string=self.tag_entry, flags=re.IGNORECASE)
-
-        if len(self.tag_entry) != 4:
-            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.taglabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='Tag No. must be a four(4) digits number', parent=self.survey_win)
-            return False
-
-        if self.tag_entry.isdigit():
-            if self.tag != None:
-                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.taglabel.config(text="valid ", foreground="light green")
-                return True
-            else:
-                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.taglabel.config(text="invalid ", foreground="red")
-                showerror(title='* Mandatory Fields',
-                          message='Tag No. field cannot be empty', parent=self.survey_win)
-                return False
-        else:
-            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.taglabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='Tag No. cannot contain alphabet\nor non-alphanumeric characters', parent=self.survey_win)
-            return False
-
-    def fnamevalidation(self):
-        """
-            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
-        """
-        self.fname_entry = self.fnamevar.get()
-        self.fname = re.match(pattern=name_pattern,
-                              string=self.fname_entry, flags=re.IGNORECASE)
-
-        if len(self.fname_entry) > 15:
-            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.fnamelabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
-            return False
-
-        if self.fname_entry.isascii():
-            if self.fname != None:
-                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.fnamelabel.config(text="valid ", foreground="light green")
-                return True
-            else:
-                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.fnamelabel.config(text="invalid ", foreground="red")
-                showerror(title='* Mandatory Fields',
-                          message='First Name field cannot be empty', parent=self.survey_win)
-                return False
-        else:
-            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.fnamelabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='First Name cannot contain numbers', parent=self.survey_win)
-            return False
-
-    def lnamevalidation(self):
-        """
-            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
-        """
-        self.lname_entry = self.lnamevar.get()
-        self.lname = re.match(pattern=name_pattern,
-                              string=self.lname_entry, flags=re.IGNORECASE)
-
-        if len(self.lname_entry) > 15:
-            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.lnamelabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
-            return False
-
-        if self.lname_entry.isascii():
-            if self.lname != None:
-                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.lnamelabel.config(text="valid ", foreground="light green")
-                return True
-            else:
-                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-                self.lnamelabel.config(text="invalid ", foreground="red")
-                showerror(title='* Mandatory Fields',
-                          message='First Name field cannot be empty', parent=self.survey_win)
-                return False
-        else:
-            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.lnamelabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='First Name cannot contain numbers', parent=self.survey_win)
-            return False
-
-    def emailvalidation(self):
-        """
-            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
-        """
-        self.email_entry = self.emailvar.get()
-        self.email = re.match(pattern=email_pattern,
-                              string=self.email_entry, flags=re.IGNORECASE)
-        if self.email != None:
-            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.emaillabel.config(text="valid ", foreground="light green")
-            return True
-        else:
-            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
-            self.emaillabel.config(text="invalid ", foreground="red")
-            showerror(title='* Mandatory Fields',
-                      message='Email Invalid', parent=self.survey_win)
-            return False
-
     def select_DOB(self: object):
         self.dob_window = tk.Toplevel()
         self.dob_window.grab_set()
@@ -527,6 +413,144 @@ class Mainframe:
         self.ageentry.delete(0, END)
         self.ageentry.insert(0, self.current_age)
         self.dob_window.destroy()
+
+    def tagvalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.tag_entry = self.tagvar.get()
+        self.tag = re.match(pattern=tag_pattern,
+                            string=self.tag_entry, flags=re.IGNORECASE)
+
+        if len(self.tag_entry) != 4:
+            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.taglabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Tag No. must be a four(4) digits number', parent=self.survey_win)
+            return False
+
+        if self.tag_entry.isdigit():
+            if self.tag != None:
+                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.taglabel.config(text="\u2713", foreground="light green")
+                return True
+            else:
+                self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.taglabel.config(text="X", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='Tag No. field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.taglabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.taglabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Tag No. cannot contain alphabet\nor non-alphanumeric characters', parent=self.survey_win)
+            return False
+
+    def fnamevalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.fname_entry = self.fnamevar.get()
+        self.fname = re.match(pattern=name_pattern,
+                              string=self.fname_entry, flags=re.IGNORECASE)
+
+        if len(self.fname_entry) > 15:
+            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.fnamelabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
+            return False
+
+        if self.fname_entry.isascii():
+            if self.fname != None:
+                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.fnamelabel.config(
+                    text="\u2713", foreground="light green")
+                return True
+            else:
+                self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.fnamelabel.config(text="X", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='First Name field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.fnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.fnamelabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot contain numbers', parent=self.survey_win)
+            return False
+
+    def lnamevalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.lname_entry = self.lnamevar.get()
+        self.lname = re.match(pattern=name_pattern,
+                              string=self.lname_entry, flags=re.IGNORECASE)
+
+        if len(self.lname_entry) > 15:
+            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.lnamelabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot be longer than 15 characters', parent=self.survey_win)
+            return False
+
+        if self.lname_entry.isascii():
+            if self.lname != None:
+                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.lnamelabel.config(text="\u2713", foreground="light green")
+                return True
+            else:
+                self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.lnamelabel.config(text="X", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='First Name field cannot be empty', parent=self.survey_win)
+                return False
+        else:
+            self.lnamelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.lnamelabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='First Name cannot contain numbers', parent=self.survey_win)
+            return False
+
+    def agevalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.age_entry = self.agevar.get()
+        self.age = re.match(pattern=age_pattern,
+                            string=self.age_entry)
+
+        if self.age_entry >= 18:
+            if self.age != None:
+                self.agelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.agelabel.config(text="\u2713", foreground="light green")
+                return True
+            else:
+                self.agelabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+                self.agelabel.config(text="X", foreground="red")
+                showerror(title='* Mandatory Fields',
+                          message='Sorry!!!\nMinors are not allowed to fill in form entries', parent=self.survey_win)
+                return False
+
+    def emailvalidation(self):
+        """
+            Validates userinput to prevent errors or entries that might compromise the data integrity of the databsae
+        """
+        self.email_entry = self.emailvar.get()
+        self.email = re.match(pattern=email_pattern,
+                              string=self.email_entry, flags=re.IGNORECASE)
+        if self.email != None:
+            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.emaillabel.config(text="\u2713", foreground="light green")
+            return True
+        else:
+            self.emaillabel.pack(side=RIGHT, fill=X, padx=5, anchor=E)
+            self.emaillabel.config(text="X", foreground="red")
+            showerror(title='* Mandatory Fields',
+                      message='Email Invalid', parent=self.survey_win)
+            return False
 
     def emailoption(self: object):
         # Attach callback handler to display email entry if the respondent selects "Yes" to Question 4
